@@ -1,0 +1,61 @@
+---
+---
+
+<footer class="mt-20 border-t border-[var(--hairline)] bg-[var(--canvas-card)] py-12 text-xs text-[var(--ink-mute)] transition-colors relative">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 space-y-6">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pb-6 border-b border-[var(--hairline)]">
+      <div class="flex items-center gap-2">
+        <span class="font-bold text-[var(--ink-primary)]">AllAgeCalculators</span>
+        <span class="font-mono text-[11px] text-[var(--ink-mute)]">allagecalculators.com</span>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-4 text-xs">
+        <a href="/about" class="hover:text-[var(--ink-primary)] transition">About Us</a>
+        <a href="/privacy-policy" class="hover:text-[var(--ink-primary)] transition">Privacy Policy</a>
+        <a href="/terms-and-conditions" class="hover:text-[var(--ink-primary)] transition">Terms & Conditions</a>
+        <a href="/#faq" class="hover:text-[var(--ink-primary)] transition">FAQ & Rules</a>
+      </div>
+    </div>
+
+    <div class="space-y-2 text-[11px] text-[var(--ink-mute)] leading-relaxed">
+      <p>
+        <strong>Disclaimer:</strong> AllAgeCalculators (allagecalculators.com) is an independent online calculation platform designed for chronological age determination, retirement planning, pet age conversion, baby milestone tracking, and competitive exam cutoff calculations. This website is NOT affiliated with, endorsed by, or connected to the Union Public Service Commission (UPSC), any government ministry, or any official regulatory body.
+      </p>
+      <p>© {new Date().getFullYear()} AllAgeCalculators. All rights reserved. Built with precision and care for all age calculation needs.</p>
+    </div>
+  </div>
+
+  <!-- Floating Touch-To-Top Button -->
+  <button
+    id="scroll-to-top"
+    type="button"
+    aria-label="Scroll back to top"
+    class="fixed bottom-6 right-6 z-50 p-3 rounded-full bg-[var(--canvas-card)] border border-[var(--hairline)] text-[var(--ink-primary)] shadow-lg hover:border-[var(--ink-primary)] hover:scale-105 active:scale-95 transition-all duration-300 opacity-0 pointer-events-none translate-y-4 flex items-center justify-center cursor-pointer select-none"
+  >
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+    </svg>
+  </button>
+</footer>
+
+<script is:inline>
+  const scrollBtn = document.getElementById('scroll-to-top');
+  if (scrollBtn) {
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 280) {
+        scrollBtn.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+        scrollBtn.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
+      } else {
+        scrollBtn.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+        scrollBtn.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+      }
+    });
+
+    scrollBtn.addEventListener('click', function() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  }
+</script>

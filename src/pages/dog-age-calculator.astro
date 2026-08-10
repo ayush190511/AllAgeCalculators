@@ -1,0 +1,84 @@
+---
+import Header from '../components/Header.astro';
+import { DogAgeMode } from '../components/modes/DogAgeMode';
+import SEOContent from '../components/SEOContent.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <!-- Dedicated Dog Age Meta Tags -->
+    <title>Dog Age Calculator — Convert Dog Years to Human Years</title>
+    <meta name="title" content="Dog Age Calculator — Convert Dog Years to Human Years" />
+    <meta 
+      name="description" 
+      content="Free Dog Age Calculator on AllAgeCalculators. Convert dog age to human years using official AVMA breed size formulas. Includes sleep requirements and life stage care tips." 
+    />
+    <meta 
+      name="keywords" 
+      content="dog age calculator, pet age calculator grow a garden, convert dog years to human years, how old is my dog in human years, dog life stage calculator, how much sleep do dogs need by age calculator" 
+    />
+    <link rel="canonical" href="https://allagecalculators.com/dog-age-calculator" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://allagecalculators.com/dog-age-calculator" />
+    <meta property="og:title" content="Dog Age Calculator — Convert Dog Years to Human Years" />
+    <meta property="og:description" content="Calculate your dog's exact age in human years using size-adjusted veterinary formulas (Small, Medium, Large & Giant breeds)." />
+
+    <!-- Theme Script -->
+    <script is:inline>
+      (function() {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else if (saved === 'light') {
+          document.documentElement.classList.remove('dark');
+        } else {
+          if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+          }
+        }
+      })();
+    </script>
+  </head>
+
+  <body class="min-h-screen bg-[var(--canvas)] text-[var(--ink-primary)] selection:bg-[var(--ink-primary)] selection:text-[var(--canvas-card)] flex flex-col justify-between hero-mesh-bg transition-colors">
+    <div>
+      <Header />
+
+      <main class="max-w-5xl mx-auto px-4 sm:px-6 pt-8 pb-16 space-y-10">
+        <!-- Hero Title -->
+        <div class="text-center space-y-3.5 max-w-3xl mx-auto pt-4">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[var(--canvas-card)] border border-[var(--hairline)] text-xs font-mono text-[var(--ink-body)] shadow-2xs">
+            <span class="h-2 w-2 rounded-full bg-[#0070f3]"></span>
+            Veterinary AVMA Breed Formula
+          </div>
+
+          <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-[var(--ink-primary)]">
+            Dog Age Calculator
+          </h1>
+
+          <p class="text-sm sm:text-base text-[var(--ink-body)] leading-relaxed">
+            Convert your dog's calendar age into <strong>human years equivalent</strong>. Features breed size adjustments (Small, Medium, Large, Giant) and life stage sleep guidance.
+          </p>
+        </div>
+
+        <!-- Direct Dog Age Component -->
+        <section id="dog-tool">
+          <DogAgeMode client:load />
+        </section>
+
+        <!-- SEO Content & FAQ -->
+        <SEOContent />
+      </main>
+    </div>
+
+    <Footer />
+  </body>
+</html>

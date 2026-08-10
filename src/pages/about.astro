@@ -1,0 +1,140 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <!-- About Page Meta Tags -->
+    <title>About Us — AllAgeCalculators (Precision Age Calculation Engine)</title>
+    <meta name="title" content="About Us — AllAgeCalculators (Precision Age Calculation Engine)" />
+    <meta 
+      name="description" 
+      content="Learn about AllAgeCalculators (allagecalculators.com). Dedicated to providing precision chronological age calculators, UPSC CSE 1st August cutoff eligibility engines, retirement timelines, and pet age conversions." 
+    />
+    <link rel="canonical" href="https://allagecalculators.com/about" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://allagecalculators.com/about" />
+    <meta property="og:title" content="About Us — AllAgeCalculators" />
+    <meta property="og:description" content="Discover the mission, technology, and privacy standards behind AllAgeCalculators." />
+
+    <!-- Theme Script -->
+    <script is:inline>
+      (function() {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else if (saved === 'light') {
+          document.documentElement.classList.remove('dark');
+        } else {
+          if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+          }
+        }
+      })();
+    </script>
+  </head>
+
+  <body class="min-h-screen bg-[var(--canvas)] text-[var(--ink-primary)] selection:bg-[var(--ink-primary)] selection:text-[var(--canvas-card)] flex flex-col justify-between hero-mesh-bg transition-colors">
+    <div>
+      <Header />
+
+      <main class="max-w-4xl mx-auto px-4 sm:px-6 pt-12 pb-20 space-y-12">
+        <!-- Hero Header -->
+        <div class="text-center space-y-4 max-w-2xl mx-auto">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[var(--canvas-card)] border border-[var(--hairline)] text-xs font-mono text-[var(--ink-body)] shadow-2xs">
+            <span class="h-2 w-2 rounded-full bg-[#0070f3]"></span>
+            Mission & Engine Architecture
+          </div>
+
+          <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-[var(--ink-primary)]">
+            About AllAgeCalculators
+          </h1>
+
+          <p class="text-sm sm:text-base text-[var(--ink-body)] leading-relaxed">
+            Delivering zero-latency, mathematically exact, and privacy-first age calculation utilities for competitive exam aspirants, professionals, pet owners, and families.
+          </p>
+        </div>
+
+        <!-- Main Content Card -->
+        <div class="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-8 sm:p-10 shadow-sm space-y-8">
+          
+          <section class="space-y-3">
+            <h2 class="text-xl font-bold tracking-tight text-[var(--ink-primary)]">
+              Our Core Mission
+            </h2>
+            <p class="text-xs sm:text-sm text-[var(--ink-body)] leading-relaxed">
+              Every year, thousands of Civil Services aspirants in India miscalculate their exam eligibility due to confusing cutoff dates, category relaxations, and leap year math. <strong>AllAgeCalculators (allagecalculators.com)</strong> was created to eliminate guesswork. We provide a content-forward, minimal, and lightning-fast suite of chronological age calculators engineered to deliver instant clarity.
+            </p>
+          </section>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-[var(--hairline)]">
+            
+            <!-- Feature 1 -->
+            <div class="p-5 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-xl space-y-2">
+              <div class="h-8 w-8 rounded-lg bg-[var(--ink-primary)] text-[var(--canvas-card)] flex items-center justify-center font-bold text-xs font-mono">
+                01
+              </div>
+              <h3 class="text-sm font-bold text-[var(--ink-primary)]">Official Rule 6 Cutoff Engine</h3>
+              <p class="text-xs text-[var(--ink-body)] leading-relaxed">
+                Calculates eligibility strictly as of the official <strong>1st August cutoff date</strong> specified in UPSC Civil Services Notifications, factoring in category relaxations for OBC, SC, ST, PwBD, and Ex-Servicemen.
+              </p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="p-5 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-xl space-y-2">
+              <div class="h-8 w-8 rounded-lg bg-[#0070f3] text-white flex items-center justify-center font-bold text-xs font-mono">
+                02
+              </div>
+              <h3 class="text-sm font-bold text-[var(--ink-primary)]">100% Client-Side Privacy</h3>
+              <p class="text-xs text-[var(--ink-body)] leading-relaxed">
+                Your birth date is processed entirely inside your local browser JavaScript engine. We never store, log, or transmit your private date of birth to external servers.
+              </p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="p-5 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-xl space-y-2">
+              <div class="h-8 w-8 rounded-lg bg-[#7928ca] text-white flex items-center justify-center font-bold text-xs font-mono">
+                03
+              </div>
+              <h3 class="text-sm font-bold text-[var(--ink-primary)]">Veterinary & Pediatric Formulas</h3>
+              <p class="text-xs text-[var(--ink-body)] leading-relaxed">
+                Beyond human age, our dedicated tools apply AVMA veterinary size formulas for dog aging and pediatric gestational week adjustments for premature babies.
+              </p>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="p-5 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-xl space-y-2">
+              <div class="h-8 w-8 rounded-lg bg-[#f5a623] text-white flex items-center justify-center font-bold text-xs font-mono">
+                04
+              </div>
+              <h3 class="text-sm font-bold text-[var(--ink-primary)]">Vercel/Linear Minimalist Design</h3>
+              <p class="text-xs text-[var(--ink-body)] leading-relaxed">
+                Clean typography, high-contrast light/dark mode, tabular-num alignment, and zero ad clutter — designed for a smooth, distraction-free user experience.
+              </p>
+            </div>
+
+          </div>
+
+          <!-- Disclaimer Section -->
+          <div class="pt-6 border-t border-[var(--hairline)] space-y-2 text-xs text-[var(--ink-mute)]">
+            <h4 class="font-bold text-[var(--ink-primary)] uppercase font-mono">Independence Disclaimer</h4>
+            <p class="leading-relaxed">
+              AllAgeCalculators (allagecalculators.com) is an independent educational technology project. It is NOT affiliated with, endorsed by, or associated with the Union Public Service Commission (UPSC) or any government entity. For official gazette notifications and examination rules, please visit upsc.gov.in.
+            </p>
+          </div>
+
+        </div>
+      </main>
+    </div>
+
+    <Footer />
+  </body>
+</html>

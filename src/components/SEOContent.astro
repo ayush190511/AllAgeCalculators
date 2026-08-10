@@ -1,0 +1,342 @@
+---
+const faqItems = [
+  // Core UPSC Cutoff & Attempt Rules
+  {
+    question: "What is the crucial cutoff date for UPSC CSE age calculation?",
+    answer: "As per Rule 6 of the official UPSC Civil Services Examination Notification, the crucial cutoff date is strictly 1st August of the exam year. For UPSC CSE 2026, a candidate must be between 21 and 32 years of age as of 1st August 2026.",
+    answerHtml: "<p>As per Rule 6 of the official UPSC Civil Services Examination Notification, the crucial cutoff date is strictly 1st August of the exam year. For UPSC CSE 2026, a candidate must be between 21 and 32 years of age as of 1st August 2026.</p>"
+  },
+  {
+    question: "How are UPSC attempts counted?",
+    answer: "An attempt is counted only if a candidate actually appears in at least one paper of the UPSC CSE Preliminary Examination. Simply filling out the application form without appearing at the examination center does NOT count as an attempt.",
+    answerHtml: "<p>An attempt is counted only if a candidate actually appears in at least one paper of the UPSC CSE Preliminary Examination. Simply filling out the application form without appearing at the examination center does NOT count as an attempt.</p>"
+  },
+  {
+    question: "What are the age relaxations for OBC, SC, ST, and PwBD candidates?",
+    answer: "OBC candidates get 3 years age relaxation (max 35 yrs) and 9 attempts. SC/ST candidates get 5 years age relaxation (max 37 yrs) and unlimited attempts. PwBD candidates get 10 years additional relaxation across all categories.",
+    answerHtml: "<p>OBC candidates get 3 years age relaxation (max 35 yrs) and 9 attempts. SC/ST candidates get 5 years age relaxation (max 37 yrs) and unlimited attempts. PwBD candidates get 10 years additional relaxation across all categories.</p>"
+  },
+  {
+    question: "Does turning 32 during the exam year make me ineligible?",
+    answer: "Not necessarily! What matters is your exact age on 1st August of the exam year. If you turn 32 after 1st August (e.g., in September or October), you are still 31 years old on 1st August and therefore FULLY ELIGIBLE.",
+    answerHtml: "<p>Not necessarily! What matters is your exact age on 1st August of the exam year. If you turn 32 after 1st August (e.g., in September or October), you are still 31 years old on 1st August and therefore FULLY ELIGIBLE.</p>"
+  },
+  {
+    question: "What is the minimum age requirement for UPSC CSE?",
+    answer: "A candidate must have attained the age of 21 years on or before 1st August of the examination year. There are no age relaxations for the minimum age requirement of 21 years.",
+    answerHtml: "<p>A candidate must have attained the age of 21 years on or before 1st August of the examination year. There are no age relaxations for the minimum age requirement of 21 years.</p>"
+  },
+
+  // 20 Priority Ahrefs Search Queries
+  {
+    question: "age calculator how old am i",
+    answer: "To calculate how old you are right now, enter your date of birth into our free online age calculator. It instantly determines your exact age in years, months, and days, complete with leap year calculations and an optional down-to-the-second live ticker.",
+    answerHtml: "<p>To calculate how old you are right now, enter your date of birth into our free online age calculator. It instantly determines your exact age in years, months, and days, complete with leap year calculations and an optional down-to-the-second live ticker.</p>"
+  },
+  {
+    question: "what is my biological age calculator",
+    answer: "Biological age measures how well your body and cellular systems function relative to your actual calendar age. While our calculator measures your precise chronological age, biological age is determined by evaluating health biomarkers like blood pressure, resting heart rate, Vo2 max, and metabolic blood panels.",
+    answerHtml: "<p>Biological age measures how well your body and cellular systems function relative to your actual calendar age. While our calculator measures your precise chronological age, biological age is determined by evaluating health biomarkers like blood pressure, resting heart rate, Vo2 max, and metabolic blood panels.</p>"
+  },
+  {
+    question: "what age can i retire calculator",
+    answer: "Retirement age depends on employer policies and country rules. In India, central government services and UPSC officer standard retirement age is 60 years. Use Mode 3 (Date Difference Calculator) to measure the exact years, months, and days remaining until your planned retirement date.",
+    answerHtml: "<p>Retirement age depends on employer policies and country rules. In India, central government services and UPSC officer standard retirement age is 60 years. Use Mode 3 (Date Difference Calculator) to measure the exact years, months, and days remaining until your planned retirement date.</p>"
+  },
+  {
+    question: "what is my age calculator",
+    answer: "Our 'What is my age' calculator determines your exact chronological age from your date of birth to today. It breaks down your life duration into total years, months, weeks, days, hours, and seconds lived.",
+    answerHtml: "<p>Our 'What is my age' calculator determines your exact chronological age from your date of birth to today. It breaks down your life duration into total years, months, weeks, days, hours, and seconds lived.</p>"
+  },
+  {
+    question: "how much sleep do dogs need by age calculator",
+    answer: "Dog sleep requirements vary significantly by age: puppies require 18–20 hours per day, adult dogs need 12–14 hours, and senior dogs (7+ years) need 14–18 hours. Knowing your dog's exact age in years and months helps tailor their daily sleep and rest environment.",
+    answerHtml: "<p>Dog sleep requirements vary significantly by age: puppies require 18–20 hours per day, adult dogs need 12–14 hours, and senior dogs (7+ years) need 14–18 hours. Knowing your dog's exact age in years and months helps tailor their daily sleep and rest environment.</p>"
+  },
+  {
+    question: "how am i doing financially for my age calculator",
+    answer: "Financial benchmarks depend on your current age. Financial advisors recommend saving 1x your annual salary by age 30, 3x by age 40, and 6x by age 50. Use Mode 2 to calculate your exact current age and align your retirement savings and emergency fund targets.",
+    answerHtml: "<p>Financial benchmarks depend on your current age. Financial advisors recommend saving 1x your annual salary by age 30, 3x by age 40, and 6x by age 50. Use Mode 2 to calculate your exact current age and align your retirement savings and emergency fund targets.</p>"
+  },
+  {
+    question: "what age did my mom have me calculator",
+    answer: "To calculate how old your mother was when you were born, use Mode 3 (Date Difference Calculator). Enter your mother's Date of Birth as the 'From Date' and your Date of Birth as the 'To Date' to get her exact age in years, months, and days on your birthday.",
+    answerHtml: "<p>To calculate how old your mother was when you were born, use Mode 3 (Date Difference Calculator). Enter your mother's Date of Birth as the 'From Date' and your Date of Birth as the 'To Date' to get her exact age in years, months, and days on your birthday.</p>"
+  },
+  {
+    question: "how fit am i for my age calculator",
+    answer: "Physical fitness for your age is evaluated by comparing physical performance metrics (plank duration, push-ups, resting heart rate, and Vo2 max) against age-matched population benchmarks. Knowing your exact age from our calculator helps contextualize fitness test results.",
+    answerHtml: "<p>Physical fitness for your age is evaluated by comparing physical performance metrics (plank duration, push-ups, resting heart rate, and Vo2 max) against age-matched population benchmarks. Knowing your exact age from our calculator helps contextualize fitness test results.</p>"
+  },
+  {
+    question: "how much to save for college by age calculator",
+    answer: "Financial planners suggest saving specific multiples of annual higher education costs based on your child's current age (e.g. 25% of goal by age 6, 50% by age 12). Use Mode 3 (Date Difference Calculator) to track your child's age in years and months for milestone tracking.",
+    answerHtml: "<p>Financial planners suggest saving specific multiples of annual higher education costs based on your child's current age (e.g. 25% of goal by age 6, 50% by age 12). Use Mode 3 (Date Difference Calculator) to track your child's age in years and months for milestone tracking.</p>"
+  },
+  {
+    question: "how much weight should i lift calculator by age",
+    answer: "Strength standards vary by body weight, gender, age group, and lifting experience. As you age, strength benchmarks scale to account for natural changes in muscle mass. Calculating your exact age helps you choose appropriate age-adjusted strength benchmarks like Wilks or DOTS scores.",
+    answerHtml: "<p>Strength standards vary by body weight, gender, age group, and lifting experience. As you age, strength benchmarks scale to account for natural changes in muscle mass. Calculating your exact age helps you choose appropriate age-adjusted strength benchmarks like Wilks or DOTS scores.</p>"
+  },
+  {
+    question: "how much wet food to feed a dog calculator by age",
+    answer: "Wet food portion sizes depend on your dog's age stage (puppy, adult, or senior) and body weight. Senior dogs often require softer wet food with caloric adjustments based on their lower activity levels and exact age in years.",
+    answerHtml: "<p>Wet food portion sizes depend on your dog's age stage (puppy, adult, or senior) and body weight. Senior dogs often require softer wet food with caloric adjustments based on their lower activity levels and exact age in years.</p>"
+  },
+  {
+    question: "what's my age calculator",
+    answer: "Enter your date of birth into our free online age calculator to instantly find your exact age. You can also calculate age gaps between two dates or determine your exact age on any future target date.",
+    answerHtml: "<p>Enter your date of birth into our free online age calculator to instantly find your exact age. You can also calculate age gaps between two dates or determine your exact age on any future target date.</p>"
+  },
+  {
+    question: "what is my heart age calculator",
+    answer: "Heart age estimates your cardiovascular disease risk relative to your actual chronological age based on factors like blood pressure, cholesterol, BMI, and smoking habits. Our calculator provides your exact chronological age baseline for medical assessments.",
+    answerHtml: "<p>Heart age estimates your cardiovascular disease risk relative to your actual chronological age based on factors like blood pressure, cholesterol, BMI, and smoking habits. Our calculator provides your exact chronological age baseline for medical assessments.</p>"
+  },
+  {
+    question: "how old am i age calculator",
+    answer: "Our age calculator computes your exact age by accounting for leap years, calendar month lengths, and exact birth times to give you your precise age as of today or on a specific target date.",
+    answerHtml: "<p>Our age calculator computes your exact age by accounting for leap years, calendar month lengths, and exact birth times to give you your precise age as of today or on a specific target date.</p>"
+  },
+  {
+    question: "at what age can i retire calculator",
+    answer: "Determining when you can retire depends on your pension plan rules and financial targets. Calculate your exact current age using Mode 2, then subtract it from your target retirement age (e.g. 60 or 65) to determine your remaining working timeline.",
+    answerHtml: "<p>Determining when you can retire depends on your pension plan rules and financial targets. Calculate your exact current age using Mode 2, then subtract it from your target retirement age (e.g. 60 or 65) to determine your remaining working timeline.</p>"
+  },
+  {
+    question: "what is my metabolic age calculator",
+    answer: "Metabolic age compares your Basal Metabolic Rate (BMR) to the average BMR for your chronological age group. Calculating your exact chronological age using our tool provides the baseline required to evaluate your metabolic rate.",
+    answerHtml: "<p>Metabolic age compares your Basal Metabolic Rate (BMR) to the average BMR for your chronological age group. Calculating your exact chronological age using our tool provides the baseline required to evaluate your metabolic rate.</p>"
+  },
+  {
+    question: "how fit a.m. i for my age calculator",
+    answer: "Fitness for your age is measured by comparing physical performance metrics (resting heart rate, strength, endurance) against age-matched population standards. Knowing your exact age from our calculator helps contextualize physical assessment standards.",
+    answerHtml: "<p>Fitness for your age is measured by comparing physical performance metrics (resting heart rate, strength, endurance) against age-matched population standards. Knowing your exact age from our calculator helps contextualize physical assessment standards.</p>"
+  },
+  {
+    question: "how much to feed a puppy calculator by age",
+    answer: "Puppies require frequent meals (3–4 times daily between 2–6 months old) scaled to their age in weeks and projected adult weight. Calculate your puppy's exact age in weeks and months to determine their daily calorie requirements.",
+    answerHtml: "<p>Puppies require frequent meals (3–4 times daily between 2–6 months old) scaled to their age in weeks and projected adult weight. Calculate your puppy's exact age in weeks and months to determine their daily calorie requirements.</p>"
+  },
+  {
+    question: "at age 73 what is the rmd calculator",
+    answer: "For retirement account holders (such as US 401k/IRA holders reaching Required Minimum Distribution age 73, or Indian NPS account annuity planning), calculating your exact age determines when compulsory distribution rules take effect.",
+    answerHtml: "<p>For retirement account holders (such as US 401k/IRA holders reaching Required Minimum Distribution age 73, or Indian NPS account annuity planning), calculating your exact age determines when compulsory distribution rules take effect.</p>"
+  },
+  {
+    question: "what age will i die calculator",
+    answer: "No calculator can predict exact lifespan, as life expectancy depends on genetics, health, and environment. However, our age calculator helps you track the total days, hours, and seconds you have lived thus far.",
+    answerHtml: "<p>No calculator can predict exact lifespan, as life expectancy depends on genetics, health, and environment. However, our age calculator helps you track the total days, hours, and seconds you have lived thus far.</p>"
+  }
+];
+
+const schemaJson = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqItems.map(item => ({
+    "@type": "Question",
+    "name": item.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": item.answerHtml
+    }
+  }))
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schemaJson)} />
+
+<section id="faq" class="mt-16 pt-16 border-t border-[var(--hairline)] space-y-12">
+  
+  <!-- SEO Content Guide Section (600+ Words for On-Page SEO) -->
+  <article class="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-8 shadow-sm space-y-8">
+    <header class="border-b border-[var(--hairline)] pb-6 space-y-2">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--canvas-inset)] border border-[var(--hairline)] text-xs font-mono text-[#0070f3]">
+        Comprehensive On-Page SEO Guide & Technical Documentation
+      </div>
+      <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--ink-primary)]">
+        The Definitive Guide to Online Age Calculation & Chronological Milestones
+      </h2>
+      <p class="text-xs text-[var(--ink-mute)]">
+        Everything you need to know about calculating age by date of birth, exam cutoffs, retirement age, pet age milestones, and calendar algorithms.
+      </p>
+    </header>
+
+    <div class="prose prose-sm max-w-none text-[var(--ink-body)] leading-relaxed space-y-6">
+      
+      <!-- H3 Section 1 -->
+      <section class="space-y-3">
+        <h3 class="text-xl font-bold text-[var(--ink-primary)] tracking-tight">
+          1. What is an Online Age Calculator? (Chronological Age vs. Biological Age)
+        </h3>
+        <p>
+          An <strong>online age calculator</strong> is a specialized digital utility designed to measure the precise duration of time elapsed between a person's <strong>date of birth</strong> and a specific reference date, such as <strong>today's date</strong> or a future examination cutoff date. Unlike informal estimates, a precision <strong>chronological age calculator</strong> factors in exact calendar math—accounting for varying month lengths (28, 30, or 31 days) and leap year intercalations (february 29th every 4 years).
+        </p>
+        <p>
+          While your <strong>chronological age by date of birth free</strong> measures calendar time, other concepts like <em>biological age</em>, <em>lunar age calculator</em> values (used in traditional East Asian calendar systems), and <em>heart age calculator</em> metrics assess health performance rather than pure calendar duration. Using our <strong>my age calculator</strong> tool in Mode 2 gives you instant, down-to-the-second precision on your exact time lived on Earth.
+        </p>
+      </section>
+
+      <!-- H3 Section 2 -->
+      <section class="space-y-3">
+        <h3 class="text-xl font-bold text-[var(--ink-primary)] tracking-tight">
+          2. Age Calculator of UPSC & Government Exam Eligibility in India
+        </h3>
+        <p>
+          In India, millions of competitive exam candidates search for an official <strong>age calculator of upsc</strong> to verify whether they satisfy Rule 6 of the Civil Services Examination (CSE) notification. Unlike standard birthday calculations, the Union Public Service Commission specifies a fixed crucial cutoff date: <strong>1st August of the examination year</strong>.
+        </p>
+        <p>
+          Our <strong>age calculator of india</strong> engine is purpose-built to calculate your exact age on <strong>1st August cutoff date</strong>. It automatically applies category-wise age relaxations:
+        </p>
+        <ul class="list-disc list-inside space-y-1 text-xs font-mono-num text-[var(--ink-primary)] pl-2">
+          <li><strong>General / EWS:</strong> Upper age cap 32 Years (6 Attempts)</li>
+          <li><strong>OBC (Non-Creamy Layer):</strong> Upper age cap 35 Years (+3 Yrs relaxation, 9 Attempts)</li>
+          <li><strong>SC / ST:</strong> Upper age cap 37 Years (+5 Yrs relaxation, Unlimited Attempts)</li>
+          <li><strong>PwBD Candidates:</strong> +10 Years cumulative relaxation across all categories</li>
+        </ul>
+        <p>
+          Whether checking your <strong>age calculator on today</strong> or calculating your eligible <strong>age calculator on year</strong> for future cycles (2026, 2027, 2028), Mode 1 provides instant clarity on remaining attempt limits and cycle counts.
+        </p>
+      </section>
+
+      <!-- H3 Section 3 -->
+      <section class="space-y-3">
+        <h3 class="text-xl font-bold text-[var(--ink-primary)] tracking-tight">
+          3. Retirement Age Calculator, State Pensions & Financial Benchmarks
+        </h3>
+        <p>
+          Planning for retirement requires knowing your exact age milestone down to the month and day. A <strong>retirement age calculator</strong> helps government and private sector employees determine when they hit key milestones:
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+          <div class="p-4 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-lg space-y-1">
+            <h4 class="text-sm font-bold text-[var(--ink-primary)]">State Pension Age Calculator</h4>
+            <p class="text-xs text-[var(--ink-mute)]">
+              Determines when you qualify for central government pensions in India (age 60) or international state pensions (age 66–67 in UK/US).
+            </p>
+          </div>
+          <div class="p-4 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-lg space-y-1">
+            <h4 class="text-sm font-bold text-[var(--ink-primary)]">At Age 73 RMD Calculator</h4>
+            <p class="text-xs text-[var(--ink-mute)]">
+              Calculates exact timelines for mandatory retirement distributions (such as US 401k/IRA RMDs or Indian NPS annuity withdrawals at retirement).
+            </p>
+          </div>
+        </div>
+        <p>
+          Additionally, families use our <strong>age calculator for school</strong> and <strong>how much to save for college by age calculator</strong> to track child growth stages and align education savings portfolios with exact age in years and months.
+        </p>
+      </section>
+
+      <!-- H3 Section 4 -->
+      <section class="space-y-3">
+        <h3 class="text-xl font-bold text-[var(--ink-primary)] tracking-tight">
+          4. Dog Age Calculator, Pet Milestones & Baby Growth Tracking
+        </h3>
+        <p>
+          Age calculation is equally crucial for pets and growing children! Using a <strong>dog age calculator</strong> or <strong>pet age calculator grow a garden</strong> allows pet owners to convert canine years to human equivalent ages. A 1-year-old dog equals roughly 15 human years, while senior dogs (7+ years) require specialized nutrition and health monitoring.
+        </p>
+        <p>
+          For human parents, an <strong>age calculator of baby</strong> or <strong>age calculator of child</strong> provides exact month-by-month and week-by-week milestones required for vaccination schedules, preschool enrollment cutoffs, and developmental tracking.
+        </p>
+      </section>
+
+      <!-- H3 Section 5 -->
+      <section class="space-y-3">
+        <h3 class="text-xl font-bold text-[var(--ink-primary)] tracking-tight">
+          5. Understanding the Age Calculator Formula (Excel & Programmatic Math)
+        </h3>
+        <p>
+          How does an <strong>age calculator by date of birth</strong> actually compute your exact age behind the scenes? In software engineering and spreadsheet software like Microsoft Excel, the standard <strong>age calculator in excel</strong> formula uses the hidden <code>DATEDIF</code> function:
+        </p>
+        <div class="p-4 bg-[var(--canvas-inset)] border-l-4 border-[#0070f3] rounded-r-lg font-mono text-xs text-[var(--ink-primary)]">
+          =DATEDIF(start_date, end_date, "Y") &amp; " Years, " &amp; DATEDIF(start_date, end_date, "YM") &amp; " Months, " &amp; DATEDIF(start_date, end_date, "MD") &amp; " Days"
+        </div>
+        <p>
+          Our web application executes this precise mathematical algorithm directly inside your browser. Whether you need an <strong>age calculator in years</strong>, an <strong>age calculator online</strong>, or an <strong>age calculator app</strong> on mobile devices, our responsive engine delivers zero-latency results without sending your sensitive personal birth date to any remote server.
+        </p>
+      </section>
+
+      <!-- H3 Section 6 -->
+      <section class="space-y-3">
+        <h3 class="text-xl font-bold text-[var(--ink-primary)] tracking-tight">
+          6. Cultural & Regional Calendars (Nepali Age Calculator & Lunar Conversions)
+        </h3>
+        <p>
+          Different global regions compute age according to solar, lunar, and lunisolar calendars. For example, an <strong>age calculator nepali</strong> converts Bikram Sambat (BS) dates to Anno Domini (AD) Gregorian calendar dates before evaluating exact age. Similarly, a <em>lunar age calculator</em> evaluates age based on lunar cycles (common in traditional East Asian cultures where a child is considered 1 year old at birth). Our <strong>birthday age calculator</strong> defaults to the international standard Gregorian calendar used by educational institutions, governments, and civil service commissions worldwide.
+        </p>
+      </section>
+
+    </div>
+  </article>
+
+  <!-- Educational Content Block 1: August 1 Cutoff Rule -->
+  <div class="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-8 shadow-sm space-y-4">
+    <div class="flex items-center gap-2 text-xs font-mono uppercase text-[#0070f3] tracking-wider font-semibold">
+      <span>Official Gazette Rule 6</span>
+    </div>
+    <h2 class="text-2xl font-bold tracking-tight text-[var(--ink-primary)]">
+      Understanding the UPSC 1st August Cutoff Rule
+    </h2>
+    <div class="prose prose-sm text-[var(--ink-body)] leading-relaxed space-y-3">
+      <p>
+        Every year, thousands of Civil Services aspirants miscalculate their eligibility by measuring their age as of the notification date (February) or the prelims exam date (May/June). However, Rule 6 of the official UPSC Examination Rules explicitly mandates that:
+      </p>
+      <blockquote class="p-4 bg-[var(--canvas-inset)] border-l-4 border-[var(--ink-primary)] rounded-r-lg font-mono text-xs text-[var(--ink-primary)]">
+        "A candidate must have attained the age of 21 years and must not have attained the age of 32 years on the 1st day of August of the year of examination."
+      </blockquote>
+      <p>
+        <strong>Key takeaway:</strong> If your date of birth falls between 2nd August 1994 and 1st August 2005 (for General category in UPSC CSE 2026), you are eligible. If you were born on 1st August 1994, you complete exactly 32 years on 1st August 2026 and remain eligible. Born on 31st July 1994? You turned 32 years and 1 day on 1st August 2026, making you overage unless category relaxations apply.
+      </p>
+    </div>
+  </div>
+
+  <!-- Educational Content Block 2: Attempts & Relaxations Overview -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-6 shadow-sm space-y-3">
+      <h3 class="text-lg font-bold text-[var(--ink-primary)] tracking-tight">
+        Category-wise Attempt Limits
+      </h3>
+      <ul class="text-xs text-[var(--ink-body)] space-y-2 list-disc list-inside font-mono-num">
+        <li><strong>General / EWS:</strong> 6 Attempts up to 32 Years</li>
+        <li><strong>OBC (Non-Creamy Layer):</strong> 9 Attempts up to 35 Years</li>
+        <li><strong>SC / ST:</strong> Unlimited Attempts up to 37 Years</li>
+        <li><strong>PwBD (GEN/EWS/OBC):</strong> 9 Attempts up to 42-45 Years</li>
+        <li><strong>PwBD (SC/ST):</strong> Unlimited Attempts up to 47 Years</li>
+      </ul>
+    </div>
+
+    <div class="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-6 shadow-sm space-y-3">
+      <h3 class="text-lg font-bold text-[var(--ink-primary)] tracking-tight">
+        Ex-Servicemen & Special Relaxations
+      </h3>
+      <p class="text-xs text-[var(--ink-body)] leading-relaxed">
+        Commissioned Officers including ECOs/SSCOs who have rendered at least 5 years military service receive up to 5 years age relaxation (maximum upper limit capped at 37 years for General). Defence personnel disabled in operations receive +3 years (GEN/OBC) or +8 years (SC/ST).
+      </p>
+    </div>
+  </div>
+
+  <!-- FAQ Accordion -->
+  <div class="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-8 shadow-sm space-y-6">
+    <div class="border-b border-[var(--hairline)] pb-4">
+      <h2 class="text-xl font-bold tracking-tight text-[var(--ink-primary)]">
+        Frequently Asked Questions & Age Calculations
+      </h2>
+      <p class="text-xs text-[var(--ink-mute)] mt-1">
+        Answers to popular search queries on age calculations, UPSC cutoffs, health age benchmarks, and life event timelines.
+      </p>
+    </div>
+
+    <div class="space-y-4">
+      {faqItems.map((item, idx) => (
+        <details key={idx} class="group border border-[var(--hairline)] rounded-lg p-4 transition [&_summary::-webkit-details-marker]:hidden bg-[var(--canvas-inset)]">
+          <summary class="flex items-center justify-between font-semibold text-sm text-[var(--ink-primary)] cursor-pointer select-none">
+            <span class="capitalize">{item.question}</span>
+            <span class="text-[var(--ink-mute)] group-open:rotate-180 transition-transform">▼</span>
+          </summary>
+          <div class="mt-3 text-xs text-[var(--ink-body)] leading-relaxed border-t border-[var(--hairline)] pt-3">
+            {item.answer}
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

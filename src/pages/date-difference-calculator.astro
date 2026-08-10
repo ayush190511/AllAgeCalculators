@@ -1,0 +1,84 @@
+---
+import Header from '../components/Header.astro';
+import { DateDiffMode } from '../components/modes/DateDiffMode';
+import SEOContent from '../components/SEOContent.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <!-- Dedicated Date Difference Meta Tags -->
+    <title>Date Difference Calculator — Calculate Days, Months & Years Between Dates</title>
+    <meta name="title" content="Date Difference Calculator — Calculate Days, Months & Years Between Dates" />
+    <meta 
+      name="description" 
+      content="Calculate exact time difference between two dates in years, months, days, hours, and seconds. Great for age gaps, event intervals, and milestone tracking." 
+    />
+    <meta 
+      name="keywords" 
+      content="date difference calculator, age gap calculator, calculate days between dates, what age did my mom have me calculator, time interval calculator" 
+    />
+    <link rel="canonical" href="https://allagecalculators.com/date-difference-calculator" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://allagecalculators.com/date-difference-calculator" />
+    <meta property="og:title" content="Date Difference Calculator — Calculate Days, Months & Years Between Dates" />
+    <meta property="og:description" content="Calculate exact duration between two dates. Get breakdowns in total days, hours, minutes, and seconds." />
+
+    <!-- Theme Script -->
+    <script is:inline>
+      (function() {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else if (saved === 'light') {
+          document.documentElement.classList.remove('dark');
+        } else {
+          if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+          }
+        }
+      })();
+    </script>
+  </head>
+
+  <body class="min-h-screen bg-[var(--canvas)] text-[var(--ink-primary)] selection:bg-[var(--ink-primary)] selection:text-[var(--canvas-card)] flex flex-col justify-between hero-mesh-bg transition-colors">
+    <div>
+      <Header />
+
+      <main class="max-w-5xl mx-auto px-4 sm:px-6 pt-8 pb-16 space-y-10">
+        <!-- Hero Title -->
+        <div class="text-center space-y-3.5 max-w-3xl mx-auto pt-4">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[var(--canvas-card)] border border-[var(--hairline)] text-xs font-mono text-[var(--ink-body)] shadow-2xs">
+            <span class="h-2 w-2 rounded-full bg-[#7928ca]"></span>
+            Date Interval & Age Gap Calculator
+          </div>
+
+          <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-[var(--ink-primary)]">
+            Date Difference Calculator
+          </h1>
+
+          <p class="text-sm sm:text-base text-[var(--ink-body)] leading-relaxed">
+            Calculate the exact duration between any two dates. Get full breakdowns in <strong>Years, Months, Days, Total Hours, Minutes & Seconds</strong>.
+          </p>
+        </div>
+
+        <!-- Direct Date Difference Calculator Component -->
+        <section id="datediff-tool">
+          <DateDiffMode client:load />
+        </section>
+
+        <!-- SEO Content & FAQ -->
+        <SEOContent />
+      </main>
+    </div>
+
+    <Footer />
+  </body>
+</html>

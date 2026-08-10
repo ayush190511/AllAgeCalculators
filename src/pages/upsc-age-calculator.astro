@@ -1,0 +1,86 @@
+---
+import Header from '../components/Header.astro';
+import { UPSCMode } from '../components/modes/UPSCMode';
+import { RelaxationTable } from '../components/RelaxationTable';
+import SEOContent from '../components/SEOContent.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <!-- Dedicated UPSC Meta Tags -->
+    <title>UPSC Age Calculator 2026 — Exact 1st August Cutoff & Category Relaxations</title>
+    <meta name="title" content="UPSC Age Calculator 2026 — Exact 1st August Cutoff & Category Relaxations" />
+    <meta 
+      name="description" 
+      content="Official UPSC Age Calculator of India on AllAgeCalculators. Check your exact eligibility and age as on 1st August cutoff date for UPSC CSE 2026, 2027 & 2028 with GEN, EWS, OBC, SC, ST, PwBD & Ex-Servicemen attempt counters." 
+    />
+    <meta 
+      name="keywords" 
+      content="age calculator of upsc, upsc age calculator, age calculator of india, upsc age limit 2026, upsc 1st august cutoff calculator, upsc attempts calculator, upsc category age relaxation" 
+    />
+    <link rel="canonical" href="https://allagecalculators.com/upsc-age-calculator" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://allagecalculators.com/upsc-age-calculator" />
+    <meta property="og:title" content="UPSC Age Calculator 2026 — Exact 1st August Cutoff & Category Relaxations" />
+    <meta property="og:description" content="Calculate your exact age on 1st August UPSC cutoff date. Check remaining attempts, category relaxations, and exam cycle counts." />
+
+    <!-- Theme Script -->
+    <script is:inline>
+      (function() {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else if (saved === 'light') {
+          document.documentElement.classList.remove('dark');
+        } else {
+          if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+          }
+        }
+      })();
+    </script>
+  </head>
+
+  <body class="min-h-screen bg-[var(--canvas)] text-[var(--ink-primary)] selection:bg-[var(--ink-primary)] selection:text-[var(--canvas-card)] flex flex-col justify-between hero-mesh-bg transition-colors">
+    <div>
+      <Header />
+
+      <main class="max-w-5xl mx-auto px-4 sm:px-6 pt-8 pb-16 space-y-10">
+        <!-- Hero Title -->
+        <div class="text-center space-y-3.5 max-w-3xl mx-auto pt-4">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[var(--canvas-card)] border border-[var(--hairline)] text-xs font-mono text-[var(--ink-body)] shadow-2xs">
+            <span class="h-2 w-2 rounded-full bg-[#0070f3]"></span>
+            Official Rule 6 Cutoff Engine
+          </div>
+
+          <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-[var(--ink-primary)]">
+            UPSC Age Calculator & Eligibility Engine
+          </h1>
+
+          <p class="text-sm sm:text-base text-[var(--ink-body)] leading-relaxed">
+            Calculate your exact age on the official <strong>1st August cutoff date</strong> for UPSC Civil Services Examination. Supports General, EWS, OBC, SC, ST, PwBD & Ex-Servicemen category limits.
+          </p>
+        </div>
+
+        <!-- Direct UPSC Calculator Component -->
+        <section id="upsc-tool" class="space-y-8">
+          <UPSCMode client:load initialDob="1998-05-15" />
+          <RelaxationTable client:load />
+        </section>
+
+        <!-- SEO Content & FAQ -->
+        <SEOContent />
+      </main>
+    </div>
+
+    <Footer />
+  </body>
+</html>

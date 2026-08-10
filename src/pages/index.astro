@@ -1,11 +1,95 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Header from '../components/Header.astro';
+import { NormalAgeMode } from '../components/modes/NormalAgeMode';
+import SEOContent from '../components/SEOContent.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <!-- Primary Meta Tags -->
+    <title>Online Age Calculator — Free Chronological Age Calculator by Date of Birth</title>
+    <meta name="title" content="Online Age Calculator — Free Chronological Age Calculator by Date of Birth" />
+    <meta 
+      name="description" 
+      content="Free Online Age Calculator by date of birth. Calculate your exact chronological age in years, months, days & seconds today. Includes UPSC age calculator of India, retirement age calculator, dog age calculator, baby age calculator, and date gap tools." 
+    />
+    <meta 
+      name="keywords" 
+      content="Online Age Calculator, age calculator, chronological age calculator, age calculator by date of birth free, age calculator online, age calculator of upsc, age calculator of india, retirement age calculator, dog age calculator, baby age calculator, age calculator in years, age calculator for school, my age calculator, birthday age calculator, state pension age calculator, lunar age calculator, pet age calculator grow a garden, heart age calculator, age calculator formula, age calculator nepali, age calculator of child, age calculator of baby, age calculator on today, age calculator on date, age calculator on year, age calculator of death, age calculator in excel, age calculator app" 
+    />
+    <meta name="author" content="AllAgeCalculators" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://allagecalculators.com/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://allagecalculators.com/" />
+    <meta property="og:site_name" content="AllAgeCalculators (allagecalculators.com)" />
+    <meta property="og:title" content="Online Age Calculator — Free Chronological Age Calculator by Date of Birth" />
+    <meta property="og:description" content="Instant online age calculator by date of birth. Calculate exact age in years, months, days & seconds for UPSC CSE, school admissions, retirement, pet age, and baby age milestones." />
+    <meta property="og:image" content="https://allagecalculators.com/og-image.png" />
+
+    <!-- Twitter Card -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://allagecalculators.com/" />
+    <meta property="twitter:title" content="Online Age Calculator — Free Chronological Age Calculator by Date of Birth" />
+    <meta property="twitter:description" content="Free chronological age calculator online. Calculate exact age by date of birth for UPSC CSE, school admission, retirement, pets & babies." />
+    <meta property="twitter:image" content="https://allagecalculators.com/og-image.png" />
+
+    <!-- Theme Initialization Script -->
+    <script is:inline>
+      (function() {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else if (saved === 'light') {
+          document.documentElement.classList.remove('dark');
+        } else {
+          if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+          }
+        }
+      })();
+    </script>
+  </head>
+
+  <body class="min-h-screen bg-[var(--canvas)] text-[var(--ink-primary)] selection:bg-[var(--ink-primary)] selection:text-[var(--canvas-card)] flex flex-col justify-between hero-mesh-bg transition-colors">
+    <div>
+      <Header />
+
+      <main class="max-w-5xl mx-auto px-4 sm:px-6 pt-8 pb-16 space-y-10">
+        <!-- Hero Header text -->
+        <div class="text-center space-y-3.5 max-w-3xl mx-auto pt-4">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[var(--canvas-card)] border border-[var(--hairline)] text-xs font-mono text-[var(--ink-body)] shadow-2xs">
+            <span class="h-2 w-2 rounded-full bg-[#0070f3]"></span>
+            Precision Chronological Age Engine
+          </div>
+
+          <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-[var(--ink-primary)]">
+            Online Age Calculator by Date of Birth
+          </h1>
+
+          <p class="text-sm sm:text-base text-[var(--ink-body)] leading-relaxed">
+            Calculate your exact chronological age today in years, months, days & live seconds.
+          </p>
+        </div>
+
+        <!-- Focused Home Age Calculator Component -->
+        <section id="calculator">
+          <NormalAgeMode client:load initialDob="1998-05-15" />
+        </section>
+
+        <!-- SEO Below the Fold Content & Guide + FAQ Section -->
+        <SEOContent />
+      </main>
+    </div>
+
+    <Footer />
+  </body>
+</html>

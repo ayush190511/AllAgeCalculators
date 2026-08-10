@@ -1,0 +1,113 @@
+import type { ExamRules } from './types';
+
+export const SUPPORTED_EXAMS: ExamRules[] = [
+  {
+    id: 'upsc_cse',
+    name: 'UPSC CSE',
+    fullName: 'UPSC Civil Services Examination',
+    cutoffMonth: 7, // August (0-indexed)
+    cutoffDay: 1, // 1st August
+    minAge: 21,
+    baseMaxAge: {
+      GEN: 32,
+      EWS: 32,
+      OBC: 35,
+      SC: 37,
+      ST: 37,
+    },
+    baseAttempts: {
+      GEN: 6,
+      EWS: 6,
+      OBC: 9,
+      SC: 'Unlimited',
+      ST: 'Unlimited',
+    },
+    pwbdMaxAge: {
+      GEN: 42,
+      EWS: 42,
+      OBC: 45,
+      SC: 47,
+      ST: 47,
+    },
+    pwbdAttempts: {
+      GEN: 9,
+      EWS: 9,
+      OBC: 9,
+      SC: 'Unlimited',
+      ST: 'Unlimited',
+    },
+    exServicemenMaxAgeCap: 37,
+  },
+  {
+    id: 'ssc_cgl',
+    name: 'SSC CGL (Coming Soon)',
+    fullName: 'Staff Selection Commission - Combined Graduate Level',
+    cutoffMonth: 7,
+    cutoffDay: 1,
+    minAge: 18,
+    baseMaxAge: {
+      GEN: 30,
+      EWS: 30,
+      OBC: 33,
+      SC: 35,
+      ST: 35,
+    },
+    baseAttempts: {
+      GEN: 'Unlimited',
+      EWS: 'Unlimited',
+      OBC: 'Unlimited',
+      SC: 'Unlimited',
+      ST: 'Unlimited',
+    },
+    pwbdMaxAge: {
+      GEN: 40,
+      EWS: 40,
+      OBC: 43,
+      SC: 45,
+      ST: 45,
+    },
+    pwbdAttempts: {
+      GEN: 'Unlimited',
+      EWS: 'Unlimited',
+      OBC: 'Unlimited',
+      SC: 'Unlimited',
+      ST: 'Unlimited',
+    },
+  },
+  {
+    id: 'ibps_po',
+    name: 'IBPS PO (Coming Soon)',
+    fullName: 'Institute of Banking Personnel Selection - Probationary Officer',
+    cutoffMonth: 7,
+    cutoffDay: 1,
+    minAge: 20,
+    baseMaxAge: {
+      GEN: 30,
+      EWS: 30,
+      OBC: 33,
+      SC: 35,
+      ST: 35,
+    },
+    baseAttempts: {
+      GEN: 'Unlimited',
+      EWS: 'Unlimited',
+      OBC: 'Unlimited',
+      SC: 'Unlimited',
+      ST: 'Unlimited',
+    },
+    pwbdMaxAge: {
+      GEN: 40,
+      EWS: 40,
+      OBC: 43,
+      SC: 45,
+      ST: 45,
+    },
+    pwbdAttempts: {
+      GEN: 'Unlimited',
+      EWS: 'Unlimited',
+      OBC: 'Unlimited',
+      SC: 'Unlimited',
+      ST: 'Unlimited',
+    },
+  },
+];

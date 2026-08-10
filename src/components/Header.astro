@@ -1,0 +1,191 @@
+---
+const currentPath = Astro.url.pathname;
+---
+
+<header class="w-full bg-[var(--canvas-card)]/90 backdrop-blur-md border-b border-[var(--hairline)] sticky top-0 z-50 transition-colors">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6">
+    <div class="h-16 flex items-center justify-between">
+      <!-- Brand Logo -->
+      <a href="/" class="flex items-center gap-3 group shrink-0">
+        <div class="h-9 w-9 rounded-xl bg-[var(--ink-primary)] text-[var(--canvas-card)] flex items-center justify-center font-black text-xs tracking-wider shadow-sm group-hover:bg-[#0070f3] group-hover:text-white transition">
+          AAC
+        </div>
+        <div class="flex flex-col">
+          <span class="text-sm font-bold tracking-tight text-[var(--ink-primary)] leading-none">
+            AllAgeCalculators
+          </span>
+          <span class="text-[11px] font-mono text-[var(--ink-mute)] mt-0.5">allagecalculators.com</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden lg:flex items-center gap-1 text-xs font-medium text-[var(--ink-body)]">
+        <a 
+          href="/" 
+          class={`px-2.5 py-1.5 rounded-lg transition ${currentPath === '/' ? 'bg-[var(--canvas-inset)] text-[var(--ink-primary)] font-semibold border border-[var(--hairline)]' : 'hover:text-[var(--ink-primary)]'}`}
+        >
+          Home
+        </a>
+        <a 
+          href="/upsc-age-calculator" 
+          class={`px-2.5 py-1.5 rounded-lg transition ${currentPath === '/upsc-age-calculator' || currentPath === '/upsc-age-calculator/' ? 'bg-[var(--canvas-inset)] text-[var(--ink-primary)] font-semibold border border-[var(--hairline)]' : 'hover:text-[var(--ink-primary)]'}`}
+        >
+          UPSC Engine
+        </a>
+        <a 
+          href="/retirement-age-calculator" 
+          class={`px-2.5 py-1.5 rounded-lg transition ${currentPath === '/retirement-age-calculator' || currentPath === '/retirement-age-calculator/' ? 'bg-[var(--canvas-inset)] text-[var(--ink-primary)] font-semibold border border-[var(--hairline)]' : 'hover:text-[var(--ink-primary)]'}`}
+        >
+          Retirement
+        </a>
+        <a 
+          href="/dog-age-calculator" 
+          class={`px-2.5 py-1.5 rounded-lg transition ${currentPath === '/dog-age-calculator' || currentPath === '/dog-age-calculator/' ? 'bg-[var(--canvas-inset)] text-[var(--ink-primary)] font-semibold border border-[var(--hairline)]' : 'hover:text-[var(--ink-primary)]'}`}
+        >
+          Dog Age 🐶
+        </a>
+        <a 
+          href="/baby-age-calculator" 
+          class={`px-2.5 py-1.5 rounded-lg transition ${currentPath === '/baby-age-calculator' || currentPath === '/baby-age-calculator/' ? 'bg-[var(--canvas-inset)] text-[var(--ink-primary)] font-semibold border border-[var(--hairline)]' : 'hover:text-[var(--ink-primary)]'}`}
+        >
+          Baby Age 👶
+        </a>
+        <a 
+          href="/date-difference-calculator" 
+          class={`px-2.5 py-1.5 rounded-lg transition ${currentPath === '/date-difference-calculator' || currentPath === '/date-difference-calculator/' ? 'bg-[var(--canvas-inset)] text-[var(--ink-primary)] font-semibold border border-[var(--hairline)]' : 'hover:text-[var(--ink-primary)]'}`}
+        >
+          Date Diff
+        </a>
+        <a 
+          href="/about" 
+          class={`px-2.5 py-1.5 rounded-lg transition ${currentPath === '/about' || currentPath === '/about/' ? 'bg-[var(--canvas-inset)] text-[var(--ink-primary)] font-semibold border border-[var(--hairline)]' : 'hover:text-[var(--ink-primary)]'}`}
+        >
+          About
+        </a>
+      </nav>
+
+      <!-- Right Header Controls -->
+      <div class="flex items-center gap-2">
+        <!-- Theme Toggle Button -->
+        <button
+          id="theme-toggle"
+          type="button"
+          aria-label="Toggle theme"
+          class="p-2 rounded-lg bg-[var(--canvas-inset)] border border-[var(--hairline)] text-[var(--ink-primary)] hover:border-[var(--ink-primary)] transition flex items-center justify-center cursor-pointer select-none"
+        >
+          <!-- Sun Icon (visible in dark mode) -->
+          <svg id="theme-toggle-sun-icon" class="w-4 h-4 text-[#f5a623]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+          </svg>
+          <!-- Moon Icon (visible in light mode) -->
+          <svg id="theme-toggle-moon-icon" class="w-4 h-4 text-[var(--ink-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+          </svg>
+        </button>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button
+          id="mobile-menu-toggle"
+          type="button"
+          aria-label="Toggle Navigation Menu"
+          class="lg:hidden p-2 rounded-lg bg-[var(--canvas-inset)] border border-[var(--hairline)] text-[var(--ink-primary)] hover:border-[var(--ink-primary)] transition flex items-center justify-center cursor-pointer select-none"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Touchscreen Horizontal Scroll Pill Bar -->
+    <div class="lg:hidden flex items-center gap-1.5 overflow-x-auto pb-2.5 pt-0.5 no-scrollbar border-t border-[var(--hairline)]/50">
+      <a 
+        href="/" 
+        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/' ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] font-semibold' : 'bg-[var(--canvas-inset)] text-[var(--ink-body)] border-[var(--hairline)]'}`}
+      >
+        Home
+      </a>
+      <a 
+        href="/upsc-age-calculator" 
+        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/upsc-age-calculator' || currentPath === '/upsc-age-calculator/' ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] font-semibold' : 'bg-[var(--canvas-inset)] text-[var(--ink-body)] border-[var(--hairline)]'}`}
+      >
+        UPSC Engine
+      </a>
+      <a 
+        href="/retirement-age-calculator" 
+        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/retirement-age-calculator' || currentPath === '/retirement-age-calculator/' ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] font-semibold' : 'bg-[var(--canvas-inset)] text-[var(--ink-body)] border-[var(--hairline)]'}`}
+      >
+        Retirement
+      </a>
+      <a 
+        href="/dog-age-calculator" 
+        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/dog-age-calculator' || currentPath === '/dog-age-calculator/' ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] font-semibold' : 'bg-[var(--canvas-inset)] text-[var(--ink-body)] border-[var(--hairline)]'}`}
+      >
+        Dog Age 🐶
+      </a>
+      <a 
+        href="/baby-age-calculator" 
+        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/baby-age-calculator' || currentPath === '/baby-age-calculator/' ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] font-semibold' : 'bg-[var(--canvas-inset)] text-[var(--ink-body)] border-[var(--hairline)]'}`}
+      >
+        Baby Age 👶
+      </a>
+      <a 
+        href="/date-difference-calculator" 
+        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/date-difference-calculator' || currentPath === '/date-difference-calculator/' ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--hairline)] font-semibold' : 'bg-[var(--canvas-inset)] text-[var(--ink-body)] border-[var(--hairline)]'}`}
+      >
+        Date Diff
+      </a>
+    </div>
+
+    <!-- Mobile Hamburger Drawer Menu -->
+    <div id="mobile-menu-drawer" class="hidden lg:hidden py-3 border-t border-[var(--hairline)] space-y-1 text-xs">
+      <a 
+        href="/about" 
+        class={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition ${currentPath === '/about' || currentPath === '/about/' ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] font-semibold' : 'text-[var(--ink-primary)] bg-[var(--canvas-inset)] hover:bg-[var(--hairline)]'}`}
+      >
+        <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+        About Us & Mission
+      </a>
+      <a 
+        href="/privacy-policy" 
+        class={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition ${currentPath === '/privacy-policy' || currentPath === '/privacy-policy/' ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] font-semibold' : 'text-[var(--ink-primary)] bg-[var(--canvas-inset)] hover:bg-[var(--hairline)]'}`}
+      >
+        <span class="h-1.5 w-1.5 rounded-full bg-[#7928ca]"></span>
+        Privacy Policy
+      </a>
+      <a 
+        href="/terms-and-conditions" 
+        class={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition ${currentPath === '/terms-and-conditions' || currentPath === '/terms-and-conditions/' ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] font-semibold' : 'text-[var(--ink-primary)] bg-[var(--canvas-inset)] hover:bg-[var(--hairline)]'}`}
+      >
+        <span class="h-1.5 w-1.5 rounded-full bg-[#f5a623]"></span>
+        Terms & Conditions
+      </a>
+    </div>
+  </div>
+</header>
+
+<script is:inline>
+  window.__toggleTheme = function() {
+    const htmlEl = document.documentElement;
+    if (htmlEl.classList.contains('dark')) {
+      htmlEl.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    } else {
+      htmlEl.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    }
+  };
+
+  const btn = document.getElementById('theme-toggle');
+  if (btn) {
+    btn.addEventListener('click', window.__toggleTheme);
+  }
+
+  const mobileBtn = document.getElementById('mobile-menu-toggle');
+  const mobileDrawer = document.getElementById('mobile-menu-drawer');
+  if (mobileBtn && mobileDrawer) {
+    mobileBtn.addEventListener('click', function() {
+      mobileDrawer.classList.toggle('hidden');
+    });
+  }
+</script>

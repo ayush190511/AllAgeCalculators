@@ -1,0 +1,84 @@
+---
+import Header from '../components/Header.astro';
+import { RetirementMode } from '../components/modes/RetirementMode';
+import SEOContent from '../components/SEOContent.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <!-- Dedicated Retirement Meta Tags -->
+    <title>Retirement Age Calculator — State Pension & Retirement Countdown Tool</title>
+    <meta name="title" content="Retirement Age Calculator — State Pension & Retirement Countdown Tool" />
+    <meta 
+      name="description" 
+      content="Free Retirement Age Calculator on AllAgeCalculators. Calculate years, months & days remaining until your target retirement age (58, 60, 62, 65, 73 RMD age). Includes state pension timelines and career progress analysis." 
+    />
+    <meta 
+      name="keywords" 
+      content="retirement age calculator, state pension age calculator, what age can i retire calculator, at age 73 rmd calculator, pension eligibility age, government service retirement age 60" 
+    />
+    <link rel="canonical" href="https://allagecalculators.com/retirement-age-calculator" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://allagecalculators.com/retirement-age-calculator" />
+    <meta property="og:title" content="Retirement Age Calculator — State Pension & Retirement Countdown Tool" />
+    <meta property="og:description" content="Calculate your exact retirement date and remaining working timeline until age 60, 65, or 73." />
+
+    <!-- Theme Script -->
+    <script is:inline>
+      (function() {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else if (saved === 'light') {
+          document.documentElement.classList.remove('dark');
+        } else {
+          if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+          }
+        }
+      })();
+    </script>
+  </head>
+
+  <body class="min-h-screen bg-[var(--canvas)] text-[var(--ink-primary)] selection:bg-[var(--ink-primary)] selection:text-[var(--canvas-card)] flex flex-col justify-between hero-mesh-bg transition-colors">
+    <div>
+      <Header />
+
+      <main class="max-w-5xl mx-auto px-4 sm:px-6 pt-8 pb-16 space-y-10">
+        <!-- Hero Title -->
+        <div class="text-center space-y-3.5 max-w-3xl mx-auto pt-4">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[var(--canvas-card)] border border-[var(--hairline)] text-xs font-mono text-[var(--ink-body)] shadow-2xs">
+            <span class="h-2 w-2 rounded-full bg-[#0070f3]"></span>
+            Retirement & Pension Countdown Engine
+          </div>
+
+          <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-[var(--ink-primary)]">
+            Retirement Age Calculator
+          </h1>
+
+          <p class="text-sm sm:text-base text-[var(--ink-body)] leading-relaxed">
+            Calculate your exact official retirement date and remaining working years, months & days. Supports <strong>India Government Service (Age 60)</strong>, <strong>State Pensions</strong> & <strong>RMD Age 73</strong> milestones.
+          </p>
+        </div>
+
+        <!-- Direct Retirement Calculator Component -->
+        <section id="retirement-tool">
+          <RetirementMode client:load initialDob="1995-06-15" />
+        </section>
+
+        <!-- SEO Content & FAQ -->
+        <SEOContent />
+      </main>
+    </div>
+
+    <Footer />
+  </body>
+</html>
