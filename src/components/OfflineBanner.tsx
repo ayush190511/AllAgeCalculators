@@ -24,8 +24,8 @@ export const OfflineBanner: React.FC = () => {
   if (!isOffline) return null;
 
   return (
-    <div class="bg-amber-500/10 border-b border-amber-500/20 text-amber-600 dark:text-amber-400 px-4 py-2 text-xs font-medium text-center flex items-center justify-center gap-2">
-      <span class="inline-block w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+    <div className="bg-amber-500/10 border-b border-amber-500/20 text-amber-600 dark:text-amber-400 px-4 py-2 text-xs font-medium text-center flex items-center justify-center gap-2">
+      <span className="inline-block w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
       <span>You are currently offline. All age calculations continue working locally in your browser!</span>
     </div>
   );
