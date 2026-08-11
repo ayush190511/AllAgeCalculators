@@ -6,15 +6,17 @@ const currentPath = Astro.url.pathname;
   <div class="max-w-5xl mx-auto px-4 sm:px-6">
     <div class="h-16 flex items-center justify-between">
       <!-- Brand Logo -->
-      <a href="/" class="flex items-center gap-3 group shrink-0">
-        <div class="h-9 w-9 rounded-xl bg-[var(--ink-primary)] text-[var(--canvas-card)] flex items-center justify-center font-black text-xs tracking-wider shadow-sm group-hover:bg-[#0070f3] group-hover:text-white transition">
-          AAC
-        </div>
-        <div class="flex flex-col">
+      <a href="/" class="flex items-center gap-2.5 group shrink-0">
+        <img 
+          src="/Logo.png" 
+          alt="AllAgeCalculators Logo" 
+          class="h-8 sm:h-9 w-auto object-contain rounded-lg shadow-2xs transition group-hover:scale-105" 
+        />
+        <div class="hidden sm:flex flex-col">
           <span class="text-sm font-bold tracking-tight text-[var(--ink-primary)] leading-none">
             AllAgeCalculators
           </span>
-          <span class="text-[11px] font-mono text-[var(--ink-mute)] mt-0.5">allagecalculators.com</span>
+          <span class="text-[10px] font-mono text-[var(--ink-mute)] mt-0.5">allagecalculators.com</span>
         </div>
       </a>
 
