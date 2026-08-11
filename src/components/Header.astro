@@ -1,8 +1,10 @@
 ---
+import { OfflineBanner } from './OfflineBanner';
 const currentPath = Astro.url.pathname;
 ---
 
 <header class="w-full bg-[var(--canvas-card)]/90 backdrop-blur-md border-b border-[var(--hairline)] sticky top-0 z-50 transition-colors">
+  <OfflineBanner client:load />
   <div class="max-w-5xl mx-auto px-4 sm:px-6">
     <div class="h-16 flex items-center justify-between">
       <!-- Brand Logo -->

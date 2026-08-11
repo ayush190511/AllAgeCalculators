@@ -16,6 +16,7 @@ export const NormalAgeMode: React.FC<NormalAgeModeProps> = ({
   const [timeStr, setTimeStr] = useState<string>('08:30');
   const [now, setNow] = useState<Date>(new Date());
   const [copied, setCopied] = useState<boolean>(false);
+  const [dateError, setDateError] = useState<string | null>(null);
 
   // Maximum date allowed is today's date (cannot be in future)
   const todayStr = useMemo(() => formatDateForInput(new Date()), []);
@@ -30,7 +31,10 @@ export const NormalAgeMode: React.FC<NormalAgeModeProps> = ({
   const handleDobInputChange = (val: string) => {
     // Prevent setting a future date if typed manually
     if (val > todayStr) {
+      setDateError('Future dates cannot be used for chronological age. Clamped to today.');
       val = todayStr;
+    } else {
+      setDateError(null);
     }
     setDob(val);
     if (onDobChange) {
@@ -108,6 +112,9 @@ export const NormalAgeMode: React.FC<NormalAgeModeProps> = ({
               onChange={(e) => handleDobInputChange(e.target.value)}
               className="w-full h-11 px-3.5 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg text-sm text-[var(--ink-primary)] font-mono-num focus:outline-none focus:ring-2 focus:ring-[var(--ink-primary)] transition cursor-pointer"
             />
+            {dateError && (
+              <p className="text-xs text-amber-500 font-medium mt-1 animate-fade-in">{dateError}</p>
+            )}
           </div>
 
           <div className="space-y-2">
