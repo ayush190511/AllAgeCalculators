@@ -1,4 +1,6 @@
 ---
+import GoogleAnalytics from './GoogleAnalytics.astro';
+
 export interface Props {
   page: 'home' | 'upsc' | 'retirement' | 'dog' | 'baby' | 'datediff' | 'about' | 'contact' | 'privacy' | 'terms';
   title: string;
@@ -74,6 +76,8 @@ const breadcrumbSchema = page !== 'home' && breadcrumbNames[page] ? {
   ]
 } : null;
 ---
+
+<GoogleAnalytics />
 
 {websiteSchema && (
   <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
