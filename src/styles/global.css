@@ -133,5 +133,7 @@ input[type="number"].no-spinner::-webkit-inner-spin-button {
   margin: 0;
 }
 input[type="number"].no-spinner {
+  appearance: none;
+  -webkit-appearance: none;
   -moz-appearance: textfield;
 }
