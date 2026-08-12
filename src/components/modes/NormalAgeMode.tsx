@@ -16,7 +16,20 @@ export const NormalAgeMode: React.FC<NormalAgeModeProps> = ({
   const [timeStr, setTimeStr] = useState<string>('08:30');
   const [showPlace, setShowPlace] = useState<boolean>(false);
   const [birthPlace, setBirthPlace] = useState<string>('');
-  const [selectedTimezone, setSelectedTimezone] = useState<string>('Asia/Kolkata');
+  
+  // Auto-detect browser device timezone silently without location permissions
+  const detectedTimezone = useMemo(() => {
+    if (typeof window !== 'undefined' && Intl?.DateTimeFormat) {
+      try {
+        return Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Kolkata';
+      } catch {
+        return 'Asia/Kolkata';
+      }
+    }
+    return 'Asia/Kolkata';
+  }, []);
+
+  const [selectedTimezone, setSelectedTimezone] = useState<string>(detectedTimezone);
   const [now, setNow] = useState<Date>(new Date());
   const [copied, setCopied] = useState<boolean>(false);
   const [dateError, setDateError] = useState<string | null>(null);
@@ -186,6 +199,9 @@ ${showPlace ? `📍 Birth Location: ${birthPlace ? birthPlace : 'Specified City'
                     onChange={(e) => setSelectedTimezone(e.target.value)}
                     className="w-full h-9 px-2.5 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg text-xs text-[var(--ink-primary)] font-mono focus:outline-none focus:ring-1 focus:ring-[var(--ink-primary)] cursor-pointer"
                   >
+                    {!['Asia/Kolkata', 'America/New_York', 'America/Los_Angeles', 'Europe/London', 'Europe/Paris', 'Asia/Dubai', 'Asia/Singapore', 'Asia/Tokyo', 'Australia/Sydney'].includes(detectedTimezone) && (
+                      <option value={detectedTimezone}>{detectedTimezone} (Auto-detected Device Timezone)</option>
+                    )}
                     <option value="Asia/Kolkata">Asia/Kolkata (IST - UTC+5:30)</option>
                     <option value="America/New_York">America/New_York (EST/EDT - UTC-5)</option>
                     <option value="America/Los_Angeles">America/Los_Angeles (PST/PDT - UTC-8)</option>
