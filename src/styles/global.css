@@ -1,43 +1,43 @@
 @import "tailwindcss";
 
-@layer base {
-  :root {
-    --font-sans: 'Geist', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
-    
-    --canvas: #fafafa;
-    --canvas-card: #ffffff;
-    --canvas-inset: #fafafa;
-    --ink-primary: #171717;
-    --ink-body: #4d4d4d;
-    --ink-mute: #888888;
-    --hairline: #ebebeb;
-    --hairline-strong: #d4d4d4;
-    --brand-blue: #0070f3;
-  }
+@theme {
+  --font-sans: 'Geist', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+}
 
-  html.dark {
-    --canvas: #000000;
-    --canvas-card: #0a0a0a;
-    --canvas-inset: #111111;
-    --ink-primary: #ffffff;
-    --ink-body: #a1a1a1;
-    --ink-mute: #666666;
-    --hairline: #222222;
-    --hairline-strong: #333333;
-    --brand-blue: #0070f3;
-  }
+:root {
+  --canvas: #fafafa;
+  --canvas-card: #ffffff;
+  --canvas-inset: #fafafa;
+  --ink-primary: #171717;
+  --ink-body: #4d4d4d;
+  --ink-mute: #888888;
+  --hairline: #ebebeb;
+  --hairline-strong: #d4d4d4;
+  --brand-blue: #0070f3;
+}
 
-  body {
-    background-color: var(--canvas);
-    color: var(--ink-primary);
-    font-family: var(--font-sans);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    transition: background-color 0.2s ease, color 0.2s ease;
-    overflow-x: hidden;
-    max-width: 100vw;
-  }
+html.dark {
+  --canvas: #000000;
+  --canvas-card: #0a0a0a;
+  --canvas-inset: #111111;
+  --ink-primary: #ffffff;
+  --ink-body: #a1a1a1;
+  --ink-mute: #666666;
+  --hairline: #222222;
+  --hairline-strong: #333333;
+  --brand-blue: #0070f3;
+}
+
+body {
+  background-color: var(--canvas);
+  color: var(--ink-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 /* Explicit Theme Icon Toggle Rules */
