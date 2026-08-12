@@ -87,20 +87,20 @@ export const NormalAgeMode: React.FC<NormalAgeModeProps> = ({
   return (
     <div className="space-y-8">
       {/* Input Card */}
-      <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-6 sm:p-8 shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition-colors">
-        <div className="flex items-center justify-between pb-5 border-b border-[var(--hairline)]">
+      <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-4 sm:p-6 md:p-8 shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition-colors">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 border-b border-[var(--hairline)]">
           <div className="flex items-center gap-2">
             <div className="h-2 w-2 rounded-full bg-[var(--ink-primary)]" />
-            <h2 className="text-lg font-semibold tracking-tight text-[var(--ink-primary)]">
+            <h2 className="text-base sm:text-lg font-semibold tracking-tight text-[var(--ink-primary)]">
               Chronological Age & Live Ticker Engine
             </h2>
           </div>
-          <span className="text-xs font-mono px-2.5 py-1 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-md text-[var(--ink-body)]">
+          <span className="self-start sm:self-auto text-[11px] sm:text-xs font-mono px-2.5 py-1 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-md text-[var(--ink-body)]">
             Live as of Today
           </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 pt-6">
           <div className="space-y-2">
             <label className="block text-xs font-medium uppercase tracking-wider text-[var(--ink-body)]">
               Date of Birth <span className="text-[#ee0000]">*</span>
@@ -121,11 +121,11 @@ export const NormalAgeMode: React.FC<NormalAgeModeProps> = ({
             <label className="block text-xs font-medium uppercase tracking-wider text-[var(--ink-body)]">
               Birth Time Precision (Optional Live Ticker)
             </label>
-            <div className="flex items-center gap-3 h-11">
+            <div className="flex flex-wrap sm:flex-nowrap items-center gap-2.5 sm:gap-3 min-h-[44px]">
               <button
                 type="button"
                 onClick={() => setShowTime(!showTime)}
-                className={`px-4 py-2 text-xs font-medium rounded-lg border transition cursor-pointer select-none ${
+                className={`px-3.5 py-2 text-xs font-medium rounded-lg border transition cursor-pointer select-none ${
                   showTime
                     ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)]'
                     : 'bg-[var(--canvas-card)] text-[var(--ink-body)] border-[var(--hairline)] hover:border-[var(--ink-primary)]'
@@ -140,7 +140,7 @@ export const NormalAgeMode: React.FC<NormalAgeModeProps> = ({
                     type="time"
                     value={timeStr}
                     onChange={(e) => setTimeStr(e.target.value)}
-                    className="h-10 px-3 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg text-sm font-mono text-[var(--ink-primary)]"
+                    className="h-9 px-3 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg text-sm font-mono text-[var(--ink-primary)]"
                   />
                 </div>
               )}
@@ -150,8 +150,8 @@ export const NormalAgeMode: React.FC<NormalAgeModeProps> = ({
       </div>
 
       {/* Main Age Stat Display */}
-      <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-6 sm:p-8 shadow-[0_2px_8px_rgba(0,0,0,0.04)] relative transition-colors">
-        <div className="flex items-center justify-between pb-6 border-b border-[var(--hairline)]">
+      <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-4 sm:p-6 md:p-8 shadow-[0_2px_8px_rgba(0,0,0,0.04)] relative transition-colors">
+        <div className="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-[var(--hairline)]">
           <div className="flex items-center gap-2">
             <Calendar className="w-5 h-5 text-[#0070f3]" />
             <span className="text-xs uppercase font-mono tracking-wider text-[var(--ink-mute)]">Current Age as of Today</span>
@@ -167,75 +167,75 @@ export const NormalAgeMode: React.FC<NormalAgeModeProps> = ({
         </div>
 
         {/* Primary Y/M/D Cards */}
-        <div className="grid grid-cols-3 gap-4 my-6 text-center">
-          <div className="bg-[var(--canvas-inset)] p-5 rounded-xl border border-[var(--hairline)]">
-            <span className="block text-3xl sm:text-4xl font-extrabold text-[var(--ink-primary)] font-mono-num">
+        <div className="grid grid-cols-3 gap-2 sm:gap-4 my-6 text-center">
+          <div className="bg-[var(--canvas-inset)] p-3 sm:p-5 rounded-xl border border-[var(--hairline)] min-w-0">
+            <span className="block text-2xl sm:text-4xl font-extrabold text-[var(--ink-primary)] font-mono-num truncate">
               {ageData.years}
             </span>
-            <span className="text-xs uppercase font-mono text-[var(--ink-mute)]">Years</span>
+            <span className="text-[10px] sm:text-xs uppercase font-mono text-[var(--ink-mute)] block mt-0.5">Years</span>
           </div>
-          <div className="bg-[var(--canvas-inset)] p-5 rounded-xl border border-[var(--hairline)]">
-            <span className="block text-3xl sm:text-4xl font-extrabold text-[var(--ink-primary)] font-mono-num">
+          <div className="bg-[var(--canvas-inset)] p-3 sm:p-5 rounded-xl border border-[var(--hairline)] min-w-0">
+            <span className="block text-2xl sm:text-4xl font-extrabold text-[var(--ink-primary)] font-mono-num truncate">
               {ageData.months}
             </span>
-            <span className="text-xs uppercase font-mono text-[var(--ink-mute)]">Months</span>
+            <span className="text-[10px] sm:text-xs uppercase font-mono text-[var(--ink-mute)] block mt-0.5">Months</span>
           </div>
-          <div className="bg-[var(--canvas-inset)] p-5 rounded-xl border border-[var(--hairline)]">
-            <span className="block text-3xl sm:text-4xl font-extrabold text-[var(--ink-primary)] font-mono-num">
+          <div className="bg-[var(--canvas-inset)] p-3 sm:p-5 rounded-xl border border-[var(--hairline)] min-w-0">
+            <span className="block text-2xl sm:text-4xl font-extrabold text-[var(--ink-primary)] font-mono-num truncate">
               {ageData.days}
             </span>
-            <span className="text-xs uppercase font-mono text-[var(--ink-mute)]">Days</span>
+            <span className="text-[10px] sm:text-xs uppercase font-mono text-[var(--ink-mute)] block mt-0.5">Days</span>
           </div>
         </div>
 
         {/* Live Second-by-Second Ticker (If Birth Time Provided) */}
         {showTime && (
-          <div className="my-6 p-5 bg-[var(--canvas-inset)] border border-[var(--hairline)] text-[var(--ink-primary)] rounded-xl flex flex-col sm:flex-row items-center justify-between gap-4 animate-fade-in-down">
+          <div className="my-6 p-4 sm:p-5 bg-[var(--canvas-inset)] border border-[var(--hairline)] text-[var(--ink-primary)] rounded-xl flex flex-col sm:flex-row items-center justify-between gap-4 animate-fade-in-down">
             <div className="flex items-center gap-3">
-              <div className="h-3 w-3 rounded-full bg-[#0070f3] animate-ticker-dot" />
-              <div>
+              <div className="h-3 w-3 rounded-full bg-[#0070f3] animate-ticker-dot shrink-0" />
+              <div className="text-center sm:text-left">
                 <span className="text-xs font-mono uppercase text-[var(--ink-mute)]">Live Precision Ticker</span>
-                <div className="text-base font-semibold text-[var(--ink-primary)]">Down-to-the-second Age</div>
+                <div className="text-sm sm:text-base font-semibold text-[var(--ink-primary)]">Down-to-the-second Age</div>
               </div>
             </div>
 
-            <div className="font-mono text-xl sm:text-2xl font-bold tracking-wider text-[#50e3c2] bg-[var(--canvas-card)] px-4 py-2 rounded-lg border border-[var(--hairline)]">
+            <div className="font-mono text-lg sm:text-2xl font-bold tracking-wider text-[#50e3c2] bg-[var(--canvas-card)] px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-lg border border-[var(--hairline)]">
               {String(liveHoursRem).padStart(2, '0')}h : {String(liveMinutesRem).padStart(2, '0')}m : {String(liveSecondsRem).padStart(2, '0')}s
             </div>
           </div>
         )}
 
         {/* Milestone Totals Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-[var(--hairline)]">
-          <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)]">
-            <span className="block text-xs text-[var(--ink-mute)] font-mono uppercase">Total Days</span>
-            <span className="text-lg font-bold text-[var(--ink-primary)] font-mono-num">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4 pt-4 border-t border-[var(--hairline)]">
+          <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)] min-w-0">
+            <span className="block text-[10px] sm:text-xs text-[var(--ink-mute)] font-mono uppercase truncate">Total Days</span>
+            <span className="text-base sm:text-lg font-bold text-[var(--ink-primary)] font-mono-num truncate block">
               {ageData.totalDays.toLocaleString()}
             </span>
           </div>
 
-          <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)]">
-            <span className="block text-xs text-[var(--ink-mute)] font-mono uppercase">Total Hours</span>
-            <span className="text-lg font-bold text-[var(--ink-primary)] font-mono-num">
+          <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)] min-w-0">
+            <span className="block text-[10px] sm:text-xs text-[var(--ink-mute)] font-mono uppercase truncate">Total Hours</span>
+            <span className="text-base sm:text-lg font-bold text-[var(--ink-primary)] font-mono-num truncate block">
               {ageData.totalHours.toLocaleString()}
             </span>
           </div>
 
-          <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)]">
-            <span className="block text-xs text-[var(--ink-mute)] font-mono uppercase">Total Weeks</span>
-            <span className="text-lg font-bold text-[var(--ink-primary)] font-mono-num">
+          <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)] min-w-0">
+            <span className="block text-[10px] sm:text-xs text-[var(--ink-mute)] font-mono uppercase truncate">Total Weeks</span>
+            <span className="text-base sm:text-lg font-bold text-[var(--ink-primary)] font-mono-num truncate block">
               {ageData.totalWeeks.toLocaleString()}
             </span>
           </div>
 
-          <div className="p-3 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg flex items-center justify-between">
-            <div>
-              <span className="block text-[11px] text-[var(--ink-mute)] font-mono uppercase">Next Birthday</span>
-              <span className="text-sm font-bold text-[#0070f3] font-mono-num">
+          <div className="p-3 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg flex items-center justify-between min-w-0 gap-1">
+            <div className="min-w-0">
+              <span className="block text-[10px] text-[var(--ink-mute)] font-mono uppercase truncate">Next Birthday</span>
+              <span className="text-xs sm:text-sm font-bold text-[#0070f3] font-mono-num block truncate">
                 {ageData.nextBirthdayDays} Days Left
               </span>
             </div>
-            <Sparkles className="w-4 h-4 text-[#f5a623]" />
+            <Sparkles className="w-4 h-4 text-[#f5a623] shrink-0" />
           </div>
         </div>
       </div>

@@ -164,8 +164,8 @@ export const DogAgeMode: React.FC = () => {
       </div>
 
       {/* Results Display */}
-      <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-6 sm:p-8 shadow-[0_2px_8px_rgba(0,0,0,0.04)] relative transition-colors">
-        <div className="flex items-center justify-between pb-6 border-b border-[var(--hairline)]">
+      <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-4 sm:p-6 md:p-8 shadow-[0_2px_8px_rgba(0,0,0,0.04)] relative transition-colors">
+        <div className="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-[var(--hairline)]">
           <div className="flex items-center gap-2">
             <Heart className="w-5 h-5 text-[#ee0000]" />
             <span className="text-xs uppercase font-mono tracking-wider text-[var(--ink-mute)]">Human Years Equivalent</span>
@@ -181,18 +181,18 @@ export const DogAgeMode: React.FC = () => {
         </div>
 
         {/* Primary Human Equivalent Display */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 my-6">
-          <div className="bg-[var(--canvas-inset)] p-6 rounded-xl border border-[var(--hairline)] flex flex-col justify-center items-center text-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 my-6">
+          <div className="bg-[var(--canvas-inset)] p-5 sm:p-6 rounded-xl border border-[var(--hairline)] flex flex-col justify-center items-center text-center">
             <span className="text-xs font-mono uppercase text-[var(--ink-mute)] mb-1">Human Equivalent Age</span>
-            <span className="text-4xl sm:text-5xl font-extrabold text-[#0070f3] font-mono-num">
+            <span className="text-3xl sm:text-5xl font-extrabold text-[#0070f3] font-mono-num">
               {humanAge}
             </span>
             <span className="text-xs text-[var(--ink-body)] mt-1 font-medium">Human Years Old</span>
           </div>
 
-          <div className="bg-[var(--canvas-inset)] p-6 rounded-xl border border-[var(--hairline)] flex flex-col justify-center items-center text-center">
+          <div className="bg-[var(--canvas-inset)] p-5 sm:p-6 rounded-xl border border-[var(--hairline)] flex flex-col justify-center items-center text-center">
             <span className="text-xs font-mono uppercase text-[var(--ink-mute)] mb-1">Actual Calendar Age</span>
-            <span className="text-3xl font-bold text-[var(--ink-primary)] font-mono-num">
+            <span className="text-2xl sm:text-3xl font-bold text-[var(--ink-primary)] font-mono-num">
               {calendarAge.years} yrs, {calendarAge.months} mos
             </span>
             <span className="text-xs text-[var(--ink-mute)] mt-1">{calendarAge.totalDays.toLocaleString()} Days Lived</span>

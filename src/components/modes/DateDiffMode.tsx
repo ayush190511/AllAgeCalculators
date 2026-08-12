@@ -119,8 +119,8 @@ export const DateDiffMode: React.FC = () => {
       </div>
 
       {/* Difference Output Card */}
-      <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-6 sm:p-8 shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-colors">
-        <div className="flex items-center justify-between pb-6 border-b border-[var(--hairline)]">
+      <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-4 sm:p-6 md:p-8 shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-colors">
+        <div className="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-[var(--hairline)]">
           <div className="flex items-center gap-2">
             <ArrowRightLeft className="w-5 h-5 text-[#7928ca]" />
             <span className="text-xs uppercase font-mono tracking-wider text-[var(--ink-mute)]">Calculated Interval</span>
@@ -136,53 +136,53 @@ export const DateDiffMode: React.FC = () => {
         </div>
 
         {/* Primary Y/M/D */}
-        <div className="grid grid-cols-3 gap-4 my-6 text-center">
-          <div className="bg-[var(--canvas-inset)] p-5 rounded-xl border border-[var(--hairline)]">
-            <span className="block text-3xl sm:text-4xl font-extrabold text-[var(--ink-primary)] font-mono-num">
+        <div className="grid grid-cols-3 gap-2.5 sm:gap-4 my-6 text-center">
+          <div className="bg-[var(--canvas-inset)] p-3 sm:p-5 rounded-xl border border-[var(--hairline)] min-w-0">
+            <span className="block text-2xl sm:text-4xl font-extrabold text-[var(--ink-primary)] font-mono-num truncate">
               {diff.years}
             </span>
-            <span className="text-xs uppercase font-mono text-[var(--ink-mute)]">Years</span>
+            <span className="text-[10px] sm:text-xs uppercase font-mono text-[var(--ink-mute)] block mt-0.5">Years</span>
           </div>
-          <div className="bg-[var(--canvas-inset)] p-5 rounded-xl border border-[var(--hairline)]">
-            <span className="block text-3xl sm:text-4xl font-extrabold text-[var(--ink-primary)] font-mono-num">
+          <div className="bg-[var(--canvas-inset)] p-3 sm:p-5 rounded-xl border border-[var(--hairline)] min-w-0">
+            <span className="block text-2xl sm:text-4xl font-extrabold text-[var(--ink-primary)] font-mono-num truncate">
               {diff.months}
             </span>
-            <span className="text-xs uppercase font-mono text-[var(--ink-mute)]">Months</span>
+            <span className="text-[10px] sm:text-xs uppercase font-mono text-[var(--ink-mute)] block mt-0.5">Months</span>
           </div>
-          <div className="bg-[var(--canvas-inset)] p-5 rounded-xl border border-[var(--hairline)]">
-            <span className="block text-3xl sm:text-4xl font-extrabold text-[var(--ink-primary)] font-mono-num">
+          <div className="bg-[var(--canvas-inset)] p-3 sm:p-5 rounded-xl border border-[var(--hairline)] min-w-0">
+            <span className="block text-2xl sm:text-4xl font-extrabold text-[var(--ink-primary)] font-mono-num truncate">
               {diff.days}
             </span>
-            <span className="text-xs uppercase font-mono text-[var(--ink-mute)]">Days</span>
+            <span className="text-[10px] sm:text-xs uppercase font-mono text-[var(--ink-mute)] block mt-0.5">Days</span>
           </div>
         </div>
 
         {/* Secondary Unit Breakdown */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-[var(--hairline)]">
-          <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)]">
-            <span className="block text-xs text-[var(--ink-mute)] font-mono uppercase">Total Days</span>
-            <span className="text-lg font-bold text-[var(--ink-primary)] font-mono-num">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4 pt-4 border-t border-[var(--hairline)]">
+          <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)] min-w-0">
+            <span className="block text-[10px] sm:text-xs text-[var(--ink-mute)] font-mono uppercase truncate">Total Days</span>
+            <span className="text-base sm:text-lg font-bold text-[var(--ink-primary)] font-mono-num truncate block">
               {diff.totalDays.toLocaleString()}
             </span>
           </div>
 
-          <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)]">
-            <span className="block text-xs text-[var(--ink-mute)] font-mono uppercase">Total Hours</span>
-            <span className="text-lg font-bold text-[var(--ink-primary)] font-mono-num">
+          <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)] min-w-0">
+            <span className="block text-[10px] sm:text-xs text-[var(--ink-mute)] font-mono uppercase truncate">Total Hours</span>
+            <span className="text-base sm:text-lg font-bold text-[var(--ink-primary)] font-mono-num truncate block">
               {diff.totalHours.toLocaleString()}
             </span>
           </div>
 
-          <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)]">
-            <span className="block text-xs text-[var(--ink-mute)] font-mono uppercase">Total Minutes</span>
-            <span className="text-lg font-bold text-[var(--ink-primary)] font-mono-num">
+          <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)] min-w-0">
+            <span className="block text-[10px] sm:text-xs text-[var(--ink-mute)] font-mono uppercase truncate">Total Minutes</span>
+            <span className="text-base sm:text-lg font-bold text-[var(--ink-primary)] font-mono-num truncate block">
               {diff.totalMinutes.toLocaleString()}
             </span>
           </div>
 
-          <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)]">
-            <span className="block text-xs text-[var(--ink-mute)] font-mono uppercase">Total Seconds</span>
-            <span className="text-lg font-bold text-[var(--ink-primary)] font-mono-num">
+          <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)] min-w-0">
+            <span className="block text-[10px] sm:text-xs text-[var(--ink-mute)] font-mono uppercase truncate">Total Seconds</span>
+            <span className="text-base sm:text-lg font-bold text-[var(--ink-primary)] font-mono-num truncate block">
               {diff.totalSeconds.toLocaleString()}
             </span>
           </div>

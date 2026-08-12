@@ -126,8 +126,8 @@ ${isPremature && correctedAgeWeeks ? `🏥 Corrected Age (Born at ${gestationalW
       </div>
 
       {/* Main Results Display */}
-      <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-6 sm:p-8 shadow-[0_2px_8px_rgba(0,0,0,0.04)] relative transition-colors">
-        <div className="flex items-center justify-between pb-6 border-b border-[var(--hairline)]">
+      <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-4 sm:p-6 md:p-8 shadow-[0_2px_8px_rgba(0,0,0,0.04)] relative transition-colors">
+        <div className="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-[var(--hairline)]">
           <div className="flex items-center gap-2">
             <Calendar className="w-5 h-5 text-[#0070f3]" />
             <span className="text-xs uppercase font-mono tracking-wider text-[var(--ink-mute)]">Exact Age Breakdown</span>
@@ -143,44 +143,44 @@ ${isPremature && correctedAgeWeeks ? `🏥 Corrected Age (Born at ${gestationalW
         </div>
 
         {/* Primary Milestone Display (Weeks & Months) */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-6 text-center">
-          <div className="bg-[var(--canvas-inset)] p-5 rounded-xl border border-[var(--hairline)]">
-            <span className="block text-3xl sm:text-4xl font-extrabold text-[var(--ink-primary)] font-mono-num">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-4 my-6 text-center">
+          <div className="bg-[var(--canvas-inset)] p-4 sm:p-5 rounded-xl border border-[var(--hairline)] min-w-0">
+            <span className="block text-2xl sm:text-4xl font-extrabold text-[var(--ink-primary)] font-mono-num truncate">
               {ageData.months}
             </span>
-            <span className="text-xs uppercase font-mono text-[var(--ink-mute)]">Months ({ageData.days} Days)</span>
+            <span className="text-xs uppercase font-mono text-[var(--ink-mute)] block mt-0.5">Months ({ageData.days} Days)</span>
           </div>
 
-          <div className="bg-[var(--canvas-inset)] p-5 rounded-xl border border-[var(--hairline)]">
-            <span className="block text-3xl sm:text-4xl font-extrabold text-[#0070f3] font-mono-num">
+          <div className="bg-[var(--canvas-inset)] p-4 sm:p-5 rounded-xl border border-[var(--hairline)] min-w-0">
+            <span className="block text-2xl sm:text-4xl font-extrabold text-[#0070f3] font-mono-num truncate">
               {ageData.totalWeeks}
             </span>
-            <span className="text-xs uppercase font-mono text-[var(--ink-mute)]">Total Weeks</span>
+            <span className="text-xs uppercase font-mono text-[var(--ink-mute)] block mt-0.5">Total Weeks</span>
           </div>
 
-          <div className="bg-[var(--canvas-inset)] p-5 rounded-xl border border-[var(--hairline)]">
-            <span className="block text-3xl sm:text-4xl font-extrabold text-[var(--ink-primary)] font-mono-num">
+          <div className="bg-[var(--canvas-inset)] p-4 sm:p-5 rounded-xl border border-[var(--hairline)] min-w-0">
+            <span className="block text-2xl sm:text-4xl font-extrabold text-[var(--ink-primary)] font-mono-num truncate">
               {ageData.totalDays.toLocaleString()}
             </span>
-            <span className="text-xs uppercase font-mono text-[var(--ink-mute)]">Total Days</span>
+            <span className="text-xs uppercase font-mono text-[var(--ink-mute)] block mt-0.5">Total Days</span>
           </div>
         </div>
 
         {/* Corrected Age Box (If Premature) */}
         {isPremature && correctedAgeWeeks && (
-          <div className="my-4 p-4 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-xl flex items-center justify-between text-xs animate-fade-in-down">
+          <div className="my-4 p-4 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs animate-fade-in-down">
             <div>
               <span className="font-semibold text-[var(--ink-primary)]">Pediatric Corrected Age (Born at {gestationalWeeks} Weeks):</span>
               <p className="text-[11px] text-[var(--ink-mute)]">Adjusts for {correctedAgeWeeks.prematureWeeks} weeks early arrival for milestone evaluation.</p>
             </div>
-            <div className="font-mono text-sm font-bold text-[#0070f3] bg-[var(--canvas-card)] px-3 py-1.5 rounded border border-[var(--hairline)]">
+            <div className="font-mono text-sm font-bold text-[#0070f3] bg-[var(--canvas-card)] px-3 py-1.5 rounded border border-[var(--hairline)] shrink-0 self-start sm:self-auto">
               {correctedAgeWeeks.correctedMonths} Months ({correctedAgeWeeks.correctedWeeks} Wks)
             </div>
           </div>
         )}
 
         {/* Breakdown Stats */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-[var(--hairline)] text-xs">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4 pt-4 border-t border-[var(--hairline)] text-xs">
           <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)]">
             <span className="block text-[var(--ink-mute)] font-mono uppercase">Years Old</span>
             <span className="text-base font-bold text-[var(--ink-primary)] font-mono-num">{ageData.years} Years</span>

@@ -8,10 +8,10 @@ export const RelaxationTable: React.FC = () => {
     <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl overflow-hidden shadow-sm transition-colors">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-6 py-4 flex items-center justify-between bg-[var(--canvas-card)] hover:bg-[var(--canvas-inset)] transition text-left"
+        className="w-full px-4 sm:px-6 py-3.5 sm:py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[var(--canvas-card)] hover:bg-[var(--canvas-inset)] transition text-left"
       >
-        <div className="flex items-center gap-2.5">
-          <Table className="w-4 h-4 text-[#0070f3]" />
+        <div className="flex items-start sm:items-center gap-2.5">
+          <Table className="w-4 h-4 text-[#0070f3] shrink-0 mt-0.5 sm:mt-0" />
           <div>
             <h3 className="text-sm font-semibold text-[var(--ink-primary)] tracking-tight">
               Official UPSC Category Age Relaxation & Attempt Limits Table
@@ -22,7 +22,7 @@ export const RelaxationTable: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0 self-start sm:self-auto">
           <span className="text-xs font-mono px-2 py-0.5 rounded bg-[var(--canvas-inset)] border border-[var(--hairline)] text-[var(--ink-body)]">
             {isOpen ? 'Collapse Table' : 'Expand Matrix'}
           </span>
@@ -31,7 +31,7 @@ export const RelaxationTable: React.FC = () => {
       </button>
 
       {isOpen && (
-        <div className="p-6 border-t border-[var(--hairline)] bg-[var(--canvas-inset)] space-y-4">
+        <div className="p-3.5 sm:p-6 border-t border-[var(--hairline)] bg-[var(--canvas-inset)] space-y-4">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse text-xs">
               <thead>

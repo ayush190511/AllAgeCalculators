@@ -97,20 +97,20 @@ export const UPSCMode: React.FC<UPSCModeProps> = ({ initialDob = '1998-05-15', o
   return (
     <div className="space-y-8">
       {/* Hero Input Section */}
-      <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-6 sm:p-8 shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition-colors">
-        <div className="flex items-center justify-between pb-5 border-b border-[var(--hairline)]">
+      <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-4 sm:p-6 md:p-8 shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition-colors">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 border-b border-[var(--hairline)]">
           <div className="flex items-center gap-2">
             <div className="h-2 w-2 rounded-full bg-[#0070f3]" />
-            <h2 className="text-lg font-semibold tracking-tight text-[var(--ink-primary)]">
+            <h2 className="text-base sm:text-lg font-semibold tracking-tight text-[var(--ink-primary)]">
               UPSC CSE Age & Eligibility Engine
             </h2>
           </div>
-          <span className="text-xs font-mono px-2.5 py-1 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-md text-[var(--ink-body)]">
+          <span className="self-start sm:self-auto text-[11px] sm:text-xs font-mono px-2.5 py-1 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-md text-[var(--ink-body)]">
             Cutoff: 1st August {targetYear}
           </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 pt-6">
           {/* DOB Input */}
           <div className="space-y-2">
             <label className="block text-xs font-medium uppercase tracking-wider text-[var(--ink-body)]">
@@ -193,7 +193,7 @@ export const UPSCMode: React.FC<UPSCModeProps> = ({ initialDob = '1998-05-15', o
           <label className="block text-xs font-medium uppercase tracking-wider text-[var(--ink-body)]">
             Special Category Age Relaxations (Optional)
           </label>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3">
             <label className="flex items-center gap-2.5 p-3 rounded-lg border border-[var(--hairline)] bg-[var(--canvas-inset)] text-xs text-[var(--ink-primary)] cursor-pointer hover:border-[var(--ink-primary)] transition">
               <input
                 type="checkbox"
@@ -238,8 +238,8 @@ export const UPSCMode: React.FC<UPSCModeProps> = ({ initialDob = '1998-05-15', o
       </div>
 
       {/* Main Verdict Card */}
-      <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-6 sm:p-8 shadow-[0_2px_8px_rgba(0,0,0,0.04)] relative transition-colors">
-        <div className="flex items-center justify-between pb-6 border-b border-[var(--hairline)]">
+      <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-4 sm:p-6 md:p-8 shadow-[0_2px_8px_rgba(0,0,0,0.04)] relative transition-colors">
+        <div className="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-[var(--hairline)]">
           <div className="flex items-center gap-2">
             <Shield className="w-5 h-5 text-[#0070f3]" />
             <span className="text-xs uppercase font-mono tracking-wider text-[var(--ink-mute)]">UPSC CSE {targetYear} Verdict</span>
@@ -282,34 +282,34 @@ export const UPSCMode: React.FC<UPSCModeProps> = ({ initialDob = '1998-05-15', o
 
               {/* Exact Underage Countdown Box */}
               {underageDetails && (
-                <div className="p-5 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-xl space-y-3.5">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs font-mono">
+                <div className="p-4 sm:p-5 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-xl space-y-3.5">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-xs font-mono">
                     <span className="text-[var(--ink-primary)] font-bold uppercase tracking-wider flex items-center gap-1.5">
-                      <Hourglass className="w-4 h-4 text-[#f5a623]" /> Time Remaining Until 21st Birthday & UPSC Eligibility
+                      <Hourglass className="w-4 h-4 text-[#f5a623] shrink-0" /> Time Remaining Until 21st Birthday & UPSC Eligibility
                     </span>
                     <span className="text-[#0070f3] font-bold">
                       First Eligible Exam: UPSC CSE {underageDetails.firstEligibleYear}
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-3 text-center">
-                    <div className="p-3 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg">
-                      <span className="block text-2xl sm:text-3xl font-extrabold text-[var(--ink-primary)] font-mono-num">
+                  <div className="grid grid-cols-3 gap-2.5 sm:gap-3 text-center">
+                    <div className="p-2.5 sm:p-3 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg min-w-0">
+                      <span className="block text-xl sm:text-3xl font-extrabold text-[var(--ink-primary)] font-mono-num truncate">
                         {underageDetails.timeRemaining.years}
                       </span>
-                      <span className="text-[11px] uppercase font-mono text-[var(--ink-mute)]">Years Left</span>
+                      <span className="text-[10px] sm:text-[11px] uppercase font-mono text-[var(--ink-mute)] block mt-0.5">Years Left</span>
                     </div>
-                    <div className="p-3 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg">
-                      <span className="block text-2xl sm:text-3xl font-extrabold text-[var(--ink-primary)] font-mono-num">
+                    <div className="p-2.5 sm:p-3 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg min-w-0">
+                      <span className="block text-xl sm:text-3xl font-extrabold text-[var(--ink-primary)] font-mono-num truncate">
                         {underageDetails.timeRemaining.months}
                       </span>
-                      <span className="text-[11px] uppercase font-mono text-[var(--ink-mute)]">Months Left</span>
+                      <span className="text-[10px] sm:text-[11px] uppercase font-mono text-[var(--ink-mute)] block mt-0.5">Months Left</span>
                     </div>
-                    <div className="p-3 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg">
-                      <span className="block text-2xl sm:text-3xl font-extrabold text-[var(--ink-primary)] font-mono-num">
+                    <div className="p-2.5 sm:p-3 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg min-w-0">
+                      <span className="block text-xl sm:text-3xl font-extrabold text-[var(--ink-primary)] font-mono-num truncate">
                         {underageDetails.timeRemaining.days}
                       </span>
-                      <span className="text-[11px] uppercase font-mono text-[var(--ink-mute)]">Days Left</span>
+                      <span className="text-[10px] sm:text-[11px] uppercase font-mono text-[var(--ink-mute)] block mt-0.5">Days Left</span>
                     </div>
                   </div>
 
@@ -336,24 +336,24 @@ export const UPSCMode: React.FC<UPSCModeProps> = ({ initialDob = '1998-05-15', o
         </div>
 
         {/* Primary Age Stats Breakdown */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-6">
-          <div className="bg-[var(--canvas-inset)] p-5 rounded-xl border border-[var(--hairline)]">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-4 my-6">
+          <div className="bg-[var(--canvas-inset)] p-4 sm:p-5 rounded-xl border border-[var(--hairline)]">
             <span className="block text-xs uppercase font-mono text-[var(--ink-mute)]">Age on 1st Aug {targetYear}</span>
-            <span className="text-2xl sm:text-3xl font-extrabold text-[var(--ink-primary)] font-mono-num block mt-1">
+            <span className="text-xl sm:text-3xl font-extrabold text-[var(--ink-primary)] font-mono-num block mt-1">
               {result.ageOnCutoff.years}y {result.ageOnCutoff.months}m {result.ageOnCutoff.days}d
             </span>
           </div>
 
-          <div className="bg-[var(--canvas-inset)] p-5 rounded-xl border border-[var(--hairline)]">
+          <div className="bg-[var(--canvas-inset)] p-4 sm:p-5 rounded-xl border border-[var(--hairline)]">
             <span className="block text-xs uppercase font-mono text-[var(--ink-mute)]">Attempts Allowed ({category})</span>
-            <span className="text-2xl sm:text-3xl font-extrabold text-[var(--ink-primary)] font-mono-num block mt-1">
+            <span className="text-xl sm:text-3xl font-extrabold text-[var(--ink-primary)] font-mono-num block mt-1">
               {result.attemptsAllowed === 99 ? 'Unlimited' : `${result.attemptsAllowed} Attempts`}
             </span>
           </div>
 
-          <div className="bg-[var(--canvas-inset)] p-5 rounded-xl border border-[var(--hairline)]">
+          <div className="bg-[var(--canvas-inset)] p-4 sm:p-5 rounded-xl border border-[var(--hairline)]">
             <span className="block text-xs uppercase font-mono text-[var(--ink-mute)]">Max Age Limit ({category})</span>
-            <span className="text-2xl sm:text-3xl font-extrabold text-[var(--ink-primary)] font-mono-num block mt-1">
+            <span className="text-xl sm:text-3xl font-extrabold text-[var(--ink-primary)] font-mono-num block mt-1">
               {result.maxAge} Years
             </span>
           </div>
