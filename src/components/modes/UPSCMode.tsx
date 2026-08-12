@@ -262,7 +262,7 @@ export const UPSCMode: React.FC<UPSCModeProps> = ({ initialDob = '1998-05-15', o
               <div>
                 <div className="text-base font-bold">ELIGIBLE for UPSC CSE {targetYear}</div>
                 <div className="text-xs text-[var(--ink-body)]">
-                  Your age on 1st August {targetYear} is within the required {result.maxAge} year limit for {category}.
+                  Your age on 1st August {targetYear} is within the required {result.maxAgeAllowed} year limit for {category}.
                 </div>
               </div>
             </div>
@@ -328,7 +328,7 @@ export const UPSCMode: React.FC<UPSCModeProps> = ({ initialDob = '1998-05-15', o
               <div>
                 <div className="text-base font-bold">OVERAGE for UPSC CSE {targetYear}</div>
                 <div className="text-xs text-[var(--ink-body)]">
-                  Exceeds the maximum age cap of {result.maxAge} years for {category} as of 1st August {targetYear}.
+                  Exceeds the maximum age cap of {result.maxAgeAllowed} years for {category} as of 1st August {targetYear}.
                 </div>
               </div>
             </div>
@@ -354,7 +354,7 @@ export const UPSCMode: React.FC<UPSCModeProps> = ({ initialDob = '1998-05-15', o
           <div className="bg-[var(--canvas-inset)] p-4 sm:p-5 rounded-xl border border-[var(--hairline)]">
             <span className="block text-xs uppercase font-mono text-[var(--ink-mute)]">Max Age Limit ({category})</span>
             <span className="text-xl sm:text-3xl font-extrabold text-[var(--ink-primary)] font-mono-num block mt-1">
-              {result.maxAge} Years
+              {result.maxAgeAllowed} Years
             </span>
           </div>
         </div>
@@ -363,12 +363,12 @@ export const UPSCMode: React.FC<UPSCModeProps> = ({ initialDob = '1998-05-15', o
         <div className="pt-4 border-t border-[var(--hairline)] grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
           <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)] flex justify-between items-center">
             <span className="text-[var(--ink-mute)]">Minimum Born On or After:</span>
-            <span className="font-mono font-semibold text-[var(--ink-primary)]">2nd August {targetYear - result.maxAge}</span>
+            <span className="font-mono font-semibold text-[var(--ink-primary)]">{result.dobBounds.minDobStr}</span>
           </div>
 
           <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)] flex justify-between items-center">
             <span className="text-[var(--ink-mute)]">Maximum Born On or Before:</span>
-            <span className="font-mono font-semibold text-[var(--ink-primary)]">1st August {targetYear - 21}</span>
+            <span className="font-mono font-semibold text-[var(--ink-primary)]">{result.dobBounds.maxDobStr}</span>
           </div>
         </div>
       </div>
