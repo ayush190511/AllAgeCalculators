@@ -1,7 +1,12 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import SEOSchema from '../components/SEOSchema.astro';
 import '../styles/global.css';
+
+const title = "Terms and Conditions — AllAgeCalculators";
+const description = "Terms and Conditions for AllAgeCalculators (allagecalculators.com). Read our terms of service, calculation accuracy disclaimers, and user guidelines.";
+const canonicalUrl = "https://allagecalculators.com/terms-and-conditions";
 ---
 
 <html lang="en">
@@ -12,19 +17,29 @@ import '../styles/global.css';
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     
     <!-- Terms and Conditions Meta Tags -->
-    <title>Terms and Conditions — AllAgeCalculators</title>
-    <meta name="title" content="Terms and Conditions — AllAgeCalculators" />
-    <meta 
-      name="description" 
-      content="Terms and Conditions for AllAgeCalculators (allagecalculators.com). Read our terms of service, calculation accuracy disclaimers, and user guidelines." 
-    />
-    <link rel="canonical" href="https://allagecalculators.com/terms-and-conditions" />
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalUrl} />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://allagecalculators.com/terms-and-conditions" />
-    <meta property="og:title" content="Terms and Conditions — AllAgeCalculators" />
-    <meta property="og:description" content="Review the Terms and Conditions of service for using AllAgeCalculators." />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content="AllAgeCalculators (allagecalculators.com)" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://allagecalculators.com/og-image.png" />
+
+    <!-- Twitter Card -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalUrl} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content="https://allagecalculators.com/og-image.png" />
+
+    <!-- JSON-LD Structured Data -->
+    <SEOSchema page="terms" title={title} description={description} canonicalUrl={canonicalUrl} />
 
     <!-- Theme Script -->
     <script is:inline>

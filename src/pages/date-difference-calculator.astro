@@ -2,8 +2,13 @@
 import Header from '../components/Header.astro';
 import { DateDiffMode } from '../components/modes/DateDiffMode';
 import SEOContent from '../components/SEOContent.astro';
+import SEOSchema from '../components/SEOSchema.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
+
+const title = "Date Difference Calculator — Calculate Days, Months & Years Between Dates";
+const description = "Calculate exact time difference between two dates in years, months, days, hours, and seconds. Great for age gaps, event intervals, and milestone tracking.";
+const canonicalUrl = "https://allagecalculators.com/date-difference-calculator";
 ---
 
 <html lang="en">
@@ -14,23 +19,33 @@ import '../styles/global.css';
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     
     <!-- Dedicated Date Difference Meta Tags -->
-    <title>Date Difference Calculator — Calculate Days, Months & Years Between Dates</title>
-    <meta name="title" content="Date Difference Calculator — Calculate Days, Months & Years Between Dates" />
-    <meta 
-      name="description" 
-      content="Calculate exact time difference between two dates in years, months, days, hours, and seconds. Great for age gaps, event intervals, and milestone tracking." 
-    />
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
     <meta 
       name="keywords" 
       content="date difference calculator, age gap calculator, calculate days between dates, what age did my mom have me calculator, time interval calculator" 
     />
-    <link rel="canonical" href="https://allagecalculators.com/date-difference-calculator" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalUrl} />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://allagecalculators.com/date-difference-calculator" />
-    <meta property="og:title" content="Date Difference Calculator — Calculate Days, Months & Years Between Dates" />
-    <meta property="og:description" content="Calculate exact duration between two dates. Get breakdowns in total days, hours, minutes, and seconds." />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content="AllAgeCalculators (allagecalculators.com)" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://allagecalculators.com/og-image.png" />
+
+    <!-- Twitter Card -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalUrl} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content="https://allagecalculators.com/og-image.png" />
+
+    <!-- JSON-LD Structured Data -->
+    <SEOSchema page="datediff" title={title} description={description} canonicalUrl={canonicalUrl} />
 
     <!-- Theme Script -->
     <script is:inline>

@@ -2,8 +2,13 @@
 import Header from '../components/Header.astro';
 import { RetirementMode } from '../components/modes/RetirementMode';
 import SEOContent from '../components/SEOContent.astro';
+import SEOSchema from '../components/SEOSchema.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
+
+const title = "Retirement Age Calculator — State Pension & Retirement Countdown Tool";
+const description = "Free Retirement Age Calculator on AllAgeCalculators. Calculate years, months & days remaining until your target retirement age (58, 60, 62, 65, 73 RMD age). Includes state pension timelines and career progress analysis.";
+const canonicalUrl = "https://allagecalculators.com/retirement-age-calculator";
 ---
 
 <html lang="en">
@@ -14,23 +19,33 @@ import '../styles/global.css';
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     
     <!-- Dedicated Retirement Meta Tags -->
-    <title>Retirement Age Calculator — State Pension & Retirement Countdown Tool</title>
-    <meta name="title" content="Retirement Age Calculator — State Pension & Retirement Countdown Tool" />
-    <meta 
-      name="description" 
-      content="Free Retirement Age Calculator on AllAgeCalculators. Calculate years, months & days remaining until your target retirement age (58, 60, 62, 65, 73 RMD age). Includes state pension timelines and career progress analysis." 
-    />
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
     <meta 
       name="keywords" 
       content="retirement age calculator, state pension age calculator, what age can i retire calculator, at age 73 rmd calculator, pension eligibility age, government service retirement age 60" 
     />
-    <link rel="canonical" href="https://allagecalculators.com/retirement-age-calculator" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalUrl} />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://allagecalculators.com/retirement-age-calculator" />
-    <meta property="og:title" content="Retirement Age Calculator — State Pension & Retirement Countdown Tool" />
-    <meta property="og:description" content="Calculate your exact retirement date and remaining working timeline until age 60, 65, or 73." />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content="AllAgeCalculators (allagecalculators.com)" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://allagecalculators.com/og-image.png" />
+
+    <!-- Twitter Card -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalUrl} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content="https://allagecalculators.com/og-image.png" />
+
+    <!-- JSON-LD Structured Data -->
+    <SEOSchema page="retirement" title={title} description={description} canonicalUrl={canonicalUrl} />
 
     <!-- Theme Script -->
     <script is:inline>

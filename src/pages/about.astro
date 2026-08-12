@@ -1,7 +1,12 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import SEOSchema from '../components/SEOSchema.astro';
 import '../styles/global.css';
+
+const title = "About Us — AllAgeCalculators (Precision Age Calculation Engine)";
+const description = "Learn about AllAgeCalculators (allagecalculators.com). Dedicated to providing precision chronological age calculators, UPSC CSE 1st August cutoff eligibility engines, retirement timelines, and pet age conversions.";
+const canonicalUrl = "https://allagecalculators.com/about";
 ---
 
 <html lang="en">
@@ -12,19 +17,29 @@ import '../styles/global.css';
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     
     <!-- About Page Meta Tags -->
-    <title>About Us — AllAgeCalculators (Precision Age Calculation Engine)</title>
-    <meta name="title" content="About Us — AllAgeCalculators (Precision Age Calculation Engine)" />
-    <meta 
-      name="description" 
-      content="Learn about AllAgeCalculators (allagecalculators.com). Dedicated to providing precision chronological age calculators, UPSC CSE 1st August cutoff eligibility engines, retirement timelines, and pet age conversions." 
-    />
-    <link rel="canonical" href="https://allagecalculators.com/about" />
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalUrl} />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://allagecalculators.com/about" />
-    <meta property="og:title" content="About Us — AllAgeCalculators" />
-    <meta property="og:description" content="Discover the mission, technology, and privacy standards behind AllAgeCalculators." />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content="AllAgeCalculators (allagecalculators.com)" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://allagecalculators.com/og-image.png" />
+
+    <!-- Twitter Card -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalUrl} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content="https://allagecalculators.com/og-image.png" />
+
+    <!-- JSON-LD Structured Data -->
+    <SEOSchema page="about" title={title} description={description} canonicalUrl={canonicalUrl} />
 
     <!-- Theme Script -->
     <script is:inline>

@@ -2,8 +2,13 @@
 import Header from '../components/Header.astro';
 import { NormalAgeMode } from '../components/modes/NormalAgeMode';
 import SEOContent from '../components/SEOContent.astro';
+import SEOSchema from '../components/SEOSchema.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
+
+const title = "Online Age Calculator — Free Chronological Age Calculator by Date of Birth";
+const description = "Free Online Age Calculator by date of birth. Calculate your exact chronological age in years, months, days & seconds today. Includes UPSC age calculator of India, retirement age calculator, dog age calculator, baby age calculator, and date gap tools.";
+const canonicalUrl = "https://allagecalculators.com/";
 ---
 
 <html lang="en">
@@ -14,34 +19,34 @@ import '../styles/global.css';
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     
     <!-- Primary Meta Tags -->
-    <title>Online Age Calculator — Free Chronological Age Calculator by Date of Birth</title>
-    <meta name="title" content="Online Age Calculator — Free Chronological Age Calculator by Date of Birth" />
-    <meta 
-      name="description" 
-      content="Free Online Age Calculator by date of birth. Calculate your exact chronological age in years, months, days & seconds today. Includes UPSC age calculator of India, retirement age calculator, dog age calculator, baby age calculator, and date gap tools." 
-    />
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
     <meta 
       name="keywords" 
       content="Online Age Calculator, age calculator, chronological age calculator, age calculator by date of birth free, age calculator online, age calculator of upsc, age calculator of india, retirement age calculator, dog age calculator, baby age calculator, age calculator in years, age calculator for school, my age calculator, birthday age calculator, state pension age calculator, lunar age calculator, pet age calculator grow a garden, heart age calculator, age calculator formula, age calculator nepali, age calculator of child, age calculator of baby, age calculator on today, age calculator on date, age calculator on year, age calculator of death, age calculator in excel, age calculator app" 
     />
     <meta name="author" content="AllAgeCalculators" />
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://allagecalculators.com/" />
+    <link rel="canonical" href={canonicalUrl} />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://allagecalculators.com/" />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:site_name" content="AllAgeCalculators (allagecalculators.com)" />
-    <meta property="og:title" content="Online Age Calculator — Free Chronological Age Calculator by Date of Birth" />
-    <meta property="og:description" content="Instant online age calculator by date of birth. Calculate exact age in years, months, days & seconds for UPSC CSE, school admissions, retirement, pet age, and baby age milestones." />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
     <meta property="og:image" content="https://allagecalculators.com/og-image.png" />
 
     <!-- Twitter Card -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://allagecalculators.com/" />
-    <meta property="twitter:title" content="Online Age Calculator — Free Chronological Age Calculator by Date of Birth" />
-    <meta property="twitter:description" content="Free chronological age calculator online. Calculate exact age by date of birth for UPSC CSE, school admission, retirement, pets & babies." />
+    <meta property="twitter:url" content={canonicalUrl} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content="https://allagecalculators.com/og-image.png" />
+
+    <!-- JSON-LD Structured Data -->
+    <SEOSchema page="home" title={title} description={description} canonicalUrl={canonicalUrl} />
 
     <!-- Theme Initialization Script -->
     <script is:inline>

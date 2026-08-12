@@ -1,0 +1,88 @@
+---
+export interface Props {
+  page: 'home' | 'upsc' | 'retirement' | 'dog' | 'baby' | 'datediff' | 'about' | 'contact' | 'privacy' | 'terms';
+  title: string;
+  description: string;
+  canonicalUrl: string;
+}
+
+const { page, title, description, canonicalUrl } = Astro.props;
+
+const isToolPage = ['home', 'upsc', 'retirement', 'dog', 'baby', 'datediff'].includes(page);
+
+// 1. WebApplication / SoftwareApplication Schema for Calculators
+const softwareAppSchema = isToolPage ? {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": title,
+  "operatingSystem": "All",
+  "applicationCategory": "UtilitiesApplication",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "description": description,
+  "url": canonicalUrl,
+  "browserRequirements": "Requires JavaScript. Requires HTML5."
+} : null;
+
+// 2. Organization & WebSite Schema (Homepage)
+const websiteSchema = page === 'home' ? {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "AllAgeCalculators",
+  "alternateName": "Online Age Calculator",
+  "url": "https://allagecalculators.com/",
+  "publisher": {
+    "@type": "Organization",
+    "name": "AllAgeCalculators",
+    "url": "https://allagecalculators.com/",
+    "logo": "https://allagecalculators.com/Logo.png"
+  }
+} : null;
+
+// 3. BreadcrumbList Schema for Inner Pages
+const breadcrumbNames: Record<string, string> = {
+  upsc: "UPSC Age Calculator",
+  retirement: "Retirement Age Calculator",
+  dog: "Dog Age Calculator",
+  baby: "Baby Age Calculator",
+  datediff: "Date Difference Calculator",
+  about: "About Us",
+  contact: "Contact Us",
+  privacy: "Privacy Policy",
+  terms: "Terms & Conditions"
+};
+
+const breadcrumbSchema = page !== 'home' && breadcrumbNames[page] ? {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://allagecalculators.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": breadcrumbNames[page],
+      "item": canonicalUrl
+    }
+  ]
+} : null;
+---
+
+{websiteSchema && (
+  <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+)}
+
+{softwareAppSchema && (
+  <script type="application/ld+json" set:html={JSON.stringify(softwareAppSchema)} />
+)}
+
+{breadcrumbSchema && (
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+)}

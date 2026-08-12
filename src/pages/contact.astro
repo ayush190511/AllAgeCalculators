@@ -2,10 +2,13 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { ContactForm } from '../components/ContactForm';
+import SEOSchema from '../components/SEOSchema.astro';
 import { Mail, HelpCircle, ExternalLink, ShieldCheck } from 'lucide-react';
 import '../styles/global.css';
 
-const canonicalURL = new URL('/contact', Astro.site || 'https://allagecalculators.com');
+const title = "Contact Us — AllAgeCalculators (Questions & Feedback)";
+const description = "Have a question about our UPSC age calculator or want to report a calculation bug? Send us a message directly. We read all feedback.";
+const canonicalUrl = "https://allagecalculators.com/contact";
 ---
 
 <html lang="en">
@@ -15,13 +18,29 @@ const canonicalURL = new URL('/contact', Astro.site || 'https://allagecalculator
     <link rel="apple-touch-icon" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Contact Us — AllAgeCalculators (Questions & Feedback)</title>
-    <meta name="title" content="Contact Us — AllAgeCalculators (Questions & Feedback)" />
-    <meta 
-      name="description" 
-      content="Have a question about our UPSC age calculator or want to report a calculation bug? Send us a message directly. We read all feedback." 
-    />
-    <link rel="canonical" href={canonicalURL} />
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content="AllAgeCalculators (allagecalculators.com)" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://allagecalculators.com/og-image.png" />
+
+    <!-- Twitter Card -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalUrl} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content="https://allagecalculators.com/og-image.png" />
+
+    <!-- JSON-LD Structured Data -->
+    <SEOSchema page="contact" title={title} description={description} canonicalUrl={canonicalUrl} />
 
     <!-- Theme Initialization Script -->
     <script is:inline>

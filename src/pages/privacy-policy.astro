@@ -1,7 +1,12 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import SEOSchema from '../components/SEOSchema.astro';
 import '../styles/global.css';
+
+const title = "Privacy Policy — AllAgeCalculators";
+const description = "Privacy Policy for AllAgeCalculators (allagecalculators.com). Learn how we prioritize user privacy through 100% client-side age processing with zero date-of-birth storage.";
+const canonicalUrl = "https://allagecalculators.com/privacy-policy";
 ---
 
 <html lang="en">
@@ -12,19 +17,29 @@ import '../styles/global.css';
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     
     <!-- Privacy Policy Meta Tags -->
-    <title>Privacy Policy — AllAgeCalculators</title>
-    <meta name="title" content="Privacy Policy — AllAgeCalculators" />
-    <meta 
-      name="description" 
-      content="Privacy Policy for AllAgeCalculators (allagecalculators.com). Learn how we prioritize user privacy through 100% client-side age processing with zero date-of-birth storage." 
-    />
-    <link rel="canonical" href="https://allagecalculators.com/privacy-policy" />
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalUrl} />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://allagecalculators.com/privacy-policy" />
-    <meta property="og:title" content="Privacy Policy — AllAgeCalculators" />
-    <meta property="og:description" content="Discover our 100% client-side privacy standard. We do not store or transmit your date of birth data." />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content="AllAgeCalculators (allagecalculators.com)" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://allagecalculators.com/og-image.png" />
+
+    <!-- Twitter Card -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalUrl} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content="https://allagecalculators.com/og-image.png" />
+
+    <!-- JSON-LD Structured Data -->
+    <SEOSchema page="privacy" title={title} description={description} canonicalUrl={canonicalUrl} />
 
     <!-- Theme Script -->
     <script is:inline>

@@ -3,8 +3,13 @@ import Header from '../components/Header.astro';
 import { UPSCMode } from '../components/modes/UPSCMode';
 import { RelaxationTable } from '../components/RelaxationTable';
 import SEOContent from '../components/SEOContent.astro';
+import SEOSchema from '../components/SEOSchema.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
+
+const title = "UPSC Age Calculator 2026 — Exact 1st August Cutoff & Category Relaxations";
+const description = "Official UPSC Age Calculator of India on AllAgeCalculators. Check your exact eligibility and age as on 1st August cutoff date for UPSC CSE 2026, 2027 & 2028 with GEN, EWS, OBC, SC, ST, PwBD & Ex-Servicemen attempt counters.";
+const canonicalUrl = "https://allagecalculators.com/upsc-age-calculator";
 ---
 
 <html lang="en">
@@ -15,23 +20,33 @@ import '../styles/global.css';
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     
     <!-- Dedicated UPSC Meta Tags -->
-    <title>UPSC Age Calculator 2026 — Exact 1st August Cutoff & Category Relaxations</title>
-    <meta name="title" content="UPSC Age Calculator 2026 — Exact 1st August Cutoff & Category Relaxations" />
-    <meta 
-      name="description" 
-      content="Official UPSC Age Calculator of India on AllAgeCalculators. Check your exact eligibility and age as on 1st August cutoff date for UPSC CSE 2026, 2027 & 2028 with GEN, EWS, OBC, SC, ST, PwBD & Ex-Servicemen attempt counters." 
-    />
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
     <meta 
       name="keywords" 
       content="age calculator of upsc, upsc age calculator, age calculator of india, upsc age limit 2026, upsc 1st august cutoff calculator, upsc attempts calculator, upsc category age relaxation" 
     />
-    <link rel="canonical" href="https://allagecalculators.com/upsc-age-calculator" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalUrl} />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://allagecalculators.com/upsc-age-calculator" />
-    <meta property="og:title" content="UPSC Age Calculator 2026 — Exact 1st August Cutoff & Category Relaxations" />
-    <meta property="og:description" content="Calculate your exact age on 1st August UPSC cutoff date. Check remaining attempts, category relaxations, and exam cycle counts." />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content="AllAgeCalculators (allagecalculators.com)" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://allagecalculators.com/og-image.png" />
+
+    <!-- Twitter Card -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalUrl} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content="https://allagecalculators.com/og-image.png" />
+
+    <!-- JSON-LD Structured Data -->
+    <SEOSchema page="upsc" title={title} description={description} canonicalUrl={canonicalUrl} />
 
     <!-- Theme Script -->
     <script is:inline>
