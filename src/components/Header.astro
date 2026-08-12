@@ -60,11 +60,22 @@ const currentPath = Astro.url.pathname;
         >
           Date Diff
         </a>
+
+        <!-- Vertical Divider Separator between Calculators & Info Pages -->
+        <div class="h-4 w-px bg-[var(--hairline-strong)] mx-1.5 shrink-0 opacity-60"></div>
+
+        <!-- Info & Support Group -->
         <a 
           href="/about" 
-          class={`px-2.5 py-1.5 rounded-lg transition ${currentPath === '/about' || currentPath === '/about/' ? 'bg-[var(--canvas-inset)] text-[var(--ink-primary)] font-semibold border border-[var(--hairline)]' : 'hover:text-[var(--ink-primary)]'}`}
+          class={`px-2.5 py-1.5 rounded-lg transition ${currentPath === '/about' || currentPath === '/about/' ? 'bg-[var(--canvas-inset)] text-[var(--ink-primary)] font-semibold border border-[var(--hairline)]' : 'hover:text-[var(--ink-primary)] text-[var(--ink-mute)]'}`}
         >
           About
+        </a>
+        <a 
+          href="/contact" 
+          class={`px-2.5 py-1.5 rounded-lg transition ${currentPath === '/contact' || currentPath === '/contact/' ? 'bg-[var(--canvas-inset)] text-[var(--ink-primary)] font-semibold border border-[var(--hairline)]' : 'hover:text-[var(--ink-primary)] text-[var(--ink-mute)]'}`}
+        >
+          Contact
         </a>
       </nav>
 
@@ -102,42 +113,59 @@ const currentPath = Astro.url.pathname;
     </div>
 
     <!-- Touchscreen Horizontal Scroll Pill Bar -->
-    <div class="lg:hidden flex items-center gap-1.5 overflow-x-auto pb-2.5 pt-0.5 no-scrollbar border-t border-[var(--hairline)]/50">
+    <div id="mobile-pill-container" class="lg:hidden flex items-center gap-1.5 overflow-x-auto pb-2.5 pt-0.5 no-scrollbar border-t border-[var(--hairline)]/50">
       <a 
         href="/" 
-        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/' ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] font-semibold' : 'bg-[var(--canvas-inset)] text-[var(--ink-body)] border-[var(--hairline)]'}`}
+        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/' ? 'mobile-active-pill bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] font-semibold' : 'bg-[var(--canvas-inset)] text-[var(--ink-body)] border-[var(--hairline)]'}`}
       >
         Home
       </a>
       <a 
         href="/upsc-age-calculator" 
-        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/upsc-age-calculator' || currentPath === '/upsc-age-calculator/' ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] font-semibold' : 'bg-[var(--canvas-inset)] text-[var(--ink-body)] border-[var(--hairline)]'}`}
+        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/upsc-age-calculator' || currentPath === '/upsc-age-calculator/' ? 'mobile-active-pill bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] font-semibold' : 'bg-[var(--canvas-inset)] text-[var(--ink-body)] border-[var(--hairline)]'}`}
       >
         UPSC Engine
       </a>
       <a 
         href="/retirement-age-calculator" 
-        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/retirement-age-calculator' || currentPath === '/retirement-age-calculator/' ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] font-semibold' : 'bg-[var(--canvas-inset)] text-[var(--ink-body)] border-[var(--hairline)]'}`}
+        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/retirement-age-calculator' || currentPath === '/retirement-age-calculator/' ? 'mobile-active-pill bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] font-semibold' : 'bg-[var(--canvas-inset)] text-[var(--ink-body)] border-[var(--hairline)]'}`}
       >
         Retirement
       </a>
       <a 
         href="/dog-age-calculator" 
-        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/dog-age-calculator' || currentPath === '/dog-age-calculator/' ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] font-semibold' : 'bg-[var(--canvas-inset)] text-[var(--ink-body)] border-[var(--hairline)]'}`}
+        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/dog-age-calculator' || currentPath === '/dog-age-calculator/' ? 'mobile-active-pill bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] font-semibold' : 'bg-[var(--canvas-inset)] text-[var(--ink-body)] border-[var(--hairline)]'}`}
       >
         Dog Age 🐶
       </a>
       <a 
         href="/baby-age-calculator" 
-        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/baby-age-calculator' || currentPath === '/baby-age-calculator/' ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] font-semibold' : 'bg-[var(--canvas-inset)] text-[var(--ink-body)] border-[var(--hairline)]'}`}
+        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/baby-age-calculator' || currentPath === '/baby-age-calculator/' ? 'mobile-active-pill bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] font-semibold' : 'bg-[var(--canvas-inset)] text-[var(--ink-body)] border-[var(--hairline)]'}`}
       >
         Baby Age 👶
       </a>
       <a 
         href="/date-difference-calculator" 
-        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/date-difference-calculator' || currentPath === '/date-difference-calculator/' ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--hairline)] font-semibold' : 'bg-[var(--canvas-inset)] text-[var(--ink-body)] border-[var(--hairline)]'}`}
+        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/date-difference-calculator' || currentPath === '/date-difference-calculator/' ? 'mobile-active-pill bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] font-semibold' : 'bg-[var(--canvas-inset)] text-[var(--ink-body)] border-[var(--hairline)]'}`}
       >
         Date Diff
+      </a>
+
+      <!-- Visual Separator Pill for Mobile -->
+      <div class="h-3.5 w-px bg-[var(--hairline-strong)] shrink-0 mx-1 self-center opacity-60"></div>
+
+      <!-- Info Group Pills -->
+      <a 
+        href="/about" 
+        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/about' || currentPath === '/about/' ? 'mobile-active-pill bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] font-semibold' : 'bg-[var(--canvas-inset)] text-[var(--ink-mute)] border-[var(--hairline)]'}`}
+      >
+        About
+      </a>
+      <a 
+        href="/contact" 
+        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/contact' || currentPath === '/contact/' ? 'mobile-active-pill bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] font-semibold' : 'bg-[var(--canvas-inset)] text-[var(--ink-mute)] border-[var(--hairline)]'}`}
+      >
+        Contact
       </a>
     </div>
 
@@ -149,6 +177,13 @@ const currentPath = Astro.url.pathname;
       >
         <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
         About Us & Mission
+      </a>
+      <a 
+        href="/contact" 
+        class={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition ${currentPath === '/contact' || currentPath === '/contact/' ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] font-semibold' : 'text-[var(--ink-primary)] bg-[var(--canvas-inset)] hover:bg-[var(--hairline)]'}`}
+      >
+        <span class="h-1.5 w-1.5 rounded-full bg-[#10b981]"></span>
+        Contact Us
       </a>
       <a 
         href="/privacy-policy" 
@@ -191,5 +226,23 @@ const currentPath = Astro.url.pathname;
     mobileBtn.addEventListener('click', function() {
       mobileDrawer.classList.toggle('hidden');
     });
+  }
+
+  // Auto-scroll mobile pill nav container so active link is always centered and visible
+  function centerActiveMobilePill() {
+    const pillContainer = document.getElementById('mobile-pill-container');
+    const activePill = document.querySelector('.mobile-active-pill');
+    if (pillContainer && activePill) {
+      const containerWidth = pillContainer.clientWidth;
+      const pillOffset = activePill.offsetLeft;
+      const pillWidth = activePill.clientWidth;
+      pillContainer.scrollLeft = pillOffset - (containerWidth / 2) + (pillWidth / 2);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', centerActiveMobilePill);
+  } else {
+    centerActiveMobilePill();
   }
 </script>

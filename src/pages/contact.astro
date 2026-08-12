@@ -1,0 +1,116 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { ContactForm } from '../components/ContactForm';
+import { Mail, HelpCircle, ExternalLink, ShieldCheck } from 'lucide-react';
+import '../styles/global.css';
+
+const canonicalURL = new URL('/contact', Astro.site || 'https://allagecalculators.com');
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Contact Us — AllAgeCalculators (Questions & Feedback)</title>
+    <meta name="title" content="Contact Us — AllAgeCalculators (Questions & Feedback)" />
+    <meta 
+      name="description" 
+      content="Have a question about our UPSC age calculator or want to report a calculation bug? Send us a message directly. We read all feedback." 
+    />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Theme Initialization Script -->
+    <script is:inline>
+      (function() {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else if (saved === 'light') {
+          document.documentElement.classList.remove('dark');
+        } else {
+          if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+          }
+        }
+      })();
+    </script>
+  </head>
+
+  <body class="min-h-screen flex flex-col bg-[var(--canvas)] text-[var(--ink-primary)] selection:bg-[var(--ink-primary)] selection:text-[var(--canvas-card)]">
+    <Header />
+
+    <main class="flex-1 max-w-4xl mx-auto px-4 py-8 sm:py-12 space-y-10 w-full">
+      {/* Page Header */}
+      <div class="text-center space-y-3">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[var(--canvas-card)] border border-[#06b6d4]/30 text-xs font-mono text-[var(--ink-body)] shadow-2xs">
+          <span class="h-2 w-2 rounded-full bg-[#06b6d4] animate-pulse"></span>
+          Get In Touch
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--ink-primary)]">
+          Contact & Feedback
+        </h1>
+        <p class="text-sm sm:text-base text-[var(--ink-body)] max-w-xl mx-auto leading-relaxed">
+          Have questions about UPSC CSE cutoffs, want to report a calculation discrepancy, or suggest a new tool? Send us a message directly.
+        </p>
+      </div>
+
+      {/* Form & Support Cards Grid */}
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+        {/* Left Column: Info & Setup Box */}
+        <div class="md:col-span-1 space-y-6">
+          <div class="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-2xl p-6 space-y-4 shadow-sm">
+            <div class="p-3 bg-[#0070f3]/10 text-[#0070f3] rounded-xl w-fit">
+              <Mail className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 class="text-base font-bold text-[var(--ink-primary)]">Direct Inquiries</h3>
+              <p class="text-xs text-[var(--ink-mute)] mt-1 leading-relaxed">
+                We review incoming messages regularly. For urgent correction reports or feature suggestions, please fill out the form.
+              </p>
+            </div>
+            <div class="pt-2 border-t border-[var(--hairline)] space-y-2 text-xs text-[var(--ink-body)]">
+              <div class="flex items-center gap-2">
+                <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                <span>Response Time: 24–48 hours</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="h-1.5 w-1.5 rounded-full bg-indigo-500"></span>
+                <span>Zero Public Email Exposure</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-2xl p-6 space-y-3 shadow-sm">
+            <div class="flex items-center gap-2 text-xs font-mono uppercase font-semibold text-[var(--ink-mute)]">
+              <HelpCircle className="w-4 h-4 text-[#7928ca]" /> Quick Guides
+            </div>
+            <p class="text-xs text-[var(--ink-body)] leading-relaxed">
+              Looking for calculation rules? Check out our dedicated guide pages:
+            </p>
+            <div class="space-y-1.5 text-xs">
+              <a href="/upsc-age-calculator" class="flex items-center justify-between p-2 rounded-lg bg-[var(--canvas-inset)] border border-[var(--hairline)] hover:border-[var(--ink-primary)] transition text-[var(--ink-primary)] font-medium">
+                <span>UPSC Eligibility Rules</span>
+                <ExternalLink className="w-3.5 h-3.5 text-[var(--ink-mute)]" />
+              </a>
+              <a href="/about" class="flex items-center justify-between p-2 rounded-lg bg-[var(--canvas-inset)] border border-[var(--hairline)] hover:border-[var(--ink-primary)] transition text-[var(--ink-primary)] font-medium">
+                <span>About Calculation Engine</span>
+                <ExternalLink className="w-3.5 h-3.5 text-[var(--ink-mute)]" />
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column: Contact Form */}
+        <div class="md:col-span-2">
+          <ContactForm client:load />
+        </div>
+      </div>
+    </main>
+
+    <Footer />
+  </body>
+</html>
