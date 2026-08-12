@@ -7,6 +7,7 @@ export type DogSize = 'small' | 'medium' | 'large' | 'giant';
 export const DogAgeMode: React.FC = () => {
   const [dob, setDob] = useState<string>('2021-04-10');
   const [dogSize, setDogSize] = useState<DogSize>('medium');
+  const [unit, setUnit] = useState<'lbs' | 'kg'>('lbs');
   const [copied, setCopied] = useState<boolean>(false);
 
   const today = useMemo(() => new Date(), []);
@@ -103,9 +104,34 @@ export const DogAgeMode: React.FC = () => {
 
           {/* Dog Size Selector */}
           <div className="space-y-2">
-            <label className="block text-xs font-medium uppercase tracking-wider text-[var(--ink-body)]">
-              Dog Breed Size <span className="text-[#ee0000]">*</span>
-            </label>
+            <div className="flex items-center justify-between">
+              <label className="block text-xs font-medium uppercase tracking-wider text-[var(--ink-body)]">
+                Dog Breed Size <span className="text-[#ee0000]">*</span>
+              </label>
+
+              {/* Unit Toggle Switch */}
+              <div className="inline-flex items-center p-0.5 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-lg text-[11px] font-mono font-semibold">
+                <button
+                  type="button"
+                  onClick={() => setUnit('lbs')}
+                  className={`px-2 py-0.5 rounded-md transition cursor-pointer select-none ${
+                    unit === 'lbs' ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] shadow-2xs' : 'text-[var(--ink-mute)] hover:text-[var(--ink-primary)]'
+                  }`}
+                >
+                  lbs
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setUnit('kg')}
+                  className={`px-2 py-0.5 rounded-md transition cursor-pointer select-none ${
+                    unit === 'kg' ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] shadow-2xs' : 'text-[var(--ink-mute)] hover:text-[var(--ink-primary)]'
+                  }`}
+                >
+                  kg
+                </button>
+              </div>
+            </div>
+
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
               <button
                 type="button"
@@ -117,7 +143,9 @@ export const DogAgeMode: React.FC = () => {
                 }`}
               >
                 <div className="font-bold">Small</div>
-                <div className="text-[10px] opacity-80">&lt; 20 lbs</div>
+                <div className="text-[10px] opacity-80">
+                  {unit === 'lbs' ? '< 20 lbs' : '< 9 kg'}
+                </div>
               </button>
 
               <button
@@ -130,7 +158,9 @@ export const DogAgeMode: React.FC = () => {
                 }`}
               >
                 <div className="font-bold">Medium</div>
-                <div className="text-[10px] opacity-80">20–50 lbs</div>
+                <div className="text-[10px] opacity-80">
+                  {unit === 'lbs' ? '20–50 lbs' : '9–23 kg'}
+                </div>
               </button>
 
               <button
@@ -143,7 +173,9 @@ export const DogAgeMode: React.FC = () => {
                 }`}
               >
                 <div className="font-bold">Large</div>
-                <div className="text-[10px] opacity-80">50–90 lbs</div>
+                <div className="text-[10px] opacity-80">
+                  {unit === 'lbs' ? '50–90 lbs' : '23–41 kg'}
+                </div>
               </button>
 
               <button
@@ -156,7 +188,9 @@ export const DogAgeMode: React.FC = () => {
                 }`}
               >
                 <div className="font-bold">Giant</div>
-                <div className="text-[10px] opacity-80">90+ lbs</div>
+                <div className="text-[10px] opacity-80">
+                  {unit === 'lbs' ? '90+ lbs' : '41+ kg'}
+                </div>
               </button>
             </div>
           </div>
