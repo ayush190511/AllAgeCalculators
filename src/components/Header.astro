@@ -60,23 +60,61 @@ const currentPath = Astro.url.pathname;
         >
           Date Diff
         </a>
-
-        <!-- Vertical Divider Separator between Calculators & Info Pages -->
+                <!-- Vertical Divider Separator between Calculators & Info Pages -->
         <div class="h-4 w-px bg-[var(--hairline-strong)] mx-1.5 shrink-0 opacity-60"></div>
 
-        <!-- Info & Support Group -->
-        <a 
-          href="/about" 
-          class={`px-2.5 py-1.5 rounded-lg transition ${currentPath === '/about' || currentPath === '/about/' ? 'bg-[var(--canvas-inset)] text-[var(--ink-primary)] font-semibold border border-[var(--hairline)]' : 'hover:text-[var(--ink-primary)] text-[var(--ink-mute)]'}`}
-        >
-          About
-        </a>
-        <a 
-          href="/contact" 
-          class={`px-2.5 py-1.5 rounded-lg transition ${currentPath === '/contact' || currentPath === '/contact/' ? 'bg-[var(--canvas-inset)] text-[var(--ink-primary)] font-semibold border border-[var(--hairline)]' : 'hover:text-[var(--ink-primary)] text-[var(--ink-mute)]'}`}
-        >
-          Contact
-        </a>
+        <!-- Clean "More / Pages & Legal" Dropdown Menu -->
+        <div class="relative group">
+          <button 
+            type="button"
+            class={`px-2.5 py-1.5 rounded-lg transition flex items-center gap-1 cursor-pointer select-none ${
+              currentPath === '/about' || currentPath === '/about/' ||
+              currentPath === '/contact' || currentPath === '/contact/' ||
+              currentPath === '/privacy-policy' || currentPath === '/privacy-policy/' ||
+              currentPath === '/terms-and-conditions' || currentPath === '/terms-and-conditions/'
+                ? 'bg-[var(--canvas-inset)] text-[var(--ink-primary)] font-semibold border border-[var(--hairline)]'
+                : 'hover:text-[var(--ink-primary)] text-[var(--ink-mute)]'
+            }`}
+          >
+            <span>More</span>
+            <svg class="w-3 h-3 text-[var(--ink-mute)] group-hover:text-[var(--ink-primary)] transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+
+          <!-- Dropdown Card -->
+          <div class="absolute right-0 top-full mt-1.5 w-48 py-1.5 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50">
+            <a 
+              href="/about" 
+              class={`flex items-center gap-2.5 px-3 py-2 text-xs transition hover:bg-[var(--canvas-inset)] ${currentPath === '/about' || currentPath === '/about/' ? 'font-bold text-[var(--ink-primary)]' : 'text-[var(--ink-body)]'}`}
+            >
+              <span class="w-1.5 h-1.5 rounded-full bg-[#0070f3]"></span>
+              About Us
+            </a>
+            <a 
+              href="/contact" 
+              class={`flex items-center gap-2.5 px-3 py-2 text-xs transition hover:bg-[var(--canvas-inset)] ${currentPath === '/contact' || currentPath === '/contact/' ? 'font-bold text-[var(--ink-primary)]' : 'text-[var(--ink-body)]'}`}
+            >
+              <span class="w-1.5 h-1.5 rounded-full bg-[#10b981]"></span>
+              Contact Us
+            </a>
+            <div class="my-1 border-t border-[var(--hairline)]"></div>
+            <a 
+              href="/privacy-policy" 
+              class={`flex items-center gap-2.5 px-3 py-2 text-xs transition hover:bg-[var(--canvas-inset)] ${currentPath === '/privacy-policy' || currentPath === '/privacy-policy/' ? 'font-bold text-[var(--ink-primary)]' : 'text-[var(--ink-body)]'}`}
+            >
+              <span class="w-1.5 h-1.5 rounded-full bg-[#7928ca]"></span>
+              Privacy Policy
+            </a>
+            <a 
+              href="/terms-and-conditions" 
+              class={`flex items-center gap-2.5 px-3 py-2 text-xs transition hover:bg-[var(--canvas-inset)] ${currentPath === '/terms-and-conditions' || currentPath === '/terms-and-conditions/' ? 'font-bold text-[var(--ink-primary)]' : 'text-[var(--ink-body)]'}`}
+            >
+              <span class="w-1.5 h-1.5 rounded-full bg-[#f5a623]"></span>
+              Terms & Conditions
+            </a>
+          </div>
+        </div>
       </nav>
 
       <!-- Right Header Controls -->
@@ -146,7 +184,7 @@ const currentPath = Astro.url.pathname;
       </a>
       <a 
         href="/date-difference-calculator" 
-        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/date-difference-calculator' || currentPath === '/date-difference-calculator/' ? 'mobile-active-pill bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] font-semibold' : 'bg-[var(--canvas-inset)] text-[var(--ink-body)] border-[var(--hairline)]'}`}
+        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/date-difference-calculator' || currentPath === '/date-difference-calculator/' ? 'mobile-active-pill bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--hairline)]' : 'bg-[var(--canvas-inset)] text-[var(--ink-body)] border-[var(--hairline)]'}`}
       >
         Date Diff
       </a>
@@ -154,7 +192,7 @@ const currentPath = Astro.url.pathname;
       <!-- Visual Separator Pill for Mobile -->
       <div class="h-3.5 w-px bg-[var(--hairline-strong)] shrink-0 mx-1 self-center opacity-60"></div>
 
-      <!-- Info Group Pills -->
+      <!-- Info & Legal Group Pills -->
       <a 
         href="/about" 
         class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/about' || currentPath === '/about/' ? 'mobile-active-pill bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] font-semibold' : 'bg-[var(--canvas-inset)] text-[var(--ink-mute)] border-[var(--hairline)]'}`}
@@ -166,6 +204,18 @@ const currentPath = Astro.url.pathname;
         class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/contact' || currentPath === '/contact/' ? 'mobile-active-pill bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] font-semibold' : 'bg-[var(--canvas-inset)] text-[var(--ink-mute)] border-[var(--hairline)]'}`}
       >
         Contact
+      </a>
+      <a 
+        href="/privacy-policy" 
+        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/privacy-policy' || currentPath === '/privacy-policy/' ? 'mobile-active-pill bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] font-semibold' : 'bg-[var(--canvas-inset)] text-[var(--ink-mute)] border-[var(--hairline)]'}`}
+      >
+        Privacy Policy
+      </a>
+      <a 
+        href="/terms-and-conditions" 
+        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/terms-and-conditions' || currentPath === '/terms-and-conditions/' ? 'mobile-active-pill bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] font-semibold' : 'bg-[var(--canvas-inset)] text-[var(--ink-mute)] border-[var(--hairline)]'}`}
+      >
+        Terms & Conditions
       </a>
     </div>
 
