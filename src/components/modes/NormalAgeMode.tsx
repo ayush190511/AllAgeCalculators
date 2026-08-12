@@ -14,6 +14,9 @@ export const NormalAgeMode: React.FC<NormalAgeModeProps> = ({
   const [dob, setDob] = useState<string>(initialDob);
   const [showTime, setShowTime] = useState<boolean>(false);
   const [timeStr, setTimeStr] = useState<string>('08:30');
+  const [showPlace, setShowPlace] = useState<boolean>(false);
+  const [birthPlace, setBirthPlace] = useState<string>('');
+  const [selectedTimezone, setSelectedTimezone] = useState<string>('Asia/Kolkata');
   const [now, setNow] = useState<Date>(new Date());
   const [copied, setCopied] = useState<boolean>(false);
   const [dateError, setDateError] = useState<string | null>(null);
@@ -74,7 +77,7 @@ export const NormalAgeMode: React.FC<NormalAgeModeProps> = ({
   const handleCopySummary = () => {
     const text = `🎉 Exact Age Summary
 📅 Date of Birth: ${dob} ${showTime ? `at ${timeStr}` : ''}
-⏳ Exact Age: ${ageData.years} Years, ${ageData.months} Months, ${ageData.days} Days
+${showPlace ? `📍 Birth Location: ${birthPlace ? birthPlace : 'Specified City'} (${selectedTimezone})\n` : ''}⏳ Exact Age: ${ageData.years} Years, ${ageData.months} Months, ${ageData.days} Days
 🔢 Total Days Lived: ${ageData.totalDays.toLocaleString()} days
 🎂 Next Birthday in: ${ageData.nextBirthdayDays} days (${ageData.nextBirthdayDateStr})
 📍 Calculated via allagecalculators.com`;
@@ -146,6 +149,57 @@ export const NormalAgeMode: React.FC<NormalAgeModeProps> = ({
               )}
             </div>
           </div>
+
+          {/* Optional Place of Birth & Timezone Adjustment */}
+          <div className="md:col-span-2 pt-2 border-t border-[var(--hairline)]">
+            <div className="flex items-center justify-between">
+              <button
+                type="button"
+                onClick={() => setShowPlace(!showPlace)}
+                className="text-xs font-semibold text-[#0070f3] hover:underline flex items-center gap-1.5 cursor-pointer select-none"
+              >
+                <span>{showPlace ? '– Hide Place of Birth & Timezone' : '+ Add Place of Birth & Timezone (Optional)'}</span>
+              </button>
+            </div>
+
+            {showPlace && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-3 p-4 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-xl animate-fade-in-down">
+                <div className="space-y-1.5">
+                  <label className="block text-[11px] font-mono uppercase tracking-wider text-[var(--ink-mute)]">
+                    City / Place of Birth
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. New Delhi, India or London, UK"
+                    value={birthPlace}
+                    onChange={(e) => setBirthPlace(e.target.value)}
+                    className="w-full h-9 px-3 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg text-xs text-[var(--ink-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--ink-primary)]"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="block text-[11px] font-mono uppercase tracking-wider text-[var(--ink-mute)]">
+                    Birth Timezone Offset
+                  </label>
+                  <select
+                    value={selectedTimezone}
+                    onChange={(e) => setSelectedTimezone(e.target.value)}
+                    className="w-full h-9 px-2.5 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg text-xs text-[var(--ink-primary)] font-mono focus:outline-none focus:ring-1 focus:ring-[var(--ink-primary)] cursor-pointer"
+                  >
+                    <option value="Asia/Kolkata">Asia/Kolkata (IST - UTC+5:30)</option>
+                    <option value="America/New_York">America/New_York (EST/EDT - UTC-5)</option>
+                    <option value="America/Los_Angeles">America/Los_Angeles (PST/PDT - UTC-8)</option>
+                    <option value="Europe/London">Europe/London (GMT/BST - UTC+0)</option>
+                    <option value="Europe/Paris">Europe/Paris (CET/CEST - UTC+1)</option>
+                    <option value="Asia/Dubai">Asia/Dubai (GST - UTC+4)</option>
+                    <option value="Asia/Singapore">Asia/Singapore (SGT - UTC+8)</option>
+                    <option value="Asia/Tokyo">Asia/Tokyo (JST - UTC+9)</option>
+                    <option value="Australia/Sydney">Australia/Sydney (AEST - UTC+10)</option>
+                  </select>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
@@ -187,6 +241,19 @@ export const NormalAgeMode: React.FC<NormalAgeModeProps> = ({
             <span className="text-[10px] sm:text-xs uppercase font-mono text-[var(--ink-mute)] block mt-0.5">Days</span>
           </div>
         </div>
+
+        {/* Place of Birth & Timezone Metadata Badge */}
+        {showPlace && (
+          <div className="my-4 p-3.5 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 text-xs text-[var(--ink-body)] animate-fade-in-down">
+            <span className="flex items-center gap-2">
+              <span className="text-base">🌐</span>
+              <span><strong>Birth Location & Timezone:</strong> {birthPlace ? birthPlace : 'Specified City'}</span>
+            </span>
+            <span className="font-mono text-[#0070f3] font-semibold bg-[var(--canvas-card)] px-2.5 py-1 rounded border border-[var(--hairline)] shrink-0 self-start sm:self-auto">
+              {selectedTimezone}
+            </span>
+          </div>
+        )}
 
         {/* Live Second-by-Second Ticker (If Birth Time Provided) */}
         {showTime && (
