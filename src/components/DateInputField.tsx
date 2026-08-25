@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Calendar as CalendarIcon } from 'lucide-react';
 
 interface DateInputFieldProps {
@@ -42,17 +42,46 @@ function isoToDisplay(isoStr: string): string {
 }
 
 /**
- * Format raw digit string into DD/MM/YYYY with auto slashes
+ * Smart date formatting with auto-inserted forward slashes
  */
-function formatDigitsToDateString(digits: string): string {
-  const clean = digits.replace(/\D/g, '').slice(0, 8);
-  if (clean.length <= 2) {
-    return clean;
+function formatWithAutoSlash(currentVal: string, previousVal: string): string {
+  // Handle smooth deletion on backspace
+  if (currentVal.length < previousVal.length) {
+    if (previousVal.endsWith('/') && !currentVal.endsWith('/')) {
+      return currentVal.slice(0, -1);
+    }
+    return currentVal;
   }
-  if (clean.length <= 4) {
-    return `${clean.slice(0, 2)}/${clean.slice(2)}`;
+
+  // If user manually pressed slash after 1 digit (e.g. "5/"), pad with leading zero -> "05/"
+  if (currentVal.endsWith('/') && !previousVal.endsWith('/')) {
+    const digitsOnly = currentVal.replace(/\D/g, '');
+    if (digitsOnly.length === 1) {
+      return `0${digitsOnly}/`;
+    }
+    if (digitsOnly.length === 3) {
+      return `${digitsOnly.slice(0, 2)}/0${digitsOnly.slice(2)}/`;
+    }
   }
-  return `${clean.slice(0, 2)}/${clean.slice(2, 4)}/${clean.slice(4)}`;
+
+  // Extract raw digits (max 8)
+  const digits = currentVal.replace(/\D/g, '').slice(0, 8);
+  if (!digits) return '';
+
+  if (digits.length === 1) {
+    return digits;
+  }
+  if (digits.length === 2) {
+    return `${digits}/`;
+  }
+  if (digits.length === 3) {
+    return `${digits.slice(0, 2)}/${digits.slice(2)}`;
+  }
+  if (digits.length === 4) {
+    return `${digits.slice(0, 2)}/${digits.slice(2)}/`;
+  }
+  // 5 to 8 digits (year)
+  return `${digits.slice(0, 2)}/${digits.slice(2, 4)}/${digits.slice(4)}`;
 }
 
 export const DateInputField: React.FC<DateInputFieldProps> = ({
@@ -69,7 +98,7 @@ export const DateInputField: React.FC<DateInputFieldProps> = ({
   const [displayText, setDisplayText] = useState<string>(() => isoToDisplay(value));
   const [inputError, setInputError] = useState<string | null>(null);
 
-  // Sync internal display when external `value` prop changes
+  // Sync internal text state when external `value` prop changes
   useEffect(() => {
     if (value) {
       const formatted = isoToDisplay(value);
@@ -81,10 +110,10 @@ export const DateInputField: React.FC<DateInputFieldProps> = ({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const rawVal = e.target.value;
-    const formatted = formatDigitsToDateString(rawVal);
+    const formatted = formatWithAutoSlash(rawVal, displayText);
     setDisplayText(formatted);
 
-    // If full 8 digits entered (DD/MM/YYYY = 10 chars)
+    // When full 8 digits (DD/MM/YYYY = 10 characters) are completed
     if (formatted.length === 10) {
       const parts = formatted.split('/');
       if (parts.length === 3) {
@@ -93,11 +122,11 @@ export const DateInputField: React.FC<DateInputFieldProps> = ({
         const yNum = parseInt(parts[2], 10);
 
         if (!isNaN(dNum) && !isNaN(mNum) && !isNaN(yNum) && yNum >= 1900 && yNum <= 2100) {
-          // Month boundary
+          // Month boundary validation
           if (mNum < 1) mNum = 1;
           if (mNum > 12) mNum = 12;
 
-          // Day boundary
+          // Day boundary validation
           const maxDays = getMaxDaysInMonth(mNum, yNum);
           if (dNum < 1) dNum = 1;
           if (dNum > maxDays) dNum = maxDays;
@@ -122,40 +151,21 @@ export const DateInputField: React.FC<DateInputFieldProps> = ({
   };
 
   const handleBlur = () => {
-    // If incomplete on blur, revert to current valid value
+    // If left incomplete on blur, revert cleanly to current valid value
     if (displayText.length < 10 && value) {
       setDisplayText(isoToDisplay(value));
       setInputError(null);
     }
   };
 
-  // Human readable preview badge (e.g. May 15, 1998)
-  const displayFormatted = useMemo(() => {
-    if (!value) return '';
-    try {
-      const [y, m, d] = value.split('-').map(Number);
-      const dateObj = new Date(y, m - 1, d);
-      return dateObj.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
-    } catch {
-      return value;
-    }
-  }, [value]);
-
   return (
     <div className={`space-y-1.5 ${className}`}>
-      {/* Label & Optional Preview */}
-      <div className="flex items-center justify-between gap-2">
-        <label className="block text-xs font-medium uppercase tracking-wider text-[var(--ink-body)] truncate">
-          {label} {required && <span className="text-[#ee0000]">*</span>}
-        </label>
-        {displayFormatted && (
-          <span className="text-xs font-mono text-[#0070f3] font-medium hidden sm:inline-block">
-            {displayFormatted}
-          </span>
-        )}
-      </div>
+      {/* Label */}
+      <label className="block text-xs font-medium uppercase tracking-wider text-[var(--ink-body)] truncate">
+        {label} {required && <span className="text-[#ee0000]">*</span>}
+      </label>
 
-      {/* Single Unified Entry Box: DD/MM/YYYY Text Input + Calendar Button */}
+      {/* Clean Single Entry Box with Placeholder and Integrated Calendar Picker */}
       <div className="relative flex items-center">
         <input
           type="text"
@@ -166,11 +176,11 @@ export const DateInputField: React.FC<DateInputFieldProps> = ({
           onChange={handleInputChange}
           onBlur={handleBlur}
           placeholder="DD/MM/YYYY"
-          className="w-full h-11 pl-3.5 pr-28 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg text-sm text-[var(--ink-primary)] font-mono-num font-semibold focus:outline-none focus:ring-2 focus:ring-[var(--ink-primary)] transition tracking-wider"
+          className="w-full h-11 pl-3.5 pr-28 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg text-sm text-[var(--ink-primary)] font-mono-num font-semibold focus:outline-none focus:ring-2 focus:ring-[var(--ink-primary)] transition tracking-wider placeholder:text-[var(--ink-mute)]/60 placeholder:font-normal"
           aria-label={`${label} in DD/MM/YYYY format`}
         />
 
-        {/* Integrated Calendar Trigger Button overlay */}
+        {/* Integrated Calendar Trigger Button */}
         <div className="absolute right-1 top-1 bottom-1 flex items-center">
           <div className="relative h-full flex items-center">
             <div className="h-9 px-3 bg-[var(--canvas-inset)] border border-[var(--hairline)] hover:border-[var(--ink-primary)] text-[var(--ink-primary)] rounded-md flex items-center justify-center gap-1.5 transition cursor-pointer select-none pointer-events-none">
@@ -178,7 +188,7 @@ export const DateInputField: React.FC<DateInputFieldProps> = ({
               <span className="text-xs font-mono font-medium">Calendar</span>
             </div>
 
-            {/* Invisible native HTML5 date input overlay: clicking the button directly opens OS date picker */}
+            {/* Invisible native HTML5 date input overlay for native calendar picker */}
             <input
               ref={hiddenDateInputRef}
               type="date"
@@ -197,14 +207,6 @@ export const DateInputField: React.FC<DateInputFieldProps> = ({
             />
           </div>
         </div>
-      </div>
-
-      {/* Sub-label helper text / error message */}
-      <div className="flex items-center justify-between text-[11px] text-[var(--ink-mute)] px-0.5">
-        <span>Format: <strong className="text-[var(--ink-primary)] font-mono">DD/MM/YYYY</strong> or tap <strong className="text-[#0070f3] font-mono">📅 Calendar</strong></span>
-        {displayFormatted && (
-          <span className="font-mono text-[#0070f3] font-medium sm:hidden">{displayFormatted}</span>
-        )}
       </div>
 
       {(inputError || helpText) && (
