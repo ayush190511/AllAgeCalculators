@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { Calendar as CalendarIcon, Edit3 } from 'lucide-react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
+import { Calendar as CalendarIcon } from 'lucide-react';
 
 interface DateInputFieldProps {
   label: string;
@@ -13,18 +13,18 @@ interface DateInputFieldProps {
 }
 
 const MONTHS = [
-  { value: '01', label: '01 - Jan', days: 31 },
-  { value: '02', label: '02 - Feb', days: 29 }, // Leap-year aware in calculation
-  { value: '03', label: '03 - Mar', days: 31 },
-  { value: '04', label: '04 - Apr', days: 30 },
-  { value: '05', label: '05 - May', days: 31 },
-  { value: '06', label: '06 - Jun', days: 30 },
-  { value: '07', label: '07 - Jul', days: 31 },
-  { value: '08', label: '08 - Aug', days: 31 },
-  { value: '09', label: '09 - Sep', days: 30 },
-  { value: '10', label: '10 - Oct', days: 31 },
-  { value: '11', label: '11 - Nov', days: 30 },
-  { value: '12', label: '12 - Dec', days: 31 },
+  { value: '01', label: '01 - Jan' },
+  { value: '02', label: '02 - Feb' },
+  { value: '03', label: '03 - Mar' },
+  { value: '04', label: '04 - Apr' },
+  { value: '05', label: '05 - May' },
+  { value: '06', label: '06 - Jun' },
+  { value: '07', label: '07 - Jul' },
+  { value: '08', label: '08 - Aug' },
+  { value: '09', label: '09 - Sep' },
+  { value: '10', label: '10 - Oct' },
+  { value: '11', label: '11 - Nov' },
+  { value: '12', label: '12 - Dec' },
 ];
 
 function isLeapYear(year: number): boolean {
@@ -51,10 +51,9 @@ export const DateInputField: React.FC<DateInputFieldProps> = ({
   helpText,
   className = '',
 }) => {
-  // Input mode: 'calendar' or 'type' (manual writing)
-  const [mode, setMode] = useState<'type' | 'calendar'>('type');
+  const hiddenDateInputRef = useRef<HTMLInputElement>(null);
 
-  // Split state for manual typing
+  // Split state for Day, Month, Year
   const [day, setDay] = useState<string>('15');
   const [month, setMonth] = useState<string>('05');
   const [year, setYear] = useState<string>('1998');
@@ -103,7 +102,6 @@ export const DateInputField: React.FC<DateInputFieldProps> = ({
   };
 
   const handleDayChange = (val: string) => {
-    // Only allow numbers, max 2 digits
     const cleaned = val.replace(/\D/g, '').slice(0, 2);
     setDay(cleaned);
     if (cleaned.length >= 1) {
@@ -130,6 +128,22 @@ export const DateInputField: React.FC<DateInputFieldProps> = ({
     }
   };
 
+  // Open the native calendar picker when user clicks calendar trigger
+  const handleCalendarClick = () => {
+    if (hiddenDateInputRef.current) {
+      if (typeof hiddenDateInputRef.current.showPicker === 'function') {
+        try {
+          hiddenDateInputRef.current.showPicker();
+          return;
+        } catch {
+          // Fallback to click
+        }
+      }
+      hiddenDateInputRef.current.focus();
+      hiddenDateInputRef.current.click();
+    }
+  };
+
   // Quick formatted human readable date
   const displayFormatted = useMemo(() => {
     if (!value) return '';
@@ -144,154 +158,129 @@ export const DateInputField: React.FC<DateInputFieldProps> = ({
 
   return (
     <div className={`space-y-2 ${className}`}>
-      {/* Label and Mode Switcher Row */}
+      {/* Label and Formatted Date Header */}
       <div className="flex items-center justify-between gap-2">
         <label className="block text-xs font-medium uppercase tracking-wider text-[var(--ink-body)] truncate">
           {label} {required && <span className="text-[#ee0000]">*</span>}
         </label>
-
-        {/* Segmented Mode Selector: Write Date vs Calendar Picker */}
-        <div className="inline-flex items-center p-0.5 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-lg text-[11px] font-medium shrink-0">
-          <button
-            type="button"
-            onClick={() => setMode('type')}
-            className={`px-2.5 py-1 rounded-md transition flex items-center gap-1.5 cursor-pointer select-none ${
-              mode === 'type'
-                ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] font-semibold shadow-2xs'
-                : 'text-[var(--ink-body)] hover:text-[var(--ink-primary)]'
-            }`}
-            aria-label="Write date manually"
-          >
-            <Edit3 className="w-3 h-3" />
-            <span>Write Date</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setMode('calendar')}
-            className={`px-2.5 py-1 rounded-md transition flex items-center gap-1.5 cursor-pointer select-none ${
-              mode === 'calendar'
-                ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] font-semibold shadow-2xs'
-                : 'text-[var(--ink-body)] hover:text-[var(--ink-primary)]'
-            }`}
-            aria-label="Pick date from calendar"
-          >
-            <CalendarIcon className="w-3 h-3" />
-            <span>Calendar</span>
-          </button>
-        </div>
+        {displayFormatted && (
+          <span className="text-xs font-mono text-[#0070f3] font-medium hidden sm:inline-block">
+            {displayFormatted}
+          </span>
+        )}
       </div>
 
-      {/* Mode 1: Write Date (Segmented Day, Month, Year Inputs) */}
-      {mode === 'type' && (
-        <div className="space-y-1.5 animate-fade-in-down">
-          <div className="grid grid-cols-12 gap-1.5 sm:gap-2">
-            {/* Day Input (3 cols) */}
-            <div className="col-span-3">
-              <div className="relative">
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  pattern="[0-9]*"
-                  maxLength={2}
-                  value={day}
-                  onChange={(e) => handleDayChange(e.target.value)}
-                  onBlur={() => {
-                    if (day) {
-                      const formatted = String(Math.max(1, Math.min(31, parseInt(day, 10) || 1))).padStart(2, '0');
-                      setDay(formatted);
-                      updateDate(formatted, month, year);
-                    }
-                  }}
-                  placeholder="DD"
-                  className="w-full h-11 px-2 sm:px-3 text-center bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg text-sm text-[var(--ink-primary)] font-mono-num font-semibold focus:outline-none focus:ring-2 focus:ring-[var(--ink-primary)] transition"
-                  aria-label="Day (DD)"
-                />
-                <span className="absolute right-1.5 bottom-1 text-[8px] sm:text-[9px] font-mono text-[var(--ink-mute)] pointer-events-none uppercase">
-                  Day
-                </span>
-              </div>
-            </div>
+      {/* Combined Unified Input Row: Day + Month + Year + Calendar Trigger */}
+      <div className="flex items-center gap-1.5 sm:gap-2">
+        {/* Day (DD) */}
+        <div className="relative flex-1 min-w-0">
+          <input
+            type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
+            maxLength={2}
+            value={day}
+            onChange={(e) => handleDayChange(e.target.value)}
+            onBlur={() => {
+              if (day) {
+                const formatted = String(Math.max(1, Math.min(31, parseInt(day, 10) || 1))).padStart(2, '0');
+                setDay(formatted);
+                updateDate(formatted, month, year);
+              }
+            }}
+            placeholder="DD"
+            className="w-full h-11 px-2 text-center bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg text-sm text-[var(--ink-primary)] font-mono-num font-semibold focus:outline-none focus:ring-2 focus:ring-[var(--ink-primary)] transition"
+            aria-label="Day (DD)"
+          />
+          <span className="absolute right-1.5 bottom-1 text-[8px] sm:text-[9px] font-mono text-[var(--ink-mute)] pointer-events-none uppercase">
+            Day
+          </span>
+        </div>
 
-            {/* Month Select (5 cols) */}
-            <div className="col-span-5">
-              <div className="relative">
-                <select
-                  value={month}
-                  onChange={(e) => handleMonthChange(e.target.value)}
-                  className="w-full h-11 pl-2 pr-4 sm:px-3 text-xs sm:text-sm bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg text-[var(--ink-primary)] font-mono font-medium focus:outline-none focus:ring-2 focus:ring-[var(--ink-primary)] transition cursor-pointer appearance-none"
-                  aria-label="Month (MM)"
-                >
-                  {MONTHS.map((m) => (
-                    <option key={m.value} value={m.value}>
-                      {m.label}
-                    </option>
-                  ))}
-                </select>
-                <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--ink-mute)] text-xs">
-                  ▾
-                </div>
-              </div>
-            </div>
-
-            {/* Year Input (4 cols) */}
-            <div className="col-span-4">
-              <div className="relative">
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  pattern="[0-9]*"
-                  maxLength={4}
-                  value={year}
-                  onChange={(e) => handleYearChange(e.target.value)}
-                  onBlur={() => {
-                    if (year && year.length === 4) {
-                      updateDate(day, month, year);
-                    }
-                  }}
-                  placeholder="YYYY"
-                  className="w-full h-11 px-2 sm:px-3 text-center bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg text-sm text-[var(--ink-primary)] font-mono-num font-semibold focus:outline-none focus:ring-2 focus:ring-[var(--ink-primary)] transition"
-                  aria-label="Year (YYYY)"
-                />
-                <span className="absolute right-1.5 bottom-1 text-[8px] sm:text-[9px] font-mono text-[var(--ink-mute)] pointer-events-none uppercase">
-                  Year
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between text-[11px] text-[var(--ink-mute)] px-1">
-            <span>Format: <strong className="text-[var(--ink-primary)] font-mono">{day || 'DD'}/{month || 'MM'}/{year || 'YYYY'}</strong></span>
-            {displayFormatted && (
-              <span className="font-mono text-[#0070f3] font-medium">{displayFormatted}</span>
-            )}
+        {/* Month Selector */}
+        <div className="relative flex-1.5 sm:flex-2 min-w-0">
+          <select
+            value={month}
+            onChange={(e) => handleMonthChange(e.target.value)}
+            className="w-full h-11 pl-2 pr-5 text-xs sm:text-sm bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg text-[var(--ink-primary)] font-mono font-medium focus:outline-none focus:ring-2 focus:ring-[var(--ink-primary)] transition cursor-pointer appearance-none"
+            aria-label="Month (MM)"
+          >
+            {MONTHS.map((m) => (
+              <option key={m.value} value={m.value}>
+                {m.label}
+              </option>
+            ))}
+          </select>
+          <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--ink-mute)] text-xs">
+            ▾
           </div>
         </div>
-      )}
 
-      {/* Mode 2: Native Calendar Picker */}
-      {mode === 'calendar' && (
-        <div className="space-y-1.5 animate-fade-in-down">
+        {/* Year (YYYY) */}
+        <div className="relative flex-1.5 min-w-0">
           <input
+            type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
+            maxLength={4}
+            value={year}
+            onChange={(e) => handleYearChange(e.target.value)}
+            onBlur={() => {
+              if (year && year.length === 4) {
+                updateDate(day, month, year);
+              }
+            }}
+            placeholder="YYYY"
+            className="w-full h-11 px-2 text-center bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg text-sm text-[var(--ink-primary)] font-mono-num font-semibold focus:outline-none focus:ring-2 focus:ring-[var(--ink-primary)] transition"
+            aria-label="Year (YYYY)"
+          />
+          <span className="absolute right-1.5 bottom-1 text-[8px] sm:text-[9px] font-mono text-[var(--ink-mute)] pointer-events-none uppercase">
+            Year
+          </span>
+        </div>
+
+        {/* Integrated Calendar Trigger */}
+        <div className="relative shrink-0">
+          <button
+            type="button"
+            onClick={handleCalendarClick}
+            title="Open Calendar Picker"
+            aria-label="Open Calendar Picker"
+            className="h-11 px-3 sm:px-3.5 bg-[var(--canvas-inset)] border border-[var(--hairline)] hover:border-[var(--ink-primary)] text-[var(--ink-primary)] rounded-lg flex items-center justify-center gap-1.5 transition cursor-pointer select-none"
+          >
+            <CalendarIcon className="w-4 h-4 text-[#0070f3]" />
+            <span className="hidden sm:inline text-xs font-mono font-medium">Calendar</span>
+          </button>
+
+          {/* Hidden native HTML5 date input with invisible overlay for 100% native picker support */}
+          <input
+            ref={hiddenDateInputRef}
             type="date"
             value={value}
             max={max}
             min={min}
-            onChange={(e) => onChange(e.target.value)}
-            className="w-full h-11 px-3.5 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg text-sm text-[var(--ink-primary)] font-mono-num focus:outline-none focus:ring-2 focus:ring-[var(--ink-primary)] transition cursor-pointer"
-            aria-label={label}
+            onChange={(e) => {
+              if (e.target.value) {
+                onChange(e.target.value);
+              }
+            }}
+            className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+            tabIndex={-1}
+            aria-hidden="true"
           />
-          <div className="flex items-center justify-between text-[11px] text-[var(--ink-mute)] px-1">
-            <span>Tap input to open device calendar</span>
-            {displayFormatted && (
-              <span className="font-mono text-[#0070f3] font-medium">{displayFormatted}</span>
-            )}
-          </div>
         </div>
-      )}
+      </div>
+
+      {/* Sub-label info row */}
+      <div className="flex items-center justify-between text-[11px] text-[var(--ink-mute)] px-0.5">
+        <span>Type <strong className="text-[var(--ink-primary)] font-mono">Day/Month/Year</strong> or tap <strong className="text-[#0070f3] font-mono">📅 Calendar</strong></span>
+        {displayFormatted && (
+          <span className="font-mono text-[#0070f3] font-medium sm:hidden">{displayFormatted}</span>
+        )}
+      </div>
 
       {helpText && (
-        <p className="text-[11px] text-[var(--ink-mute)] mt-1">{helpText}</p>
+        <p className="text-[11px] text-amber-500 font-medium mt-1">{helpText}</p>
       )}
     </div>
   );
