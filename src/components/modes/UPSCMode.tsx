@@ -7,11 +7,16 @@ import { CheckCircle2, XCircle, AlertCircle, Copy, Check, Clock, Shield, Award, 
 
 interface UPSCModeProps {
   initialDob?: string;
+  dob?: string;
   onDobChange?: (val: string) => void;
 }
 
-export const UPSCMode: React.FC<UPSCModeProps> = ({ initialDob = '', onDobChange }) => {
-  const [dob, setDob] = useState<string>(initialDob);
+export const UPSCMode: React.FC<UPSCModeProps> = ({ 
+  initialDob = '', 
+  dob: controlledDob,
+  onDobChange 
+}) => {
+  const [dob, setDob] = useState<string>(controlledDob !== undefined ? controlledDob : initialDob);
   const [showTime, setShowTime] = useState<boolean>(false);
   const [birthTime, setBirthTime] = useState<string>('12:00');
   const [category, setCategory] = useState<Category>('GEN');
@@ -19,8 +24,12 @@ export const UPSCMode: React.FC<UPSCModeProps> = ({ initialDob = '', onDobChange
   const [copied, setCopied] = useState<boolean>(false);
 
   useEffect(() => {
-    setDob(initialDob || '');
-  }, [initialDob]);
+    if (controlledDob !== undefined) {
+      setDob(controlledDob);
+    } else if (initialDob !== undefined) {
+      setDob(initialDob);
+    }
+  }, [controlledDob, initialDob]);
 
   const handleDobInputChange = (val: string) => {
     const maxStr = formatDateForInput(new Date());

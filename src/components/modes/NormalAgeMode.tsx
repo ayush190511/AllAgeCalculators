@@ -5,14 +5,16 @@ import { Calendar, Sparkles, Copy, Check } from 'lucide-react';
 
 interface NormalAgeModeProps {
   initialDob?: string;
+  dob?: string;
   onDobChange?: (val: string) => void;
 }
 
 export const NormalAgeMode: React.FC<NormalAgeModeProps> = ({ 
   initialDob = '',
+  dob: controlledDob,
   onDobChange 
 }) => {
-  const [dob, setDob] = useState<string>(initialDob);
+  const [dob, setDob] = useState<string>(controlledDob !== undefined ? controlledDob : initialDob);
   const [showTime, setShowTime] = useState<boolean>(false);
   const [timeStr, setTimeStr] = useState<string>('08:30');
   const [showPlace, setShowPlace] = useState<boolean>(false);
@@ -38,10 +40,14 @@ export const NormalAgeMode: React.FC<NormalAgeModeProps> = ({
   // Maximum date allowed is today's date (cannot be in future)
   const todayStr = useMemo(() => formatDateForInput(new Date()), []);
 
-  // Sync state if initialDob prop changes externally
+  // Sync state if controlled dob or initialDob prop changes externally
   useEffect(() => {
-    setDob(initialDob || '');
-  }, [initialDob]);
+    if (controlledDob !== undefined) {
+      setDob(controlledDob);
+    } else if (initialDob !== undefined) {
+      setDob(initialDob);
+    }
+  }, [controlledDob, initialDob]);
 
   const handleDobInputChange = (val: string) => {
     if (val && val > todayStr) {
