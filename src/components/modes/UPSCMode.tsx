@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import type { Category, RelaxationOptions } from '../../lib/types';
 import { calculateUPSCEligibility } from '../../lib/upsc-calculator';
 import { formatDateForInput, calculateDateDifference } from '../../lib/date-utils';
+import { DateInputField } from '../DateInputField';
 import { CheckCircle2, XCircle, AlertCircle, Copy, Check, Clock, Shield, Award, Hourglass } from 'lucide-react';
 
 interface UPSCModeProps {
@@ -113,17 +114,13 @@ export const UPSCMode: React.FC<UPSCModeProps> = ({ initialDob = '1998-05-15', o
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 pt-6">
           {/* DOB Input */}
           <div className="space-y-2">
-            <label className="block text-xs font-medium uppercase tracking-wider text-[var(--ink-body)]">
-              Date of Birth <span className="text-[#ee0000]">*</span>
-            </label>
-            <input
-              type="date"
+            <DateInputField
+              label="Date of Birth"
               value={dob}
               max={formatDateForInput(new Date())}
-              onChange={(e) => handleDobInputChange(e.target.value)}
-              className="w-full h-11 px-3.5 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg text-sm text-[var(--ink-primary)] font-mono-num focus:outline-none focus:ring-2 focus:ring-[var(--ink-primary)] transition cursor-pointer"
+              onChange={(val) => handleDobInputChange(val)}
             />
-            <div className="pt-1">
+            <div className="pt-0.5">
               <button
                 type="button"
                 onClick={() => setShowTime(!showTime)}

@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { calculateAgeBreakdown, calculateDateDifference, formatDateForInput } from '../../lib/date-utils';
+import { DateInputField } from '../DateInputField';
 import { Briefcase, Calendar, Clock, Copy, Check, ShieldCheck, Award, Sliders, Plus, Minus } from 'lucide-react';
 
 interface RetirementModeProps {
@@ -99,22 +100,16 @@ export const RetirementMode: React.FC<RetirementModeProps> = ({ initialDob = '19
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
           {/* DOB */}
-          <div className="space-y-2">
-            <label className="block text-xs font-medium uppercase tracking-wider text-[var(--ink-body)]">
-              Your Date of Birth <span className="text-[#ee0000]">*</span>
-            </label>
-            <input
-              type="date"
-              value={dob}
-              max={formatDateForInput(today)}
-              onChange={(e) => {
-                const maxStr = formatDateForInput(today);
-                const val = e.target.value > maxStr ? maxStr : e.target.value;
-                setDob(val);
-              }}
-              className="w-full h-11 px-3.5 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg text-sm text-[var(--ink-primary)] font-mono-num focus:outline-none focus:ring-2 focus:ring-[var(--ink-primary)] transition"
-            />
-          </div>
+          <DateInputField
+            label="Your Date of Birth"
+            value={dob}
+            max={formatDateForInput(today)}
+            onChange={(val) => {
+              const maxStr = formatDateForInput(today);
+              const clamped = val > maxStr ? maxStr : val;
+              setDob(clamped);
+            }}
+          />
 
           {/* Work Joining Age Input with Unified Seamless Stepper */}
           <div className="space-y-2">

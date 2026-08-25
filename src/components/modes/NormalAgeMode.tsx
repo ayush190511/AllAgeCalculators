@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { calculateAgeBreakdown, formatDateForInput } from '../../lib/date-utils';
+import { DateInputField } from '../DateInputField';
 import { Calendar, Sparkles, Copy, Check } from 'lucide-react';
 
 interface NormalAgeModeProps {
@@ -117,21 +118,13 @@ ${showPlace ? `📍 Birth Location: ${birthPlace ? birthPlace : 'Specified City'
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 pt-6">
-          <div className="space-y-2">
-            <label className="block text-xs font-medium uppercase tracking-wider text-[var(--ink-body)]">
-              Date of Birth <span className="text-[#ee0000]">*</span>
-            </label>
-            <input
-              type="date"
-              value={dob}
-              max={todayStr}
-              onChange={(e) => handleDobInputChange(e.target.value)}
-              className="w-full h-11 px-3.5 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg text-sm text-[var(--ink-primary)] font-mono-num focus:outline-none focus:ring-2 focus:ring-[var(--ink-primary)] transition cursor-pointer"
-            />
-            {dateError && (
-              <p className="text-xs text-amber-500 font-medium mt-1 animate-fade-in">{dateError}</p>
-            )}
-          </div>
+          <DateInputField
+            label="Date of Birth"
+            value={dob}
+            max={todayStr}
+            onChange={(val) => handleDobInputChange(val)}
+            helpText={dateError || undefined}
+          />
 
           <div className="space-y-2">
             <label className="block text-xs font-medium uppercase tracking-wider text-[var(--ink-body)]">

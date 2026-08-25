@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { calculateDateDifference, formatDateForInput } from '../../lib/date-utils';
+import { DateInputField } from '../DateInputField';
 import { ArrowRightLeft, Copy, Check } from 'lucide-react';
 
 export const DateDiffMode: React.FC = () => {
@@ -55,7 +56,7 @@ export const DateDiffMode: React.FC = () => {
           <button
             type="button"
             onClick={() => setIncludeTime(!includeTime)}
-            className={`text-xs px-3 py-1 font-mono rounded-md border transition ${
+            className={`text-xs px-3 py-1 font-mono rounded-md border transition cursor-pointer select-none ${
               includeTime
                 ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)]'
                 : 'bg-[var(--canvas-inset)] text-[var(--ink-body)] border-[var(--hairline)] hover:border-[var(--ink-primary)]'
@@ -68,52 +69,42 @@ export const DateDiffMode: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
           {/* From Date */}
           <div className="space-y-2">
-            <label className="block text-xs font-medium uppercase tracking-wider text-[var(--ink-body)]">
-              From Date / Earlier Date <span className="text-[#ee0000]">*</span>
-            </label>
-            <div className="flex gap-2">
-              <input
-                type="date"
-                value={fromDate}
-                onChange={(e) => setFromDate(e.target.value)}
-                className="w-full h-11 px-3.5 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg text-sm text-[var(--ink-primary)] font-mono-num focus:outline-none focus:ring-2 focus:ring-[var(--ink-primary)] transition"
-              />
-              {includeTime && (
-                <div className="animate-fade-in-down">
-                  <input
-                    type="time"
-                    value={fromTime}
-                    onChange={(e) => setFromTime(e.target.value)}
-                    className="h-11 px-3 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg text-sm font-mono text-[var(--ink-primary)]"
-                  />
-                </div>
-              )}
-            </div>
+            <DateInputField
+              label="From Date / Earlier Date"
+              value={fromDate}
+              onChange={(val) => setFromDate(val)}
+            />
+            {includeTime && (
+              <div className="flex items-center gap-2 animate-fade-in-down pt-1">
+                <span className="text-xs font-mono text-[var(--ink-mute)]">From Time:</span>
+                <input
+                  type="time"
+                  value={fromTime}
+                  onChange={(e) => setFromTime(e.target.value)}
+                  className="h-9 px-3 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg text-xs font-mono text-[var(--ink-primary)]"
+                />
+              </div>
+            )}
           </div>
 
           {/* To Date */}
           <div className="space-y-2">
-            <label className="block text-xs font-medium uppercase tracking-wider text-[var(--ink-body)]">
-              To Date / Later Date <span className="text-[#ee0000]">*</span>
-            </label>
-            <div className="flex gap-2">
-              <input
-                type="date"
-                value={toDate}
-                onChange={(e) => setToDate(e.target.value)}
-                className="w-full h-11 px-3.5 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg text-sm text-[var(--ink-primary)] font-mono-num focus:outline-none focus:ring-2 focus:ring-[var(--ink-primary)] transition"
-              />
-              {includeTime && (
-                <div className="animate-fade-in-down">
-                  <input
-                    type="time"
-                    value={toTime}
-                    onChange={(e) => setToTime(e.target.value)}
-                    className="h-11 px-3 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg text-sm font-mono text-[var(--ink-primary)]"
-                  />
-                </div>
-              )}
-            </div>
+            <DateInputField
+              label="To Date / Later Date"
+              value={toDate}
+              onChange={(val) => setToDate(val)}
+            />
+            {includeTime && (
+              <div className="flex items-center gap-2 animate-fade-in-down pt-1">
+                <span className="text-xs font-mono text-[var(--ink-mute)]">To Time:</span>
+                <input
+                  type="time"
+                  value={toTime}
+                  onChange={(e) => setToTime(e.target.value)}
+                  className="h-9 px-3 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg text-xs font-mono text-[var(--ink-primary)]"
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
