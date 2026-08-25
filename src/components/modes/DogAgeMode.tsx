@@ -6,7 +6,7 @@ import { Dog, Heart, Moon, Copy, Check, Info } from 'lucide-react';
 export type DogSize = 'small' | 'medium' | 'large' | 'giant';
 
 export const DogAgeMode: React.FC = () => {
-  const [dob, setDob] = useState<string>('2021-04-10');
+  const [dob, setDob] = useState<string>('');
   const [dogSize, setDogSize] = useState<DogSize>('medium');
   const [unit, setUnit] = useState<'lbs' | 'kg'>('lbs');
   const [copied, setCopied] = useState<boolean>(false);
@@ -14,18 +14,20 @@ export const DogAgeMode: React.FC = () => {
   const today = useMemo(() => new Date(), []);
 
   const parsedDob = useMemo(() => {
-    if (!dob) return new Date(2021, 3, 10);
+    if (!dob) return null;
     const [y, m, d] = dob.split('-').map(Number);
     return new Date(y, m - 1, d);
   }, [dob]);
 
   // Actual Calendar Age of Dog
   const calendarAge = useMemo(() => {
+    if (!parsedDob) return null;
     return calculateDateDifference(parsedDob, today);
   }, [parsedDob, today]);
 
   // Veterinary Human Equivalent Age Formula
   const humanAge = useMemo(() => {
+    if (!calendarAge) return 0;
     const totalYears = calendarAge.years + calendarAge.months / 12;
     if (totalYears <= 0) return 0;
     if (totalYears <= 1) {
@@ -48,13 +50,15 @@ export const DogAgeMode: React.FC = () => {
 
   // Life Stage Determination
   const lifeStage = useMemo(() => {
+    if (!calendarAge) return null;
     if (calendarAge.years < 1) return { name: 'Puppy Stage', sleep: '18–20 hours/day', tip: 'High calorie puppy food, frequent small meals (3–4 times daily).' };
     if (calendarAge.years < 3) return { name: 'Young Adult', sleep: '12–14 hours/day', tip: 'High energy exercise, adult maintenance diet.' };
     if (calendarAge.years < 7) return { name: 'Mature Adult', sleep: '12–14 hours/day', tip: 'Balanced adult diet, regular wellness checkups.' };
     return { name: 'Senior Dog (7+ Yrs)', sleep: '14–18 hours/day', tip: 'Soft joint care food, gentle exercise, bi-annual vet checks.' };
-  }, [calendarAge.years]);
+  }, [calendarAge]);
 
   const handleCopySummary = () => {
+    if (!calendarAge || !lifeStage) return;
     const text = `🐶 Dog Age Calculator Summary
 📅 Dog Date of Birth: ${dob}
 📏 Breed Size: ${dogSize.toUpperCase()}
@@ -193,58 +197,68 @@ export const DogAgeMode: React.FC = () => {
       </div>
 
       {/* Results Display */}
-      <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-4 sm:p-6 md:p-8 shadow-[0_2px_8px_rgba(0,0,0,0.04)] relative transition-colors">
-        <div className="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-[var(--hairline)]">
-          <div className="flex items-center gap-2">
-            <Heart className="w-5 h-5 text-[#ee0000]" />
-            <span className="text-xs uppercase font-mono tracking-wider text-[var(--ink-mute)]">Human Years Equivalent</span>
-          </div>
-
-          <button
-            onClick={handleCopySummary}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[var(--ink-primary)] bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-lg hover:border-[var(--ink-primary)] transition"
-          >
-            {copied ? <Check className="w-3.5 h-3.5 text-[#0070f3]" /> : <Copy className="w-3.5 h-3.5" />}
-            {copied ? 'Copied!' : 'Copy Summary'}
-          </button>
-        </div>
-
-        {/* Primary Human Equivalent Display */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 my-6">
-          <div className="bg-[var(--canvas-inset)] p-5 sm:p-6 rounded-xl border border-[var(--hairline)] flex flex-col justify-center items-center text-center">
-            <span className="text-xs font-mono uppercase text-[var(--ink-mute)] mb-1">Human Equivalent Age</span>
-            <span className="text-3xl sm:text-5xl font-extrabold text-[#0070f3] font-mono-num">
-              {humanAge}
-            </span>
-            <span className="text-xs text-[var(--ink-body)] mt-1 font-medium">Human Years Old</span>
-          </div>
-
-          <div className="bg-[var(--canvas-inset)] p-5 sm:p-6 rounded-xl border border-[var(--hairline)] flex flex-col justify-center items-center text-center">
-            <span className="text-xs font-mono uppercase text-[var(--ink-mute)] mb-1">Actual Calendar Age</span>
-            <span className="text-2xl sm:text-3xl font-bold text-[var(--ink-primary)] font-mono-num">
-              {calendarAge.years} yrs, {calendarAge.months} mos
-            </span>
-            <span className="text-xs text-[var(--ink-mute)] mt-1">{calendarAge.totalDays.toLocaleString()} Days Lived</span>
-          </div>
-        </div>
-
-        {/* Life Stage & Care Guidance */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-[var(--hairline)] text-xs">
-          <div className="p-4 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)] space-y-1">
-            <span className="block text-[var(--ink-mute)] font-mono uppercase">Life Stage</span>
-            <span className="text-base font-bold text-[var(--ink-primary)]">{lifeStage.name}</span>
-            <p className="text-[11px] text-[var(--ink-body)]">{lifeStage.tip}</p>
-          </div>
-
-          <div className="p-4 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)] space-y-1">
-            <div className="flex items-center gap-1 text-[var(--ink-mute)] font-mono uppercase">
-              <Moon className="w-3.5 h-3.5 text-[#0070f3]" /> Sleep Requirements
+      {calendarAge && lifeStage ? (
+        <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-4 sm:p-6 md:p-8 shadow-[0_2px_8px_rgba(0,0,0,0.04)] relative transition-colors animate-fade-in-down">
+          <div className="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-[var(--hairline)]">
+            <div className="flex items-center gap-2">
+              <Heart className="w-5 h-5 text-[#ee0000]" />
+              <span className="text-xs uppercase font-mono tracking-wider text-[var(--ink-mute)]">Human Years Equivalent</span>
             </div>
-            <span className="text-base font-bold text-[var(--ink-primary)]">{lifeStage.sleep}</span>
-            <p className="text-[11px] text-[var(--ink-body)]">Tailor sleep environment & rest cycles to this age stage.</p>
+
+            <button
+              onClick={handleCopySummary}
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[var(--ink-primary)] bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-lg hover:border-[var(--ink-primary)] transition"
+            >
+              {copied ? <Check className="w-3.5 h-3.5 text-[#0070f3]" /> : <Copy className="w-3.5 h-3.5" />}
+              {copied ? 'Copied!' : 'Copy Summary'}
+            </button>
+          </div>
+
+          {/* Primary Human Equivalent Display */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 my-6">
+            <div className="bg-[var(--canvas-inset)] p-5 sm:p-6 rounded-xl border border-[var(--hairline)] flex flex-col justify-center items-center text-center">
+              <span className="text-xs font-mono uppercase text-[var(--ink-mute)] mb-1">Human Equivalent Age</span>
+              <span className="text-3xl sm:text-5xl font-extrabold text-[#0070f3] font-mono-num">
+                {humanAge}
+              </span>
+              <span className="text-xs text-[var(--ink-body)] mt-1 font-medium">Human Years Old</span>
+            </div>
+
+            <div className="bg-[var(--canvas-inset)] p-5 sm:p-6 rounded-xl border border-[var(--hairline)] flex flex-col justify-center items-center text-center">
+              <span className="text-xs font-mono uppercase text-[var(--ink-mute)] mb-1">Actual Calendar Age</span>
+              <span className="text-2xl sm:text-3xl font-bold text-[var(--ink-primary)] font-mono-num">
+                {calendarAge.years} yrs, {calendarAge.months} mos
+              </span>
+              <span className="text-xs text-[var(--ink-mute)] mt-1">{calendarAge.totalDays.toLocaleString()} Days Lived</span>
+            </div>
+          </div>
+
+          {/* Life Stage & Care Guidance */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-[var(--hairline)] text-xs">
+            <div className="p-4 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)] space-y-1">
+              <span className="block text-[var(--ink-mute)] font-mono uppercase">Life Stage</span>
+              <span className="text-base font-bold text-[var(--ink-primary)]">{lifeStage.name}</span>
+              <p className="text-[11px] text-[var(--ink-body)]">{lifeStage.tip}</p>
+            </div>
+
+            <div className="p-4 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)] space-y-1">
+              <div className="flex items-center gap-1 text-[var(--ink-mute)] font-mono uppercase">
+                <Moon className="w-3.5 h-3.5 text-[#0070f3]" /> Sleep Requirements
+              </div>
+              <span className="text-base font-bold text-[var(--ink-primary)]">{lifeStage.sleep}</span>
+              <p className="text-[11px] text-[var(--ink-body)]">Tailor sleep environment & rest cycles to this age stage.</p>
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="p-8 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl text-center space-y-2">
+          <Dog className="w-8 h-8 mx-auto text-[#0070f3]/60" />
+          <h3 className="text-sm font-semibold text-[var(--ink-primary)]">Ready for Dog Age Calculation</h3>
+          <p className="text-xs text-[var(--ink-mute)] max-w-sm mx-auto">
+            Enter your dog's Date of Birth in the input box above to calculate their human equivalent age, life stage, and sleep recommendations.
+          </p>
+        </div>
+      )}
     </div>
   );
 };

@@ -9,7 +9,7 @@ interface NormalAgeModeProps {
 }
 
 export const NormalAgeMode: React.FC<NormalAgeModeProps> = ({ 
-  initialDob = '1998-05-15',
+  initialDob = '',
   onDobChange 
 }) => {
   const [dob, setDob] = useState<string>(initialDob);
@@ -40,15 +40,12 @@ export const NormalAgeMode: React.FC<NormalAgeModeProps> = ({
 
   // Sync state if initialDob prop changes externally
   useEffect(() => {
-    if (initialDob) {
-      setDob(initialDob);
-    }
+    setDob(initialDob || '');
   }, [initialDob]);
 
   const handleDobInputChange = (val: string) => {
-    // Prevent setting a future date if typed manually
-    if (val > todayStr) {
-      setDateError('Future dates cannot be used for chronological age. Clamped to today.');
+    if (val && val > todayStr) {
+      setDateError('Future dates cannot be used for chronological age.');
       val = todayStr;
     } else {
       setDateError(null);
@@ -68,18 +65,20 @@ export const NormalAgeMode: React.FC<NormalAgeModeProps> = ({
   }, []);
 
   const dobDate = useMemo(() => {
-    if (!dob) return new Date(1998, 4, 15);
+    if (!dob) return null;
     const [y, m, d] = dob.split('-').map(Number);
     const [h, min] = timeStr.split(':').map(Number);
     return new Date(y, m - 1, d, showTime ? h || 0 : 0, showTime ? min || 0 : 0);
   }, [dob, timeStr, showTime]);
 
   const ageData = useMemo(() => {
+    if (!dobDate) return null;
     return calculateAgeBreakdown(dobDate, now);
   }, [dobDate, now]);
 
   // Down-to-the-second exact live counter calculations
   const liveSecondsTotal = useMemo(() => {
+    if (!dobDate) return 0;
     const diffMs = Math.max(0, now.getTime() - dobDate.getTime());
     return Math.floor(diffMs / 1000);
   }, [dobDate, now]);
@@ -89,6 +88,7 @@ export const NormalAgeMode: React.FC<NormalAgeModeProps> = ({
   const liveHoursRem = Math.floor(liveSecondsTotal / 3600) % 24;
 
   const handleCopySummary = () => {
+    if (!ageData) return;
     const text = `🎉 Exact Age Summary
 📅 Date of Birth: ${dob} ${showTime ? `at ${timeStr}` : ''}
 ${showPlace ? `📍 Birth Location: ${birthPlace ? birthPlace : 'Specified City'} (${selectedTimezone})\n` : ''}⏳ Exact Age: ${ageData.years} Years, ${ageData.months} Months, ${ageData.days} Days
@@ -211,110 +211,119 @@ ${showPlace ? `📍 Birth Location: ${birthPlace ? birthPlace : 'Specified City'
           </div>
         </div>
       </div>
-
       {/* Main Age Stat Display */}
-      <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-4 sm:p-6 md:p-8 shadow-[0_2px_8px_rgba(0,0,0,0.04)] relative transition-colors">
-        <div className="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-[var(--hairline)]">
-          <div className="flex items-center gap-2">
-            <Calendar className="w-5 h-5 text-[#0070f3]" />
-            <span className="text-xs uppercase font-mono tracking-wider text-[var(--ink-mute)]">Current Age as of Today</span>
-          </div>
-
-          <button
-            onClick={handleCopySummary}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[var(--ink-primary)] bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-lg hover:border-[var(--ink-primary)] transition"
-          >
-            {copied ? <Check className="w-3.5 h-3.5 text-[#0070f3]" /> : <Copy className="w-3.5 h-3.5" />}
-            {copied ? 'Copied!' : 'Copy Summary'}
-          </button>
-        </div>
-
-        {/* Primary Y/M/D Cards */}
-        <div className="grid grid-cols-3 gap-2 sm:gap-4 my-6 text-center">
-          <div className="bg-[var(--canvas-inset)] p-3 sm:p-5 rounded-xl border border-[var(--hairline)] min-w-0">
-            <span className="block text-2xl sm:text-4xl font-extrabold text-[var(--ink-primary)] font-mono-num truncate">
-              {ageData.years}
-            </span>
-            <span className="text-[10px] sm:text-xs uppercase font-mono text-[var(--ink-mute)] block mt-0.5">Years</span>
-          </div>
-          <div className="bg-[var(--canvas-inset)] p-3 sm:p-5 rounded-xl border border-[var(--hairline)] min-w-0">
-            <span className="block text-2xl sm:text-4xl font-extrabold text-[var(--ink-primary)] font-mono-num truncate">
-              {ageData.months}
-            </span>
-            <span className="text-[10px] sm:text-xs uppercase font-mono text-[var(--ink-mute)] block mt-0.5">Months</span>
-          </div>
-          <div className="bg-[var(--canvas-inset)] p-3 sm:p-5 rounded-xl border border-[var(--hairline)] min-w-0">
-            <span className="block text-2xl sm:text-4xl font-extrabold text-[var(--ink-primary)] font-mono-num truncate">
-              {ageData.days}
-            </span>
-            <span className="text-[10px] sm:text-xs uppercase font-mono text-[var(--ink-mute)] block mt-0.5">Days</span>
-          </div>
-        </div>
-
-        {/* Place of Birth & Timezone Metadata Badge */}
-        {showPlace && (
-          <div className="my-4 p-3.5 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 text-xs text-[var(--ink-body)] animate-fade-in-down">
-            <span className="flex items-center gap-2">
-              <span className="text-base">🌐</span>
-              <span><strong>Birth Location & Timezone:</strong> {birthPlace ? birthPlace : 'Specified City'}</span>
-            </span>
-            <span className="font-mono text-[#0070f3] font-semibold bg-[var(--canvas-card)] px-2.5 py-1 rounded border border-[var(--hairline)] shrink-0 self-start sm:self-auto">
-              {selectedTimezone}
-            </span>
-          </div>
-        )}
-
-        {/* Live Second-by-Second Ticker (If Birth Time Provided) */}
-        {showTime && (
-          <div className="my-6 p-4 sm:p-5 bg-[var(--canvas-inset)] border border-[var(--hairline)] text-[var(--ink-primary)] rounded-xl flex flex-col sm:flex-row items-center justify-between gap-4 animate-fade-in-down">
-            <div className="flex items-center gap-3">
-              <div className="h-3 w-3 rounded-full bg-[#0070f3] animate-ticker-dot shrink-0" />
-              <div className="text-center sm:text-left">
-                <span className="text-xs font-mono uppercase text-[var(--ink-mute)]">Live Precision Ticker</span>
-                <div className="text-sm sm:text-base font-semibold text-[var(--ink-primary)]">Down-to-the-second Age</div>
-              </div>
+      {ageData ? (
+        <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-4 sm:p-6 md:p-8 shadow-[0_2px_8px_rgba(0,0,0,0.04)] relative transition-colors animate-fade-in-down">
+          <div className="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-[var(--hairline)]">
+            <div className="flex items-center gap-2">
+              <Calendar className="w-5 h-5 text-[#0070f3]" />
+              <span className="text-xs uppercase font-mono tracking-wider text-[var(--ink-mute)]">Current Age as of Today</span>
             </div>
 
-            <div className="font-mono text-lg sm:text-2xl font-bold tracking-wider text-[#50e3c2] bg-[var(--canvas-card)] px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-lg border border-[var(--hairline)]">
-              {String(liveHoursRem).padStart(2, '0')}h : {String(liveMinutesRem).padStart(2, '0')}m : {String(liveSecondsRem).padStart(2, '0')}s
+            <button
+              onClick={handleCopySummary}
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[var(--ink-primary)] bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-lg hover:border-[var(--ink-primary)] transition"
+            >
+              {copied ? <Check className="w-3.5 h-3.5 text-[#0070f3]" /> : <Copy className="w-3.5 h-3.5" />}
+              {copied ? 'Copied!' : 'Copy Summary'}
+            </button>
+          </div>
+
+          {/* Primary Y/M/D Cards */}
+          <div className="grid grid-cols-3 gap-2 sm:gap-4 my-6 text-center">
+            <div className="bg-[var(--canvas-inset)] p-3 sm:p-5 rounded-xl border border-[var(--hairline)] min-w-0">
+              <span className="block text-2xl sm:text-4xl font-extrabold text-[var(--ink-primary)] font-mono-num truncate">
+                {ageData.years}
+              </span>
+              <span className="text-[10px] sm:text-xs uppercase font-mono text-[var(--ink-mute)] block mt-0.5">Years</span>
+            </div>
+            <div className="bg-[var(--canvas-inset)] p-3 sm:p-5 rounded-xl border border-[var(--hairline)] min-w-0">
+              <span className="block text-2xl sm:text-4xl font-extrabold text-[var(--ink-primary)] font-mono-num truncate">
+                {ageData.months}
+              </span>
+              <span className="text-[10px] sm:text-xs uppercase font-mono text-[var(--ink-mute)] block mt-0.5">Months</span>
+            </div>
+            <div className="bg-[var(--canvas-inset)] p-3 sm:p-5 rounded-xl border border-[var(--hairline)] min-w-0">
+              <span className="block text-2xl sm:text-4xl font-extrabold text-[var(--ink-primary)] font-mono-num truncate">
+                {ageData.days}
+              </span>
+              <span className="text-[10px] sm:text-xs uppercase font-mono text-[var(--ink-mute)] block mt-0.5">Days</span>
             </div>
           </div>
-        )}
 
-        {/* Milestone Totals Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4 pt-4 border-t border-[var(--hairline)]">
-          <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)] min-w-0">
-            <span className="block text-[10px] sm:text-xs text-[var(--ink-mute)] font-mono uppercase truncate">Total Days</span>
-            <span className="text-base sm:text-lg font-bold text-[var(--ink-primary)] font-mono-num truncate block">
-              {ageData.totalDays.toLocaleString()}
-            </span>
-          </div>
-
-          <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)] min-w-0">
-            <span className="block text-[10px] sm:text-xs text-[var(--ink-mute)] font-mono uppercase truncate">Total Hours</span>
-            <span className="text-base sm:text-lg font-bold text-[var(--ink-primary)] font-mono-num truncate block">
-              {ageData.totalHours.toLocaleString()}
-            </span>
-          </div>
-
-          <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)] min-w-0">
-            <span className="block text-[10px] sm:text-xs text-[var(--ink-mute)] font-mono uppercase truncate">Total Weeks</span>
-            <span className="text-base sm:text-lg font-bold text-[var(--ink-primary)] font-mono-num truncate block">
-              {ageData.totalWeeks.toLocaleString()}
-            </span>
-          </div>
-
-          <div className="p-3 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg flex items-center justify-between min-w-0 gap-1">
-            <div className="min-w-0">
-              <span className="block text-[10px] text-[var(--ink-mute)] font-mono uppercase truncate">Next Birthday</span>
-              <span className="text-xs sm:text-sm font-bold text-[#0070f3] font-mono-num block truncate">
-                {ageData.nextBirthdayDays} Days Left
+          {/* Place of Birth & Timezone Metadata Badge */}
+          {showPlace && (
+            <div className="my-4 p-3.5 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 text-xs text-[var(--ink-body)] animate-fade-in-down">
+              <span className="flex items-center gap-2">
+                <span className="text-base">🌐</span>
+                <span><strong>Birth Location & Timezone:</strong> {birthPlace ? birthPlace : 'Specified City'}</span>
+              </span>
+              <span className="font-mono text-[#0070f3] font-semibold bg-[var(--canvas-card)] px-2.5 py-1 rounded border border-[var(--hairline)] shrink-0 self-start sm:self-auto">
+                {selectedTimezone}
               </span>
             </div>
-            <Sparkles className="w-4 h-4 text-[#f5a623] shrink-0" />
+          )}
+
+          {/* Live Second-by-Second Ticker (If Birth Time Provided) */}
+          {showTime && (
+            <div className="my-6 p-4 sm:p-5 bg-[var(--canvas-inset)] border border-[var(--hairline)] text-[var(--ink-primary)] rounded-xl flex flex-col sm:flex-row items-center justify-between gap-4 animate-fade-in-down">
+              <div className="flex items-center gap-3">
+                <div className="h-3 w-3 rounded-full bg-[#0070f3] animate-ticker-dot shrink-0" />
+                <div className="text-center sm:text-left">
+                  <span className="text-xs font-mono uppercase text-[var(--ink-mute)]">Live Precision Ticker</span>
+                  <div className="text-sm sm:text-base font-semibold text-[var(--ink-primary)]">Down-to-the-second Age</div>
+                </div>
+              </div>
+
+              <div className="font-mono text-lg sm:text-2xl font-bold tracking-wider text-[#50e3c2] bg-[var(--canvas-card)] px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-lg border border-[var(--hairline)]">
+                {String(liveHoursRem).padStart(2, '0')}h : {String(liveMinutesRem).padStart(2, '0')}m : {String(liveSecondsRem).padStart(2, '0')}s
+              </div>
+            </div>
+          )}
+
+          {/* Milestone Totals Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4 pt-4 border-t border-[var(--hairline)]">
+            <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)] min-w-0">
+              <span className="block text-[10px] sm:text-xs text-[var(--ink-mute)] font-mono uppercase truncate">Total Days</span>
+              <span className="text-base sm:text-lg font-bold text-[var(--ink-primary)] font-mono-num truncate block">
+                {ageData.totalDays.toLocaleString()}
+              </span>
+            </div>
+
+            <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)] min-w-0">
+              <span className="block text-[10px] sm:text-xs text-[var(--ink-mute)] font-mono uppercase truncate">Total Hours</span>
+              <span className="text-base sm:text-lg font-bold text-[var(--ink-primary)] font-mono-num truncate block">
+                {ageData.totalHours.toLocaleString()}
+              </span>
+            </div>
+
+            <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)] min-w-0">
+              <span className="block text-[10px] sm:text-xs text-[var(--ink-mute)] font-mono uppercase truncate">Total Weeks</span>
+              <span className="text-base sm:text-lg font-bold text-[var(--ink-primary)] font-mono-num truncate block">
+                {ageData.totalWeeks.toLocaleString()}
+              </span>
+            </div>
+
+            <div className="p-3 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg flex items-center justify-between min-w-0 gap-1">
+              <div className="min-w-0">
+                <span className="block text-[10px] text-[var(--ink-mute)] font-mono uppercase truncate">Next Birthday</span>
+                <span className="text-xs sm:text-sm font-bold text-[#0070f3] font-mono-num block truncate">
+                  {ageData.nextBirthdayDays} Days Left
+                </span>
+              </div>
+              <Sparkles className="w-4 h-4 text-[#f5a623] shrink-0" />
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="p-8 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl text-center space-y-2">
+          <Calendar className="w-8 h-8 mx-auto text-[#0070f3]/60" />
+          <h3 className="text-sm font-semibold text-[var(--ink-primary)]">Ready to Calculate</h3>
+          <p className="text-xs text-[var(--ink-mute)] max-w-sm mx-auto">
+            Enter your Date of Birth in the input box above to instantly compute your exact age, lifetime milestones, and next birthday countdown.
+          </p>
+        </div>
+      )}
     </div>
   );
 };

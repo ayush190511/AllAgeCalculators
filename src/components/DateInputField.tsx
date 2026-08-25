@@ -42,46 +42,120 @@ function isoToDisplay(isoStr: string): string {
 }
 
 /**
- * Smart date formatting with auto-inserted forward slashes
+ * Smart date formatting and strict validation on input
  */
-function formatWithAutoSlash(currentVal: string, previousVal: string): string {
-  // Handle smooth deletion on backspace
-  if (currentVal.length < previousVal.length) {
-    if (previousVal.endsWith('/') && !currentVal.endsWith('/')) {
-      return currentVal.slice(0, -1);
+function sanitizeAndFormatDateInput(
+  rawVal: string,
+  prevVal: string,
+  maxIso?: string,
+  minIso?: string
+): { formatted: string; isoDate: string | null; error: string | null } {
+  // Handle backspace / deletion
+  if (rawVal.length < prevVal.length) {
+    if (prevVal.endsWith('/') && !rawVal.endsWith('/')) {
+      return { formatted: rawVal.slice(0, -1), isoDate: null, error: null };
     }
-    return currentVal;
+    return { formatted: rawVal, isoDate: null, error: null };
   }
 
-  // If user manually pressed slash after 1 digit (e.g. "5/"), pad with leading zero -> "05/"
-  if (currentVal.endsWith('/') && !previousVal.endsWith('/')) {
-    const digitsOnly = currentVal.replace(/\D/g, '');
-    if (digitsOnly.length === 1) {
-      return `0${digitsOnly}/`;
-    }
-    if (digitsOnly.length === 3) {
-      return `${digitsOnly.slice(0, 2)}/0${digitsOnly.slice(2)}/`;
-    }
+  // Extract digits only (max 8)
+  const digits = rawVal.replace(/\D/g, '').slice(0, 8);
+  if (!digits) {
+    return { formatted: '', isoDate: null, error: null };
   }
 
-  // Extract raw digits (max 8)
-  const digits = currentVal.replace(/\D/g, '').slice(0, 8);
-  if (!digits) return '';
-
+  // 1. Day validation (1-2 digits)
+  let dayPart = '';
   if (digits.length === 1) {
-    return digits;
+    const d1 = parseInt(digits[0], 10);
+    // If first digit is 4-9, auto-pad with 0 -> "04/", "05/", etc.
+    if (d1 >= 4) {
+      dayPart = `0${d1}/`;
+      return { formatted: dayPart, isoDate: null, error: null };
+    }
+    return { formatted: digits[0], isoDate: null, error: null };
   }
+
+  let dNum = parseInt(digits.slice(0, 2), 10);
+  if (dNum === 0) dNum = 1;
+  if (dNum > 31) dNum = 31;
+  dayPart = String(dNum).padStart(2, '0');
+
   if (digits.length === 2) {
-    return `${digits}/`;
+    return { formatted: `${dayPart}/`, isoDate: null, error: null };
   }
-  if (digits.length === 3) {
-    return `${digits.slice(0, 2)}/${digits.slice(2)}`;
+
+  // 2. Month validation (digits 3-4)
+  const remainingAfterDay = digits.slice(2);
+  let monthPart = '';
+
+  if (remainingAfterDay.length === 1) {
+    const m1 = parseInt(remainingAfterDay[0], 10);
+    // If first digit of month is 2-9, auto-pad with 0 -> "02/", "03/", etc.
+    if (m1 >= 2) {
+      monthPart = `0${m1}/`;
+      return { formatted: `${dayPart}/${monthPart}`, isoDate: null, error: null };
+    }
+    return { formatted: `${dayPart}/${remainingAfterDay[0]}`, isoDate: null, error: null };
   }
-  if (digits.length === 4) {
-    return `${digits.slice(0, 2)}/${digits.slice(2)}/`;
+
+  let mNum = parseInt(remainingAfterDay.slice(0, 2), 10);
+  if (mNum === 0) mNum = 1;
+  if (mNum > 12) mNum = 12;
+  monthPart = String(mNum).padStart(2, '0');
+
+  // Clamp day against 30-day month limits
+  const maxDaysThisMonth = getMaxDaysInMonth(mNum, 2024);
+  if (dNum > maxDaysThisMonth) {
+    dNum = maxDaysThisMonth;
+    dayPart = String(dNum).padStart(2, '0');
   }
-  // 5 to 8 digits (year)
-  return `${digits.slice(0, 2)}/${digits.slice(2, 4)}/${digits.slice(4)}`;
+
+  if (remainingAfterDay.length === 2) {
+    return { formatted: `${dayPart}/${monthPart}/`, isoDate: null, error: null };
+  }
+
+  // 3. Year validation (digits 5-8)
+  const yearDigits = remainingAfterDay.slice(2, 6);
+  const formatted = `${dayPart}/${monthPart}/${yearDigits}`;
+
+  if (yearDigits.length === 4) {
+    const yNum = parseInt(yearDigits, 10);
+    if (yNum >= 1900 && yNum <= 2100) {
+      // Re-verify leap year for February
+      const maxDaysForYear = getMaxDaysInMonth(mNum, yNum);
+      if (dNum > maxDaysForYear) {
+        dNum = maxDaysForYear;
+        dayPart = String(dNum).padStart(2, '0');
+      }
+
+      const isoStr = `${String(yNum).padStart(4, '0')}-${monthPart}-${dayPart}`;
+
+      if (maxIso && isoStr > maxIso) {
+        return {
+          formatted: `${dayPart}/${monthPart}/${yearDigits}`,
+          isoDate: null,
+          error: `Date cannot be in the future (after ${isoToDisplay(maxIso)})`,
+        };
+      }
+
+      if (minIso && isoStr < minIso) {
+        return {
+          formatted: `${dayPart}/${monthPart}/${yearDigits}`,
+          isoDate: null,
+          error: `Date cannot be before ${isoToDisplay(minIso)}`,
+        };
+      }
+
+      return {
+        formatted: `${dayPart}/${monthPart}/${yearDigits}`,
+        isoDate: isoStr,
+        error: null,
+      };
+    }
+  }
+
+  return { formatted, isoDate: null, error: null };
 }
 
 export const DateInputField: React.FC<DateInputFieldProps> = ({
@@ -102,58 +176,40 @@ export const DateInputField: React.FC<DateInputFieldProps> = ({
   useEffect(() => {
     if (value) {
       const formatted = isoToDisplay(value);
-      if (formatted) {
-        setDisplayText(formatted);
-      }
+      setDisplayText(formatted);
+      setInputError(null);
+    } else {
+      setDisplayText('');
+      setInputError(null);
     }
   }, [value]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const rawVal = e.target.value;
-    const formatted = formatWithAutoSlash(rawVal, displayText);
-    setDisplayText(formatted);
-
-    // When full 8 digits (DD/MM/YYYY = 10 characters) are completed
-    if (formatted.length === 10) {
-      const parts = formatted.split('/');
-      if (parts.length === 3) {
-        let dNum = parseInt(parts[0], 10);
-        let mNum = parseInt(parts[1], 10);
-        const yNum = parseInt(parts[2], 10);
-
-        if (!isNaN(dNum) && !isNaN(mNum) && !isNaN(yNum) && yNum >= 1900 && yNum <= 2100) {
-          // Month boundary validation
-          if (mNum < 1) mNum = 1;
-          if (mNum > 12) mNum = 12;
-
-          // Day boundary validation
-          const maxDays = getMaxDaysInMonth(mNum, yNum);
-          if (dNum < 1) dNum = 1;
-          if (dNum > maxDays) dNum = maxDays;
-
-          const isoStr = `${String(yNum).padStart(4, '0')}-${String(mNum).padStart(2, '0')}-${String(dNum).padStart(2, '0')}`;
-
-          if (max && isoStr > max) {
-            setInputError(`Date cannot be after ${isoToDisplay(max)}`);
-            onChange(max);
-          } else if (min && isoStr < min) {
-            setInputError(`Date cannot be before ${isoToDisplay(min)}`);
-            onChange(min);
-          } else {
-            setInputError(null);
-            onChange(isoStr);
-          }
-        }
-      }
-    } else {
+    if (!rawVal.trim()) {
+      setDisplayText('');
       setInputError(null);
+      onChange('');
+      return;
+    }
+
+    const { formatted, isoDate, error } = sanitizeAndFormatDateInput(rawVal, displayText, max, min);
+    setDisplayText(formatted);
+    setInputError(error);
+
+    if (isoDate) {
+      onChange(isoDate);
     }
   };
 
   const handleBlur = () => {
-    // If left incomplete on blur, revert cleanly to current valid value
-    if (displayText.length < 10 && value) {
-      setDisplayText(isoToDisplay(value));
+    // If left incomplete on blur, revert to current valid value or clear
+    if (displayText.length > 0 && displayText.length < 10) {
+      if (value) {
+        setDisplayText(isoToDisplay(value));
+      } else {
+        setDisplayText('');
+      }
       setInputError(null);
     }
   };
@@ -192,13 +248,15 @@ export const DateInputField: React.FC<DateInputFieldProps> = ({
             <input
               ref={hiddenDateInputRef}
               type="date"
-              value={value}
+              value={value || ''}
               max={max}
               min={min}
               onChange={(e) => {
-                if (e.target.value) {
-                  onChange(e.target.value);
-                  setDisplayText(isoToDisplay(e.target.value));
+                const newVal = e.target.value;
+                if (newVal) {
+                  onChange(newVal);
+                  setDisplayText(isoToDisplay(newVal));
+                  setInputError(null);
                 }
               }}
               className="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-10"

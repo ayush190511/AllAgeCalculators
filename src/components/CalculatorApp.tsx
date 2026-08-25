@@ -9,8 +9,8 @@ export type ModeType = 'upsc' | 'normal' | 'datediff';
 
 export const CalculatorApp: React.FC = () => {
   const [mode, setMode] = useState<ModeType>('upsc');
-  // Shared DOB state maintained across modes!
-  const [sharedDob, setSharedDob] = useState<string>('1998-05-15');
+  // Shared DOB state maintained across modes (empty by default)
+  const [sharedDob, setSharedDob] = useState<string>('');
 
   // URL query parameter sync for sharing exact calculation view
   useEffect(() => {

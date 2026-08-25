@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { calculateAgeBreakdown, calculateDateDifference, formatDateForInput } from '../../lib/date-utils';
 import { DateInputField } from '../DateInputField';
 import { Briefcase, Calendar, Clock, Copy, Check, ShieldCheck, Award, Sliders, Plus, Minus } from 'lucide-react';
@@ -7,7 +7,7 @@ interface RetirementModeProps {
   initialDob?: string;
 }
 
-export const RetirementMode: React.FC<RetirementModeProps> = ({ initialDob = '1995-06-15' }) => {
+export const RetirementMode: React.FC<RetirementModeProps> = ({ initialDob = '' }) => {
   const [dob, setDob] = useState<string>(initialDob);
   const [retirementAge, setRetirementAge] = useState<number>(60); // Default 60
   const [isCustomRetirement, setIsCustomRetirement] = useState<boolean>(false);
@@ -20,14 +20,19 @@ export const RetirementMode: React.FC<RetirementModeProps> = ({ initialDob = '19
 
   const today = useMemo(() => new Date(), []);
 
+  useEffect(() => {
+    setDob(initialDob || '');
+  }, [initialDob]);
+
   const parsedDob = useMemo(() => {
-    if (!dob) return new Date(1995, 5, 15);
+    if (!dob) return null;
     const [y, m, d] = dob.split('-').map(Number);
     return new Date(y, m - 1, d);
   }, [dob]);
 
   // Calculate current exact age
   const currentAge = useMemo(() => {
+    if (!parsedDob) return null;
     return calculateAgeBreakdown(parsedDob, today);
   }, [parsedDob, today]);
 
@@ -42,6 +47,7 @@ export const RetirementMode: React.FC<RetirementModeProps> = ({ initialDob = '19
 
   // Calculate retirement date (DOB + activeRetirementAge years)
   const retirementDate = useMemo(() => {
+    if (!parsedDob) return null;
     const ret = new Date(parsedDob);
     ret.setFullYear(ret.getFullYear() + activeRetirementAge);
     return ret;
@@ -49,6 +55,7 @@ export const RetirementMode: React.FC<RetirementModeProps> = ({ initialDob = '19
 
   // Calculate time remaining until retirement
   const remaining = useMemo(() => {
+    if (!retirementDate) return null;
     if (today >= retirementDate) {
       return { isRetired: true, years: 0, months: 0, days: 0, totalDays: 0 };
     }
@@ -58,13 +65,15 @@ export const RetirementMode: React.FC<RetirementModeProps> = ({ initialDob = '19
 
   // Career progress percentage based on custom Joining Age and Target Retirement Age
   const progressPercent = useMemo(() => {
+    if (!currentAge) return 0;
     const totalWorkingYears = Math.max(1, activeRetirementAge - careerStartAge);
     const yearsWorked = Math.max(0, currentAge.years - careerStartAge);
     const pct = Math.min(100, Math.max(0, (yearsWorked / totalWorkingYears) * 100));
     return Math.round(pct);
-  }, [currentAge.years, activeRetirementAge, careerStartAge]);
+  }, [currentAge, activeRetirementAge, careerStartAge]);
 
   const handleCopySummary = () => {
+    if (!currentAge || !retirementDate || !remaining) return;
     const text = `🏖️ Retirement Countdown Summary
 📅 Date of Birth: ${dob}
 💼 Work Joining Age: ${careerStartAge} Years
@@ -223,89 +232,99 @@ export const RetirementMode: React.FC<RetirementModeProps> = ({ initialDob = '19
       </div>
 
       {/* Main Results Card */}
-      <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-6 sm:p-8 shadow-[0_2px_8px_rgba(0,0,0,0.04)] relative transition-colors">
-        <div className="flex items-center justify-between pb-6 border-b border-[var(--hairline)]">
-          <div className="flex items-center gap-2">
-            <Briefcase className="w-5 h-5 text-[#0070f3]" />
-            <span className="text-xs uppercase font-mono tracking-wider text-[var(--ink-mute)]">Retirement Timeline Analysis</span>
-          </div>
-
-          <button
-            onClick={handleCopySummary}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[var(--ink-primary)] bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-lg hover:border-[var(--ink-primary)] transition"
-          >
-            {copied ? <Check className="w-3.5 h-3.5 text-[#0070f3]" /> : <Copy className="w-3.5 h-3.5" />}
-            {copied ? 'Copied!' : 'Copy Summary'}
-          </button>
-        </div>
-
-        {/* Big Remaining Time Display */}
-        {remaining.isRetired ? (
-          <div className="my-8 p-6 bg-[var(--canvas-inset)] border border-[var(--hairline)] text-center rounded-xl">
-            <h3 className="text-2xl font-extrabold text-[#0070f3]">🎉 Congratulations! You are already retired!</h3>
-            <p className="text-xs text-[var(--ink-mute)] mt-1">You reached your target retirement age of {activeRetirementAge} on {formatDateForInput(retirementDate)}.</p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-3 gap-4 my-6 text-center">
-            <div className="bg-[var(--canvas-inset)] p-5 rounded-xl border border-[var(--hairline)]">
-              <span className="block text-3xl sm:text-4xl font-extrabold text-[var(--ink-primary)] font-mono-num">
-                {remaining.years}
-              </span>
-              <span className="text-xs uppercase font-mono text-[var(--ink-mute)]">Years Left</span>
+      {currentAge && retirementDate && remaining ? (
+        <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-6 sm:p-8 shadow-[0_2px_8px_rgba(0,0,0,0.04)] relative transition-colors animate-fade-in-down">
+          <div className="flex items-center justify-between pb-6 border-b border-[var(--hairline)]">
+            <div className="flex items-center gap-2">
+              <Briefcase className="w-5 h-5 text-[#0070f3]" />
+              <span className="text-xs uppercase font-mono tracking-wider text-[var(--ink-mute)]">Retirement Timeline Analysis</span>
             </div>
-            <div className="bg-[var(--canvas-inset)] p-5 rounded-xl border border-[var(--hairline)]">
-              <span className="block text-3xl sm:text-4xl font-extrabold text-[var(--ink-primary)] font-mono-num">
-                {remaining.months}
-              </span>
-              <span className="text-xs uppercase font-mono text-[var(--ink-mute)]">Months Left</span>
-            </div>
-            <div className="bg-[var(--canvas-inset)] p-5 rounded-xl border border-[var(--hairline)]">
-              <span className="block text-3xl sm:text-4xl font-extrabold text-[var(--ink-primary)] font-mono-num">
-                {remaining.days}
-              </span>
-              <span className="text-xs uppercase font-mono text-[var(--ink-mute)]">Days Left</span>
-            </div>
-          </div>
-        )}
 
-        {/* Customized Progress Bar */}
-        <div className="space-y-2 my-6 p-4 bg-[var(--canvas-inset)] rounded-xl border border-[var(--hairline)]">
-          <div className="flex justify-between text-xs font-mono">
-            <span className="text-[var(--ink-body)]">Career Milestone Progress (Age {careerStartAge} to {activeRetirementAge})</span>
-            <span className="font-bold text-[var(--ink-primary)]">{progressPercent}% Completed</span>
+            <button
+              onClick={handleCopySummary}
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[var(--ink-primary)] bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-lg hover:border-[var(--ink-primary)] transition"
+            >
+              {copied ? <Check className="w-3.5 h-3.5 text-[#0070f3]" /> : <Copy className="w-3.5 h-3.5" />}
+              {copied ? 'Copied!' : 'Copy Summary'}
+            </button>
           </div>
-          <div className="w-full bg-[var(--canvas-card)] h-3 rounded-full overflow-hidden border border-[var(--hairline)] p-0.5">
-            <div
-              className="bg-[#0070f3] h-full rounded-full transition-all duration-500"
-              style={{ width: `${progressPercent}%` }}
-            />
+
+          {/* Big Remaining Time Display */}
+          {remaining.isRetired ? (
+            <div className="my-8 p-6 bg-[var(--canvas-inset)] border border-[var(--hairline)] text-center rounded-xl">
+              <h3 className="text-2xl font-extrabold text-[#0070f3]">🎉 Congratulations! You are already retired!</h3>
+              <p className="text-xs text-[var(--ink-mute)] mt-1">You reached your target retirement age of {activeRetirementAge} on {formatDateForInput(retirementDate)}.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-3 gap-4 my-6 text-center">
+              <div className="bg-[var(--canvas-inset)] p-5 rounded-xl border border-[var(--hairline)]">
+                <span className="block text-3xl sm:text-4xl font-extrabold text-[var(--ink-primary)] font-mono-num">
+                  {remaining.years}
+                </span>
+                <span className="text-xs uppercase font-mono text-[var(--ink-mute)]">Years Left</span>
+              </div>
+              <div className="bg-[var(--canvas-inset)] p-5 rounded-xl border border-[var(--hairline)]">
+                <span className="block text-3xl sm:text-4xl font-extrabold text-[var(--ink-primary)] font-mono-num">
+                  {remaining.months}
+                </span>
+                <span className="text-xs uppercase font-mono text-[var(--ink-mute)]">Months Left</span>
+              </div>
+              <div className="bg-[var(--canvas-inset)] p-5 rounded-xl border border-[var(--hairline)]">
+                <span className="block text-3xl sm:text-4xl font-extrabold text-[var(--ink-primary)] font-mono-num">
+                  {remaining.days}
+                </span>
+                <span className="text-xs uppercase font-mono text-[var(--ink-mute)]">Days Left</span>
+              </div>
+            </div>
+          )}
+
+          {/* Customized Progress Bar */}
+          <div className="space-y-2 my-6 p-4 bg-[var(--canvas-inset)] rounded-xl border border-[var(--hairline)]">
+            <div className="flex justify-between text-xs font-mono">
+              <span className="text-[var(--ink-body)]">Career Milestone Progress (Age {careerStartAge} to {activeRetirementAge})</span>
+              <span className="font-bold text-[var(--ink-primary)]">{progressPercent}% Completed</span>
+            </div>
+            <div className="w-full bg-[var(--canvas-card)] h-3 rounded-full overflow-hidden border border-[var(--hairline)] p-0.5">
+              <div
+                className="bg-[#0070f3] h-full rounded-full transition-all duration-500"
+                style={{ width: `${progressPercent}%` }}
+              />
+            </div>
+          </div>
+
+          {/* Breakdown Stats */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-[var(--hairline)] text-xs">
+            <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)]">
+              <span className="block text-[var(--ink-mute)] font-mono uppercase">Current Exact Age</span>
+              <span className="text-sm font-bold text-[var(--ink-primary)] font-mono-num">
+                {currentAge.years} yrs, {currentAge.months} mos
+              </span>
+            </div>
+
+            <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)]">
+              <span className="block text-[var(--ink-mute)] font-mono uppercase">Official Retirement Date</span>
+              <span className="text-sm font-bold text-[#0070f3] font-mono-num">
+                {formatDateForInput(retirementDate)}
+              </span>
+            </div>
+
+            <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)]">
+              <span className="block text-[var(--ink-mute)] font-mono uppercase">Total Days to Target</span>
+              <span className="text-sm font-bold text-[var(--ink-primary)] font-mono-num">
+                {remaining.totalDays.toLocaleString()} Days
+              </span>
+            </div>
           </div>
         </div>
-
-        {/* Breakdown Stats */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-[var(--hairline)] text-xs">
-          <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)]">
-            <span className="block text-[var(--ink-mute)] font-mono uppercase">Current Exact Age</span>
-            <span className="text-sm font-bold text-[var(--ink-primary)] font-mono-num">
-              {currentAge.years} yrs, {currentAge.months} mos
-            </span>
-          </div>
-
-          <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)]">
-            <span className="block text-[var(--ink-mute)] font-mono uppercase">Official Retirement Date</span>
-            <span className="text-sm font-bold text-[#0070f3] font-mono-num">
-              {formatDateForInput(retirementDate)}
-            </span>
-          </div>
-
-          <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)]">
-            <span className="block text-[var(--ink-mute)] font-mono uppercase">Total Days to Target</span>
-            <span className="text-sm font-bold text-[var(--ink-primary)] font-mono-num">
-              {remaining.totalDays.toLocaleString()} Days
-            </span>
-          </div>
+      ) : (
+        <div className="p-8 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl text-center space-y-2">
+          <Briefcase className="w-8 h-8 mx-auto text-[#0070f3]/60" />
+          <h3 className="text-sm font-semibold text-[var(--ink-primary)]">Ready for Retirement Calculation</h3>
+          <p className="text-xs text-[var(--ink-mute)] max-w-sm mx-auto">
+            Enter your Date of Birth in the input box above to instantly calculate your retirement countdown, official pension date, and career progress.
+          </p>
         </div>
-      </div>
+      )}
     </div>
   );
 };

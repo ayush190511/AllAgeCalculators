@@ -10,7 +10,7 @@ interface UPSCModeProps {
   onDobChange?: (val: string) => void;
 }
 
-export const UPSCMode: React.FC<UPSCModeProps> = ({ initialDob = '1998-05-15', onDobChange }) => {
+export const UPSCMode: React.FC<UPSCModeProps> = ({ initialDob = '', onDobChange }) => {
   const [dob, setDob] = useState<string>(initialDob);
   const [showTime, setShowTime] = useState<boolean>(false);
   const [birthTime, setBirthTime] = useState<string>('12:00');
@@ -19,14 +19,12 @@ export const UPSCMode: React.FC<UPSCModeProps> = ({ initialDob = '1998-05-15', o
   const [copied, setCopied] = useState<boolean>(false);
 
   useEffect(() => {
-    if (initialDob) {
-      setDob(initialDob);
-    }
+    setDob(initialDob || '');
   }, [initialDob]);
 
   const handleDobInputChange = (val: string) => {
     const maxStr = formatDateForInput(new Date());
-    const clamped = val > maxStr ? maxStr : val;
+    const clamped = val && val > maxStr ? maxStr : val;
     setDob(clamped);
     if (onDobChange) {
       onDobChange(clamped);
@@ -41,18 +39,19 @@ export const UPSCMode: React.FC<UPSCModeProps> = ({ initialDob = '1998-05-15', o
   });
 
   const parsedDob = useMemo(() => {
-    if (!dob) return new Date(1998, 4, 15);
+    if (!dob) return null;
     const [y, m, d] = dob.split('-').map(Number);
     return new Date(y, m - 1, d);
   }, [dob]);
 
   const result = useMemo(() => {
+    if (!parsedDob) return null;
     return calculateUPSCEligibility(parsedDob, targetYear, category, relaxations);
   }, [parsedDob, targetYear, category, relaxations]);
 
   // Underage time remaining countdown calculations
   const underageDetails = useMemo(() => {
-    if (result.status !== 'underage') return null;
+    if (!result || result.status !== 'underage' || !parsedDob) return null;
 
     const turning21 = new Date(parsedDob);
     turning21.setFullYear(turning21.getFullYear() + 21);
@@ -72,13 +71,14 @@ export const UPSCMode: React.FC<UPSCModeProps> = ({ initialDob = '1998-05-15', o
       timeRemaining: diff,
       firstEligibleYear: firstYear,
     };
-  }, [parsedDob, result.status]);
+  }, [parsedDob, result]);
 
   const toggleRelaxation = (key: keyof RelaxationOptions) => {
     setRelaxations((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
   const handleCopySummary = () => {
+    if (!result) return;
     const text = `🎯 UPSC CSE ${targetYear} Eligibility Summary
 📅 Date of Birth: ${dob}
 🏷️ Category: ${category}
@@ -235,140 +235,150 @@ export const UPSCMode: React.FC<UPSCModeProps> = ({ initialDob = '1998-05-15', o
       </div>
 
       {/* Main Verdict Card */}
-      <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-4 sm:p-6 md:p-8 shadow-[0_2px_8px_rgba(0,0,0,0.04)] relative transition-colors">
-        <div className="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-[var(--hairline)]">
-          <div className="flex items-center gap-2">
-            <Shield className="w-5 h-5 text-[#0070f3]" />
-            <span className="text-xs uppercase font-mono tracking-wider text-[var(--ink-mute)]">UPSC CSE {targetYear} Verdict</span>
+      {result ? (
+        <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-4 sm:p-6 md:p-8 shadow-[0_2px_8px_rgba(0,0,0,0.04)] relative transition-colors animate-fade-in-down">
+          <div className="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-[var(--hairline)]">
+            <div className="flex items-center gap-2">
+              <Shield className="w-5 h-5 text-[#0070f3]" />
+              <span className="text-xs uppercase font-mono tracking-wider text-[var(--ink-mute)]">UPSC CSE {targetYear} Verdict</span>
+            </div>
+
+            <button
+              onClick={handleCopySummary}
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[var(--ink-primary)] bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-lg hover:border-[var(--ink-primary)] transition cursor-pointer"
+            >
+              {copied ? <Check className="w-3.5 h-3.5 text-[#0070f3]" /> : <Copy className="w-3.5 h-3.5" />}
+              {copied ? 'Copied!' : 'Copy Summary'}
+            </button>
           </div>
 
-          <button
-            onClick={handleCopySummary}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[var(--ink-primary)] bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-lg hover:border-[var(--ink-primary)] transition cursor-pointer"
-          >
-            {copied ? <Check className="w-3.5 h-3.5 text-[#0070f3]" /> : <Copy className="w-3.5 h-3.5" />}
-            {copied ? 'Copied!' : 'Copy Summary'}
-          </button>
-        </div>
-
-        {/* Verdict Badge & Underage Countdown */}
-        <div className="my-6 space-y-4">
-          {result.status === 'eligible' && (
-            <div className="p-4 bg-[#0070f3]/10 border border-[#0070f3]/30 rounded-xl flex items-center gap-3 text-[#0070f3]">
-              <CheckCircle2 className="w-6 h-6 shrink-0" />
-              <div>
-                <div className="text-base font-bold">ELIGIBLE for UPSC CSE {targetYear}</div>
-                <div className="text-xs text-[var(--ink-body)]">
-                  Your age on 1st August {targetYear} is within the required {result.maxAgeAllowed} year limit for {category}.
-                </div>
-              </div>
-            </div>
-          )}
-
-          {result.status === 'underage' && (
-            <div className="space-y-4">
-              <div className="p-4 bg-[#f5a623]/10 border border-[#f5a623]/30 rounded-xl flex items-center gap-3 text-[#f5a623]">
-                <AlertCircle className="w-6 h-6 shrink-0" />
+          {/* Verdict Badge & Underage Countdown */}
+          <div className="my-6 space-y-4">
+            {result.status === 'eligible' && (
+              <div className="p-4 bg-[#0070f3]/10 border border-[#0070f3]/30 rounded-xl flex items-center gap-3 text-[#0070f3]">
+                <CheckCircle2 className="w-6 h-6 shrink-0" />
                 <div>
-                  <div className="text-base font-bold">UNDERAGE for UPSC CSE {targetYear}</div>
-                  <div className="text-xs text-[var(--ink-body)] mt-0.5">
-                    Candidates must be at least 21 years old on 1st August {targetYear}.
+                  <div className="text-base font-bold">ELIGIBLE for UPSC CSE {targetYear}</div>
+                  <div className="text-xs text-[var(--ink-body)]">
+                    Your age on 1st August {targetYear} is within the required {result.maxAgeAllowed} year limit for {category}.
                   </div>
                 </div>
               </div>
+            )}
 
-              {/* Exact Underage Countdown Box */}
-              {underageDetails && (
-                <div className="p-4 sm:p-5 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-xl space-y-3.5">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-xs font-mono">
-                    <span className="text-[var(--ink-primary)] font-bold uppercase tracking-wider flex items-center gap-1.5">
-                      <Hourglass className="w-4 h-4 text-[#f5a623] shrink-0" /> Time Remaining Until 21st Birthday & UPSC Eligibility
-                    </span>
-                    <span className="text-[#0070f3] font-bold">
-                      First Eligible Exam: UPSC CSE {underageDetails.firstEligibleYear}
-                    </span>
-                  </div>
-
-                  <div className="grid grid-cols-3 gap-2.5 sm:gap-3 text-center">
-                    <div className="p-2.5 sm:p-3 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg min-w-0">
-                      <span className="block text-xl sm:text-3xl font-extrabold text-[var(--ink-primary)] font-mono-num truncate">
-                        {underageDetails.timeRemaining.years}
-                      </span>
-                      <span className="text-[10px] sm:text-[11px] uppercase font-mono text-[var(--ink-mute)] block mt-0.5">Years Left</span>
+            {result.status === 'underage' && (
+              <div className="space-y-4">
+                <div className="p-4 bg-[#f5a623]/10 border border-[#f5a623]/30 rounded-xl flex items-center gap-3 text-[#f5a623]">
+                  <AlertCircle className="w-6 h-6 shrink-0" />
+                  <div>
+                    <div className="text-base font-bold">UNDERAGE for UPSC CSE {targetYear}</div>
+                    <div className="text-xs text-[var(--ink-body)] mt-0.5">
+                      Candidates must be at least 21 years old on 1st August {targetYear}.
                     </div>
-                    <div className="p-2.5 sm:p-3 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg min-w-0">
-                      <span className="block text-xl sm:text-3xl font-extrabold text-[var(--ink-primary)] font-mono-num truncate">
-                        {underageDetails.timeRemaining.months}
-                      </span>
-                      <span className="text-[10px] sm:text-[11px] uppercase font-mono text-[var(--ink-mute)] block mt-0.5">Months Left</span>
-                    </div>
-                    <div className="p-2.5 sm:p-3 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg min-w-0">
-                      <span className="block text-xl sm:text-3xl font-extrabold text-[var(--ink-primary)] font-mono-num truncate">
-                        {underageDetails.timeRemaining.days}
-                      </span>
-                      <span className="text-[10px] sm:text-[11px] uppercase font-mono text-[var(--ink-mute)] block mt-0.5">Days Left</span>
-                    </div>
-                  </div>
-
-                  <div className="text-xs text-[var(--ink-body)] flex flex-col sm:flex-row sm:items-center justify-between gap-1 pt-2 border-t border-[var(--hairline)]">
-                    <span>21st Birthday: <strong className="font-mono text-[var(--ink-primary)]">{formatDateForInput(underageDetails.turning21Date)}</strong></span>
-                    <span>Total Days Remaining: <strong className="font-mono text-[#0070f3]">{underageDetails.timeRemaining.totalDays.toLocaleString()} Days</strong></span>
                   </div>
                 </div>
-              )}
-            </div>
-          )}
 
-          {result.status === 'overage' && (
-            <div className="p-4 bg-[#ee0000]/10 border border-[#ee0000]/30 rounded-xl flex items-center gap-3 text-[#ee0000]">
-              <XCircle className="w-6 h-6 shrink-0" />
-              <div>
-                <div className="text-base font-bold">OVERAGE for UPSC CSE {targetYear}</div>
-                <div className="text-xs text-[var(--ink-body)]">
-                  Exceeds the maximum age cap of {result.maxAgeAllowed} years for {category} as of 1st August {targetYear}.
+                {/* Exact Underage Countdown Box */}
+                {underageDetails && (
+                  <div className="p-4 sm:p-5 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-xl space-y-3.5">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-xs font-mono">
+                      <span className="text-[var(--ink-primary)] font-bold uppercase tracking-wider flex items-center gap-1.5">
+                        <Hourglass className="w-4 h-4 text-[#f5a623] shrink-0" /> Time Remaining Until 21st Birthday & UPSC Eligibility
+                      </span>
+                      <span className="text-[#0070f3] font-bold">
+                        First Eligible Exam: UPSC CSE {underageDetails.firstEligibleYear}
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-3 gap-2.5 sm:gap-3 text-center">
+                      <div className="p-2.5 sm:p-3 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg min-w-0">
+                        <span className="block text-xl sm:text-3xl font-extrabold text-[var(--ink-primary)] font-mono-num truncate">
+                          {underageDetails.timeRemaining.years}
+                        </span>
+                        <span className="text-[10px] sm:text-[11px] uppercase font-mono text-[var(--ink-mute)] block mt-0.5">Years Left</span>
+                      </div>
+                      <div className="p-2.5 sm:p-3 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg min-w-0">
+                        <span className="block text-xl sm:text-3xl font-extrabold text-[var(--ink-primary)] font-mono-num truncate">
+                          {underageDetails.timeRemaining.months}
+                        </span>
+                        <span className="text-[10px] sm:text-[11px] uppercase font-mono text-[var(--ink-mute)] block mt-0.5">Months Left</span>
+                      </div>
+                      <div className="p-2.5 sm:p-3 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg min-w-0">
+                        <span className="block text-xl sm:text-3xl font-extrabold text-[var(--ink-primary)] font-mono-num truncate">
+                          {underageDetails.timeRemaining.days}
+                        </span>
+                        <span className="text-[10px] sm:text-[11px] uppercase font-mono text-[var(--ink-mute)] block mt-0.5">Days Left</span>
+                      </div>
+                    </div>
+
+                    <div className="text-xs text-[var(--ink-body)] flex flex-col sm:flex-row sm:items-center justify-between gap-1 pt-2 border-t border-[var(--hairline)]">
+                      <span>21st Birthday: <strong className="font-mono text-[var(--ink-primary)]">{formatDateForInput(underageDetails.turning21Date)}</strong></span>
+                      <span>Total Days Remaining: <strong className="font-mono text-[#0070f3]">{underageDetails.timeRemaining.totalDays.toLocaleString()} Days</strong></span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {result.status === 'overage' && (
+              <div className="p-4 bg-[#ee0000]/10 border border-[#ee0000]/30 rounded-xl flex items-center gap-3 text-[#ee0000]">
+                <XCircle className="w-6 h-6 shrink-0" />
+                <div>
+                  <div className="text-base font-bold">OVERAGE for UPSC CSE {targetYear}</div>
+                  <div className="text-xs text-[var(--ink-body)]">
+                    Exceeds the maximum age cap of {result.maxAgeAllowed} years for {category} as of 1st August {targetYear}.
+                  </div>
                 </div>
               </div>
+            )}
+          </div>
+
+          {/* Primary Age Stats Breakdown */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-4 my-6">
+            <div className="bg-[var(--canvas-inset)] p-4 sm:p-5 rounded-xl border border-[var(--hairline)]">
+              <span className="block text-xs uppercase font-mono text-[var(--ink-mute)]">Age on 1st Aug {targetYear}</span>
+              <span className="text-xl sm:text-3xl font-extrabold text-[var(--ink-primary)] font-mono-num block mt-1">
+                {result.ageOnCutoff.years}y {result.ageOnCutoff.months}m {result.ageOnCutoff.days}d
+              </span>
             </div>
-          )}
-        </div>
 
-        {/* Primary Age Stats Breakdown */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-4 my-6">
-          <div className="bg-[var(--canvas-inset)] p-4 sm:p-5 rounded-xl border border-[var(--hairline)]">
-            <span className="block text-xs uppercase font-mono text-[var(--ink-mute)]">Age on 1st Aug {targetYear}</span>
-            <span className="text-xl sm:text-3xl font-extrabold text-[var(--ink-primary)] font-mono-num block mt-1">
-              {result.ageOnCutoff.years}y {result.ageOnCutoff.months}m {result.ageOnCutoff.days}d
-            </span>
+            <div className="bg-[var(--canvas-inset)] p-4 sm:p-5 rounded-xl border border-[var(--hairline)]">
+              <span className="block text-xs uppercase font-mono text-[var(--ink-mute)]">Attempts Allowed ({category})</span>
+              <span className="text-xl sm:text-3xl font-extrabold text-[var(--ink-primary)] font-mono-num block mt-1">
+                {result.attemptsAllowed === 99 ? 'Unlimited' : `${result.attemptsAllowed} Attempts`}
+              </span>
+            </div>
+
+            <div className="bg-[var(--canvas-inset)] p-4 sm:p-5 rounded-xl border border-[var(--hairline)]">
+              <span className="block text-xs uppercase font-mono text-[var(--ink-mute)]">Max Age Limit ({category})</span>
+              <span className="text-xl sm:text-3xl font-extrabold text-[var(--ink-primary)] font-mono-num block mt-1">
+                {result.maxAgeAllowed} Years
+              </span>
+            </div>
           </div>
 
-          <div className="bg-[var(--canvas-inset)] p-4 sm:p-5 rounded-xl border border-[var(--hairline)]">
-            <span className="block text-xs uppercase font-mono text-[var(--ink-mute)]">Attempts Allowed ({category})</span>
-            <span className="text-xl sm:text-3xl font-extrabold text-[var(--ink-primary)] font-mono-num block mt-1">
-              {result.attemptsAllowed === 99 ? 'Unlimited' : `${result.attemptsAllowed} Attempts`}
-            </span>
-          </div>
+          {/* Detailed Timeline Parameters */}
+          <div className="pt-4 border-t border-[var(--hairline)] grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)] flex justify-between items-center">
+              <span className="text-[var(--ink-mute)]">Minimum Born On or After:</span>
+              <span className="font-mono font-semibold text-[var(--ink-primary)]">{result.dobBounds.minDobStr}</span>
+            </div>
 
-          <div className="bg-[var(--canvas-inset)] p-4 sm:p-5 rounded-xl border border-[var(--hairline)]">
-            <span className="block text-xs uppercase font-mono text-[var(--ink-mute)]">Max Age Limit ({category})</span>
-            <span className="text-xl sm:text-3xl font-extrabold text-[var(--ink-primary)] font-mono-num block mt-1">
-              {result.maxAgeAllowed} Years
-            </span>
-          </div>
-        </div>
-
-        {/* Detailed Timeline Parameters */}
-        <div className="pt-4 border-t border-[var(--hairline)] grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-          <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)] flex justify-between items-center">
-            <span className="text-[var(--ink-mute)]">Minimum Born On or After:</span>
-            <span className="font-mono font-semibold text-[var(--ink-primary)]">{result.dobBounds.minDobStr}</span>
-          </div>
-
-          <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)] flex justify-between items-center">
-            <span className="text-[var(--ink-mute)]">Maximum Born On or Before:</span>
-            <span className="font-mono font-semibold text-[var(--ink-primary)]">{result.dobBounds.maxDobStr}</span>
+            <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)] flex justify-between items-center">
+              <span className="text-[var(--ink-mute)]">Maximum Born On or Before:</span>
+              <span className="font-mono font-semibold text-[var(--ink-primary)]">{result.dobBounds.maxDobStr}</span>
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="p-8 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl text-center space-y-2">
+          <Shield className="w-8 h-8 mx-auto text-[#0070f3]/60" />
+          <h3 className="text-sm font-semibold text-[var(--ink-primary)]">Ready for Eligibility Verdict</h3>
+          <p className="text-xs text-[var(--ink-mute)] max-w-sm mx-auto">
+            Enter your Date of Birth in the input box above to instantly check your eligibility, remaining attempts, and 1st August cutoff age for UPSC CSE.
+          </p>
+        </div>
+      )}
     </div>
   );
 };
