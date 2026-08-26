@@ -4,7 +4,7 @@ import { DateInputField } from '../DateInputField';
 import { ArrowRightLeft, Calendar, Copy, Check } from 'lucide-react';
 
 export const DateDiffMode: React.FC = () => {
-  const [fromDate, setFromDate] = useState<string>('2024-01-01');
+  const [fromDate, setFromDate] = useState<string>('');
   const [fromTime, setFromTime] = useState<string>('00:00');
   const [toDate, setToDate] = useState<string>(() => formatDateForInput(new Date()));
   const [toTime, setToTime] = useState<string>('12:00');
