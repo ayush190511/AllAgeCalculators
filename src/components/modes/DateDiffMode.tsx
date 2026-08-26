@@ -1,12 +1,12 @@
 import React, { useState, useMemo } from 'react';
 import { calculateDateDifference, formatDateForInput } from '../../lib/date-utils';
 import { DateInputField } from '../DateInputField';
-import { ArrowRightLeft, Copy, Check } from 'lucide-react';
+import { ArrowRightLeft, Calendar, Copy, Check } from 'lucide-react';
 
 export const DateDiffMode: React.FC = () => {
-  const [fromDate, setFromDate] = useState<string>('');
+  const [fromDate, setFromDate] = useState<string>('2024-01-01');
   const [fromTime, setFromTime] = useState<string>('00:00');
-  const [toDate, setToDate] = useState<string>(formatDateForInput(new Date()));
+  const [toDate, setToDate] = useState<string>(() => formatDateForInput(new Date()));
   const [toTime, setToTime] = useState<string>('12:00');
   const [includeTime, setIncludeTime] = useState<boolean>(false);
   const [copied, setCopied] = useState<boolean>(false);
@@ -37,7 +37,7 @@ export const DateDiffMode: React.FC = () => {
 📅 To: ${toDate} ${includeTime ? toTime : ''}
 ⏱️ Difference: ${diff.years} Years, ${diff.months} Months, ${diff.days} Days
 🔢 Total Days: ${diff.totalDays.toLocaleString()} days (${diff.totalHours.toLocaleString()} hours)
-📍 Calculated via allagecalculators.com`;
+📍 Calculated via allagecalculators.com/date-difference-calculator`;
 
     navigator.clipboard.writeText(text);
     setCopied(true);
@@ -118,7 +118,9 @@ export const DateDiffMode: React.FC = () => {
           <div className="flex flex-wrap items-center justify-between gap-3 pb-3.5 border-b border-[var(--hairline)]">
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4 text-[#7928ca]" />
-              <span className="text-xs uppercase font-mono tracking-wider text-[var(--ink-mute)]">Calculated Duration</span>
+              <span className="text-xs uppercase font-mono tracking-wider text-[var(--ink-mute)]">
+                Duration: <strong className="text-[var(--ink-primary)] font-mono">{fromDate}</strong> &rarr; <strong className="text-[var(--ink-primary)] font-mono">{toDate}</strong>
+              </span>
             </div>
 
             <button
