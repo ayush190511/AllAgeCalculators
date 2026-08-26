@@ -214,6 +214,21 @@ export const DateInputField: React.FC<DateInputFieldProps> = ({
     }
   };
 
+  const handleOpenCalendar = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (hiddenDateInputRef.current) {
+      if (typeof hiddenDateInputRef.current.showPicker === 'function') {
+        try {
+          hiddenDateInputRef.current.showPicker();
+          return;
+        } catch {
+          // Fallback if showPicker fails
+        }
+      }
+      hiddenDateInputRef.current.focus();
+    }
+  };
+
   return (
     <div className={`space-y-1.5 ${className}`}>
       {/* Label */}
@@ -232,19 +247,14 @@ export const DateInputField: React.FC<DateInputFieldProps> = ({
           onChange={handleInputChange}
           onBlur={handleBlur}
           placeholder="DD/MM/YYYY"
-          className="w-full h-11 pl-3.5 pr-28 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg text-sm text-[var(--ink-primary)] font-mono-num font-semibold focus:outline-none focus:ring-2 focus:ring-[var(--ink-primary)] transition tracking-wider placeholder:text-[var(--ink-mute)]/60 placeholder:font-normal"
+          className="w-full h-10 pl-3 pr-24 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg text-sm text-[var(--ink-primary)] font-mono-num font-semibold focus:outline-none focus:ring-2 focus:ring-[var(--ink-primary)] transition tracking-wider placeholder:text-[var(--ink-mute)]/60 placeholder:font-normal"
           aria-label={`${label} in DD/MM/YYYY format`}
         />
 
         {/* Integrated Calendar Trigger Button */}
         <div className="absolute right-1 top-1 bottom-1 flex items-center">
           <div className="relative h-full flex items-center">
-            <div className="h-9 px-3 bg-[var(--canvas-inset)] border border-[var(--hairline)] hover:border-[var(--ink-primary)] text-[var(--ink-primary)] rounded-md flex items-center justify-center gap-1.5 transition cursor-pointer select-none pointer-events-none">
-              <CalendarIcon className="w-4 h-4 text-[#0070f3]" />
-              <span className="text-xs font-mono font-medium">Calendar</span>
-            </div>
-
-            {/* Invisible native HTML5 date input overlay for native calendar picker */}
+            {/* Native HTML5 date input positioned to anchor the picker */}
             <input
               ref={hiddenDateInputRef}
               type="date"
@@ -259,10 +269,21 @@ export const DateInputField: React.FC<DateInputFieldProps> = ({
                   setInputError(null);
                 }
               }}
-              className="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-10"
-              tabIndex={0}
-              aria-label="Choose date from calendar"
+              className="absolute inset-0 opacity-0 pointer-events-none w-full h-full"
+              tabIndex={-1}
+              aria-hidden="true"
             />
+
+            <button
+              type="button"
+              onClick={handleOpenCalendar}
+              className="h-8 px-2.5 bg-[var(--canvas-inset)] border border-[var(--hairline)] hover:border-[var(--ink-primary)] hover:bg-[var(--canvas-card)] text-[var(--ink-primary)] active:scale-[0.98] rounded-md flex items-center justify-center gap-1.5 transition cursor-pointer select-none"
+              title="Open calendar picker"
+              aria-label="Open calendar picker"
+            >
+              <CalendarIcon className="w-3.5 h-3.5 text-[#0070f3] pointer-events-none" />
+              <span className="text-xs font-mono font-medium pointer-events-none">Calendar</span>
+            </button>
           </div>
         </div>
       </div>

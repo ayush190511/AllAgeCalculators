@@ -92,22 +92,22 @@ export const RetirementMode: React.FC<RetirementModeProps> = ({ initialDob = '' 
   const presetAges = [58, 60, 62, 65, 70, 73];
 
   return (
-    <div className="w-full max-w-5xl mx-auto space-y-8">
+    <div className="space-y-4 sm:space-y-5">
       {/* Input Card */}
-      <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-6 sm:p-8 shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition-colors">
-        <div className="flex items-center justify-between pb-5 border-b border-[var(--hairline)]">
+      <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-4 sm:p-5 md:p-6 shadow-xs transition-colors">
+        <div className="flex items-center justify-between pb-3.5 border-b border-[var(--hairline)]">
           <div className="flex items-center gap-2">
-            <span className="text-xl">🏖️</span>
-            <h2 className="text-lg font-semibold tracking-tight text-[var(--ink-primary)]">
-              Retirement & Pension Age Countdown Engine
+            <span className="text-lg">🏖️</span>
+            <h2 className="text-sm sm:text-base font-semibold tracking-tight text-[var(--ink-primary)]">
+              Retirement & Pension Countdown Engine
             </h2>
           </div>
-          <span className="text-xs font-mono px-2.5 py-1 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-md text-[var(--ink-body)]">
-            Target Cap: {activeRetirementAge} Yrs
+          <span className="text-[11px] sm:text-xs font-mono px-2.5 py-1 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-md text-[var(--ink-body)]">
+            Target: {activeRetirementAge} Years
           </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 pt-4">
           {/* DOB */}
           <DateInputField
             label="Your Date of Birth"
@@ -120,171 +120,158 @@ export const RetirementMode: React.FC<RetirementModeProps> = ({ initialDob = '' 
             }}
           />
 
-          {/* Work Joining Age Input with Unified Seamless Stepper */}
-          <div className="space-y-2">
-            <label className="block text-xs font-medium uppercase tracking-wider text-[var(--ink-body)]">
-              Work / Career Joining Age <span className="text-[#ee0000]">*</span>
-            </label>
-            <div className="flex items-center h-11 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-[var(--ink-primary)] transition">
-              <button
-                type="button"
-                onClick={() => setCareerStartAge((prev) => Math.max(15, prev - 1))}
-                className="h-full px-3.5 bg-[var(--canvas-inset)] text-[var(--ink-primary)] hover:bg-[var(--hairline)] transition flex items-center justify-center cursor-pointer select-none border-r border-[var(--hairline)]"
-                aria-label="Decrease joining age"
-              >
-                <Minus className="w-3.5 h-3.5" />
-              </button>
-              <input
-                type="number"
-                min={15}
-                max={85}
-                value={careerStartAge}
-                onChange={(e) => setCareerStartAge(Math.max(10, Math.min(85, Number(e.target.value) || 22)))}
-                className="w-full h-full text-center bg-transparent text-sm font-mono font-bold text-[var(--ink-primary)] no-spinner focus:outline-none outline-none border-none ring-0 focus:ring-0 shadow-none"
-              />
-              <button
-                type="button"
-                onClick={() => setCareerStartAge((prev) => Math.min(85, prev + 1))}
-                className="h-full px-3.5 bg-[var(--canvas-inset)] text-[var(--ink-primary)] hover:bg-[var(--hairline)] transition flex items-center justify-center cursor-pointer select-none border-l border-[var(--hairline)]"
-                aria-label="Increase joining age"
-              >
-                <Plus className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          </div>
-
-          {/* Retirement Target Age Selector */}
-          <div className="space-y-2 md:col-span-1">
-            <label className="block text-xs font-medium uppercase tracking-wider text-[var(--ink-body)]">
-              Target Retirement Age <span className="text-[#ee0000]">*</span>
-            </label>
-            <div className="flex flex-wrap gap-1.5">
-              {presetAges.map((age) => (
-                <button
-                  key={age}
-                  type="button"
-                  onClick={() => {
-                    setIsCustomRetirement(false);
-                    setRetirementAge(age);
-                  }}
-                  className={`px-2.5 py-1.5 text-xs font-mono font-medium rounded-lg border transition cursor-pointer select-none ${
-                    !isCustomRetirement && retirementAge === age
-                      ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] shadow-sm'
-                      : 'bg-[var(--canvas-card)] text-[var(--ink-body)] border-[var(--hairline)] hover:border-[var(--ink-primary)]'
-                  }`}
-                >
-                  {age} {age === 60 ? '(Govt)' : age === 73 ? '(RMD)' : ''}
-                </button>
-              ))}
-
-              {/* Manual / Custom Option Button */}
-              <button
-                type="button"
-                onClick={() => setIsCustomRetirement(true)}
-                className={`px-2.5 py-1.5 text-xs font-mono font-medium rounded-lg border transition flex items-center gap-1 cursor-pointer select-none ${
-                  isCustomRetirement
-                    ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] shadow-sm'
-                    : 'bg-[var(--canvas-card)] text-[var(--ink-body)] border-[var(--hairline)] hover:border-[var(--ink-primary)]'
-                }`}
-              >
-                <Sliders className="w-3 h-3" /> Manual
-              </button>
-            </div>
-
-            {/* Custom Retirement Age Input Field with Unified Seamless Stepper */}
-            {isCustomRetirement && (
-              <div className="mt-2.5 animate-fade-in-down flex items-center h-10 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-[var(--ink-primary)] transition">
+          {/* Steppers & Target */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {/* Work Joining Age Stepper */}
+            <div className="space-y-1.5">
+              <label className="block text-xs font-medium uppercase tracking-wider text-[var(--ink-body)]">
+                Joining Age <span className="text-[#ee0000]">*</span>
+              </label>
+              <div className="flex items-center h-10 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-lg overflow-hidden">
                 <button
                   type="button"
-                  onClick={() => {
-                    const current = parseInt(customRetirementInput, 10) || 60;
-                    setCustomRetirementInput(String(Math.max(30, current - 1)));
-                  }}
-                  className="h-full px-3.5 bg-[var(--canvas-inset)] text-[var(--ink-primary)] hover:bg-[var(--hairline)] transition flex items-center justify-center cursor-pointer select-none border-r border-[var(--hairline)]"
-                  aria-label="Decrease custom retirement age"
+                  onClick={() => setCareerStartAge((prev) => Math.max(15, prev - 1))}
+                  className="h-full px-3 text-[var(--ink-primary)] hover:bg-[var(--hairline)] transition flex items-center justify-center cursor-pointer select-none"
+                  aria-label="Decrease joining age"
                 >
                   <Minus className="w-3.5 h-3.5" />
                 </button>
                 <input
                   type="number"
-                  min={30}
-                  max={100}
-                  value={customRetirementInput}
-                  onChange={(e) => setCustomRetirementInput(e.target.value)}
-                  placeholder="e.g. 55"
-                  className="w-full h-full text-center bg-transparent text-sm font-mono font-bold text-[var(--ink-primary)] no-spinner focus:outline-none outline-none border-none ring-0 focus:ring-0 shadow-none"
+                  min={15}
+                  max={85}
+                  value={careerStartAge}
+                  onChange={(e) => setCareerStartAge(Math.max(10, Math.min(85, Number(e.target.value) || 22)))}
+                  className="w-full h-full text-center bg-transparent text-xs sm:text-sm font-mono font-bold text-[var(--ink-primary)] no-spinner focus:outline-none"
                 />
                 <button
                   type="button"
-                  onClick={() => {
-                    const current = parseInt(customRetirementInput, 10) || 60;
-                    setCustomRetirementInput(String(Math.min(100, current + 1)));
-                  }}
-                  className="h-full px-3.5 bg-[var(--canvas-inset)] text-[var(--ink-primary)] hover:bg-[var(--hairline)] transition flex items-center justify-center cursor-pointer select-none border-l border-[var(--hairline)]"
-                  aria-label="Increase custom retirement age"
+                  onClick={() => setCareerStartAge((prev) => Math.min(85, prev + 1))}
+                  className="h-full px-3 text-[var(--ink-primary)] hover:bg-[var(--hairline)] transition flex items-center justify-center cursor-pointer select-none"
+                  aria-label="Increase joining age"
                 >
                   <Plus className="w-3.5 h-3.5" />
                 </button>
               </div>
-            )}
+            </div>
+
+            {/* Target Age Stepper / Selector */}
+            <div className="space-y-1.5">
+              <label className="block text-xs font-medium uppercase tracking-wider text-[var(--ink-body)]">
+                Target Age <span className="text-[#ee0000]">*</span>
+              </label>
+              <select
+                value={isCustomRetirement ? 'custom' : retirementAge}
+                onChange={(e) => {
+                  if (e.target.value === 'custom') {
+                    setIsCustomRetirement(true);
+                  } else {
+                    setIsCustomRetirement(false);
+                    setRetirementAge(Number(e.target.value));
+                  }
+                }}
+                className="w-full h-10 px-2.5 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-lg text-xs sm:text-sm font-mono font-bold text-[var(--ink-primary)] focus:outline-none cursor-pointer"
+              >
+                {presetAges.map((age) => (
+                  <option key={age} value={age}>
+                    {age} Yrs {age === 60 ? '(Govt)' : age === 73 ? '(RMD)' : ''}
+                  </option>
+                ))}
+                <option value="custom">Custom...</option>
+              </select>
+            </div>
           </div>
+
+          {isCustomRetirement && (
+            <div className="md:col-span-2 flex items-center h-10 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-lg overflow-hidden animate-fade-in-down">
+              <button
+                type="button"
+                onClick={() => {
+                  const current = parseInt(customRetirementInput, 10) || 60;
+                  setCustomRetirementInput(String(Math.max(30, current - 1)));
+                }}
+                className="h-full px-3 text-[var(--ink-primary)] hover:bg-[var(--hairline)] transition cursor-pointer"
+              >
+                <Minus className="w-3.5 h-3.5" />
+              </button>
+              <input
+                type="number"
+                min={30}
+                max={100}
+                value={customRetirementInput}
+                onChange={(e) => setCustomRetirementInput(e.target.value)}
+                placeholder="Custom Target Retirement Age"
+                className="w-full h-full text-center bg-transparent text-xs sm:text-sm font-mono font-bold text-[var(--ink-primary)] no-spinner focus:outline-none"
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  const current = parseInt(customRetirementInput, 10) || 60;
+                  setCustomRetirementInput(String(Math.min(100, current + 1)));
+                }}
+                className="h-full px-3 text-[var(--ink-primary)] hover:bg-[var(--hairline)] transition cursor-pointer"
+              >
+                <Plus className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Main Results Card */}
+      {/* Main Results Display */}
       {currentAge && retirementDate && remaining ? (
-        <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-6 sm:p-8 shadow-[0_2px_8px_rgba(0,0,0,0.04)] relative transition-colors animate-fade-in-down">
-          <div className="flex items-center justify-between pb-6 border-b border-[var(--hairline)]">
+        <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-4 sm:p-5 md:p-6 shadow-xs relative transition-colors animate-fade-in-down">
+          <div className="flex flex-wrap items-center justify-between gap-3 pb-3.5 border-b border-[var(--hairline)]">
             <div className="flex items-center gap-2">
-              <Briefcase className="w-5 h-5 text-[#0070f3]" />
-              <span className="text-xs uppercase font-mono tracking-wider text-[var(--ink-mute)]">Retirement Timeline Analysis</span>
+              <Calendar className="w-4 h-4 text-[#0070f3]" />
+              <span className="text-xs uppercase font-mono tracking-wider text-[var(--ink-mute)]">Retirement Countdown</span>
             </div>
 
             <button
               onClick={handleCopySummary}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[var(--ink-primary)] bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-lg hover:border-[var(--ink-primary)] transition"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[var(--ink-primary)] bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-lg hover:border-[var(--ink-primary)] transition cursor-pointer"
             >
               {copied ? <Check className="w-3.5 h-3.5 text-[#0070f3]" /> : <Copy className="w-3.5 h-3.5" />}
-              {copied ? 'Copied!' : 'Copy Summary'}
+              <span>{copied ? 'Copied!' : 'Copy Summary'}</span>
             </button>
           </div>
 
           {/* Big Remaining Time Display */}
           {remaining.isRetired ? (
-            <div className="my-8 p-6 bg-[var(--canvas-inset)] border border-[var(--hairline)] text-center rounded-xl">
-              <h3 className="text-2xl font-extrabold text-[#0070f3]">🎉 Congratulations! You are already retired!</h3>
-              <p className="text-xs text-[var(--ink-mute)] mt-1">You reached your target retirement age of {activeRetirementAge} on {formatDateForInput(retirementDate)}.</p>
+            <div className="my-3 p-3.5 bg-[var(--canvas-inset)] border border-[var(--hairline)] text-center rounded-xl">
+              <div className="text-lg sm:text-xl font-extrabold text-[#0070f3]">🎉 Already Retired!</div>
+              <p className="text-xs text-[var(--ink-mute)] mt-0.5">Target retirement age reached on {formatDateForInput(retirementDate)}.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-3 gap-4 my-6 text-center">
-              <div className="bg-[var(--canvas-inset)] p-5 rounded-xl border border-[var(--hairline)]">
-                <span className="block text-3xl sm:text-4xl font-extrabold text-[var(--ink-primary)] font-mono-num">
+            <div className="grid grid-cols-3 gap-2 sm:gap-3.5 my-3 text-center">
+              <div className="bg-[var(--canvas-inset)] p-2.5 sm:p-3.5 rounded-xl border border-[var(--hairline)] min-w-0">
+                <span className="block text-xl sm:text-2xl md:text-3xl font-extrabold text-[var(--ink-primary)] font-mono-num truncate">
                   {remaining.years}
                 </span>
-                <span className="text-xs uppercase font-mono text-[var(--ink-mute)]">Years Left</span>
+                <span className="text-[11px] uppercase font-mono text-[var(--ink-mute)] block mt-0.5">Years Left</span>
               </div>
-              <div className="bg-[var(--canvas-inset)] p-5 rounded-xl border border-[var(--hairline)]">
-                <span className="block text-3xl sm:text-4xl font-extrabold text-[var(--ink-primary)] font-mono-num">
+              <div className="bg-[var(--canvas-inset)] p-2.5 sm:p-3.5 rounded-xl border border-[var(--hairline)] min-w-0">
+                <span className="block text-xl sm:text-2xl md:text-3xl font-extrabold text-[var(--ink-primary)] font-mono-num truncate">
                   {remaining.months}
                 </span>
-                <span className="text-xs uppercase font-mono text-[var(--ink-mute)]">Months Left</span>
+                <span className="text-[11px] uppercase font-mono text-[var(--ink-mute)] block mt-0.5">Months Left</span>
               </div>
-              <div className="bg-[var(--canvas-inset)] p-5 rounded-xl border border-[var(--hairline)]">
-                <span className="block text-3xl sm:text-4xl font-extrabold text-[var(--ink-primary)] font-mono-num">
+              <div className="bg-[var(--canvas-inset)] p-2.5 sm:p-3.5 rounded-xl border border-[var(--hairline)] min-w-0">
+                <span className="block text-xl sm:text-2xl md:text-3xl font-extrabold text-[var(--ink-primary)] font-mono-num truncate">
                   {remaining.days}
                 </span>
-                <span className="text-xs uppercase font-mono text-[var(--ink-mute)]">Days Left</span>
+                <span className="text-[11px] uppercase font-mono text-[var(--ink-mute)] block mt-0.5">Days Left</span>
               </div>
             </div>
           )}
 
-          {/* Customized Progress Bar */}
-          <div className="space-y-2 my-6 p-4 bg-[var(--canvas-inset)] rounded-xl border border-[var(--hairline)]">
+          {/* Career Progress Bar */}
+          <div className="my-3 space-y-1.5 p-3 bg-[var(--canvas-inset)] rounded-xl border border-[var(--hairline)]">
             <div className="flex justify-between text-xs font-mono">
-              <span className="text-[var(--ink-body)]">Career Milestone Progress (Age {careerStartAge} to {activeRetirementAge})</span>
+              <span className="text-[var(--ink-body)]">Career Track (Age {careerStartAge} &rarr; {activeRetirementAge})</span>
               <span className="font-bold text-[var(--ink-primary)]">{progressPercent}% Completed</span>
             </div>
-            <div className="w-full bg-[var(--canvas-card)] h-3 rounded-full overflow-hidden border border-[var(--hairline)] p-0.5">
+            <div className="w-full bg-[var(--canvas-card)] h-2.5 rounded-full overflow-hidden border border-[var(--hairline)]">
               <div
                 className="bg-[#0070f3] h-full rounded-full transition-all duration-500"
                 style={{ width: `${progressPercent}%` }}
@@ -292,36 +279,36 @@ export const RetirementMode: React.FC<RetirementModeProps> = ({ initialDob = '' 
             </div>
           </div>
 
-          {/* Breakdown Stats */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-[var(--hairline)] text-xs">
-            <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)]">
-              <span className="block text-[var(--ink-mute)] font-mono uppercase">Current Exact Age</span>
-              <span className="text-sm font-bold text-[var(--ink-primary)] font-mono-num">
-                {currentAge.years} yrs, {currentAge.months} mos
+          {/* Timeline Chips */}
+          <div className="grid grid-cols-3 gap-2 sm:gap-3 pt-3 border-t border-[var(--hairline)] text-xs">
+            <div className="p-2.5 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)] min-w-0">
+              <span className="block text-[10px] text-[var(--ink-mute)] font-mono uppercase truncate">Current Age</span>
+              <span className="text-sm sm:text-base font-bold text-[var(--ink-primary)] font-mono-num block truncate mt-0.5">
+                {currentAge.years}y {currentAge.months}m
               </span>
             </div>
 
-            <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)]">
-              <span className="block text-[var(--ink-mute)] font-mono uppercase">Official Retirement Date</span>
-              <span className="text-sm font-bold text-[#0070f3] font-mono-num">
+            <div className="p-2.5 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)] min-w-0">
+              <span className="block text-[10px] text-[var(--ink-mute)] font-mono uppercase truncate">Pension Date</span>
+              <span className="text-sm sm:text-base font-bold text-[#0070f3] font-mono-num block truncate mt-0.5">
                 {formatDateForInput(retirementDate)}
               </span>
             </div>
 
-            <div className="p-3 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)]">
-              <span className="block text-[var(--ink-mute)] font-mono uppercase">Total Days to Target</span>
-              <span className="text-sm font-bold text-[var(--ink-primary)] font-mono-num">
+            <div className="p-2.5 bg-[var(--canvas-inset)] rounded-lg border border-[var(--hairline)] min-w-0">
+              <span className="block text-[10px] text-[var(--ink-mute)] font-mono uppercase truncate">Days Left</span>
+              <span className="text-sm sm:text-base font-bold text-[var(--ink-primary)] font-mono-num block truncate mt-0.5">
                 {remaining.totalDays.toLocaleString()} Days
               </span>
             </div>
           </div>
         </div>
       ) : (
-        <div className="p-8 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl text-center space-y-2">
-          <Briefcase className="w-8 h-8 mx-auto text-[#0070f3]/60" />
+        <div className="p-6 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl text-center space-y-1.5">
+          <Briefcase className="w-6 h-6 mx-auto text-[#0070f3]" />
           <h3 className="text-sm font-semibold text-[var(--ink-primary)]">Ready for Retirement Calculation</h3>
           <p className="text-xs text-[var(--ink-mute)] max-w-sm mx-auto">
-            Enter your Date of Birth in the input box above to instantly calculate your retirement countdown, official pension date, and career progress.
+            Enter your Date of Birth in the box above to compute your retirement countdown and pension milestone date.
           </p>
         </div>
       )}

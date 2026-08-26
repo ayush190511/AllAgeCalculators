@@ -137,3 +137,34 @@ input[type="number"].no-spinner {
   -webkit-appearance: none;
   -moz-appearance: textfield;
 }
+
+/* Mobile Menu Drawer Accordion Slide Down/Up Animation */
+.mobile-drawer-accordion {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.22s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mobile-drawer-accordion.is-open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Animated Hamburger to Cross Transformation */
+#hamburger-animated-icon.is-active .hamburger-bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+#hamburger-animated-icon.is-active .hamburger-bar:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+#hamburger-animated-icon.is-active .hamburger-bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+

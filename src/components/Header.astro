@@ -136,21 +136,24 @@ const currentPath = Astro.url.pathname;
           </svg>
         </button>
 
-        <!-- Mobile Menu Toggle Button -->
+        <!-- Mobile Menu Toggle Button with Smooth Hamburger-to-Cross Transformation -->
         <button
           id="mobile-menu-toggle"
           type="button"
           aria-label="Toggle Navigation Menu"
-          class="lg:hidden p-2 rounded-lg bg-[var(--canvas-inset)] border border-[var(--hairline)] text-[var(--ink-primary)] hover:border-[var(--ink-primary)] transition flex items-center justify-center cursor-pointer select-none"
+          aria-expanded="false"
+          class="lg:hidden p-2.5 rounded-lg bg-[var(--canvas-inset)] border border-[var(--hairline)] text-[var(--ink-primary)] hover:border-[var(--ink-primary)] transition flex items-center justify-center cursor-pointer select-none"
         >
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-          </svg>
+          <div id="hamburger-animated-icon" class="w-5 h-4 relative flex flex-col justify-between transition-transform duration-300">
+            <span class="hamburger-bar w-full h-[2px] bg-current rounded-full transition-all duration-300 ease-in-out origin-center"></span>
+            <span class="hamburger-bar w-full h-[2px] bg-current rounded-full transition-all duration-300 ease-in-out origin-center"></span>
+            <span class="hamburger-bar w-full h-[2px] bg-current rounded-full transition-all duration-300 ease-in-out origin-center"></span>
+          </div>
         </button>
       </div>
     </div>
 
-    <!-- Touchscreen Horizontal Scroll Pill Bar -->
+    <!-- Touchscreen Horizontal Scroll Pill Bar (Tool Links Only) -->
     <div id="mobile-pill-container" class="lg:hidden flex items-center gap-1.5 overflow-x-auto pb-2.5 pt-0.5 no-scrollbar border-t border-[var(--hairline)]/50">
       <a 
         href="/" 
@@ -188,67 +191,45 @@ const currentPath = Astro.url.pathname;
       >
         Date Diff
       </a>
-
-      <!-- Visual Separator Pill for Mobile -->
-      <div class="h-3.5 w-px bg-[var(--hairline-strong)] shrink-0 mx-1 self-center opacity-60"></div>
-
-      <!-- Info & Legal Group Pills -->
-      <a 
-        href="/about" 
-        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/about' || currentPath === '/about/' ? 'mobile-active-pill bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] font-semibold' : 'bg-[var(--canvas-inset)] text-[var(--ink-mute)] border-[var(--hairline)]'}`}
-      >
-        About
-      </a>
-      <a 
-        href="/contact" 
-        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/contact' || currentPath === '/contact/' ? 'mobile-active-pill bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] font-semibold' : 'bg-[var(--canvas-inset)] text-[var(--ink-mute)] border-[var(--hairline)]'}`}
-      >
-        Contact
-      </a>
-      <a 
-        href="/privacy-policy" 
-        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/privacy-policy' || currentPath === '/privacy-policy/' ? 'mobile-active-pill bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] font-semibold' : 'bg-[var(--canvas-inset)] text-[var(--ink-mute)] border-[var(--hairline)]'}`}
-      >
-        Privacy Policy
-      </a>
-      <a 
-        href="/terms-and-conditions" 
-        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/terms-and-conditions' || currentPath === '/terms-and-conditions/' ? 'mobile-active-pill bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] font-semibold' : 'bg-[var(--canvas-inset)] text-[var(--ink-mute)] border-[var(--hairline)]'}`}
-      >
-        Terms & Conditions
-      </a>
     </div>
 
-    <!-- Mobile Hamburger Drawer Menu -->
-    <div id="mobile-menu-drawer" class="hidden lg:hidden py-3 border-t border-[var(--hairline)] space-y-1 text-xs">
-      <a 
-        href="/about" 
-        class={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition ${currentPath === '/about' || currentPath === '/about/' ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] font-semibold' : 'text-[var(--ink-primary)] bg-[var(--canvas-inset)] hover:bg-[var(--hairline)]'}`}
-      >
-        <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
-        About Us & Mission
-      </a>
-      <a 
-        href="/contact" 
-        class={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition ${currentPath === '/contact' || currentPath === '/contact/' ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] font-semibold' : 'text-[var(--ink-primary)] bg-[var(--canvas-inset)] hover:bg-[var(--hairline)]'}`}
-      >
-        <span class="h-1.5 w-1.5 rounded-full bg-[#10b981]"></span>
-        Contact Us
-      </a>
-      <a 
-        href="/privacy-policy" 
-        class={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition ${currentPath === '/privacy-policy' || currentPath === '/privacy-policy/' ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] font-semibold' : 'text-[var(--ink-primary)] bg-[var(--canvas-inset)] hover:bg-[var(--hairline)]'}`}
-      >
-        <span class="h-1.5 w-1.5 rounded-full bg-[#7928ca]"></span>
-        Privacy Policy
-      </a>
-      <a 
-        href="/terms-and-conditions" 
-        class={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition ${currentPath === '/terms-and-conditions' || currentPath === '/terms-and-conditions/' ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] font-semibold' : 'text-[var(--ink-primary)] bg-[var(--canvas-inset)] hover:bg-[var(--hairline)]'}`}
-      >
-        <span class="h-1.5 w-1.5 rounded-full bg-[#f5a623]"></span>
-        Terms & Conditions
-      </a>
+    <!-- Mobile Hamburger Drawer Menu with Smooth Accordion Slide Down/Up Animation -->
+    <div id="mobile-menu-drawer" class="mobile-drawer-accordion lg:hidden">
+      <div class="overflow-hidden">
+        <div class="py-3 border-t border-[var(--hairline)] space-y-1.5 text-xs">
+          <div class="px-1 py-1 text-[11px] font-mono uppercase tracking-wider text-[var(--ink-mute)]">
+            More Pages & Legal
+          </div>
+          <a 
+            href="/about" 
+            class={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition ${currentPath === '/about' || currentPath === '/about/' ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] font-semibold' : 'text-[var(--ink-primary)] bg-[var(--canvas-inset)] hover:bg-[var(--hairline)]'}`}
+          >
+            <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+            About Us & Mission
+          </a>
+          <a 
+            href="/contact" 
+            class={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition ${currentPath === '/contact' || currentPath === '/contact/' ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] font-semibold' : 'text-[var(--ink-primary)] bg-[var(--canvas-inset)] hover:bg-[var(--hairline)]'}`}
+          >
+            <span class="h-1.5 w-1.5 rounded-full bg-[#10b981]"></span>
+            Contact Us
+          </a>
+          <a 
+            href="/privacy-policy" 
+            class={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition ${currentPath === '/privacy-policy' || currentPath === '/privacy-policy/' ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] font-semibold' : 'text-[var(--ink-primary)] bg-[var(--canvas-inset)] hover:bg-[var(--hairline)]'}`}
+          >
+            <span class="h-1.5 w-1.5 rounded-full bg-[#7928ca]"></span>
+            Privacy Policy
+          </a>
+          <a 
+            href="/terms-and-conditions" 
+            class={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition ${currentPath === '/terms-and-conditions' || currentPath === '/terms-and-conditions/' ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] font-semibold' : 'text-[var(--ink-primary)] bg-[var(--canvas-inset)] hover:bg-[var(--hairline)]'}`}
+          >
+            <span class="h-1.5 w-1.5 rounded-full bg-[#f5a623]"></span>
+            Terms & Conditions
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </header>
@@ -272,9 +253,59 @@ const currentPath = Astro.url.pathname;
 
   const mobileBtn = document.getElementById('mobile-menu-toggle');
   const mobileDrawer = document.getElementById('mobile-menu-drawer');
-  if (mobileBtn && mobileDrawer) {
-    mobileBtn.addEventListener('click', function() {
-      mobileDrawer.classList.toggle('hidden');
+  const animatedIcon = document.getElementById('hamburger-animated-icon');
+
+  function openMobileMenu() {
+    if (!mobileDrawer) return;
+    mobileDrawer.classList.add('is-open');
+    mobileBtn?.setAttribute('aria-expanded', 'true');
+    animatedIcon?.classList.add('is-active');
+  }
+
+  function closeMobileMenu() {
+    if (!mobileDrawer) return;
+    mobileDrawer.classList.remove('is-open');
+    mobileBtn?.setAttribute('aria-expanded', 'false');
+    animatedIcon?.classList.remove('is-active');
+  }
+
+  function toggleMobileMenu() {
+    if (!mobileDrawer) return;
+    if (mobileDrawer.classList.contains('is-open')) {
+      closeMobileMenu();
+    } else {
+      openMobileMenu();
+    }
+  }
+
+  if (mobileBtn) {
+    mobileBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      toggleMobileMenu();
+    });
+  }
+
+  // Close drawer when clicking outside
+  document.addEventListener('click', function(e) {
+    if (mobileDrawer && mobileDrawer.classList.contains('is-open')) {
+      if (!mobileDrawer.contains(e.target) && !mobileBtn?.contains(e.target)) {
+        closeMobileMenu();
+      }
+    }
+  });
+
+  // Close drawer on Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && mobileDrawer && mobileDrawer.classList.contains('is-open')) {
+      closeMobileMenu();
+    }
+  });
+
+  // Close drawer when clicking on any link inside
+  if (mobileDrawer) {
+    const drawerLinks = mobileDrawer.querySelectorAll('a');
+    drawerLinks.forEach(link => {
+      link.addEventListener('click', closeMobileMenu);
     });
   }
 
