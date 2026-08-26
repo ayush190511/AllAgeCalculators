@@ -6,7 +6,7 @@ import { ArrowRightLeft, Calendar, Copy, Check } from 'lucide-react';
 export const DateDiffMode: React.FC = () => {
   const [fromDate, setFromDate] = useState<string>('');
   const [fromTime, setFromTime] = useState<string>('00:00');
-  const [toDate, setToDate] = useState<string>('');
+  const [toDate, setToDate] = useState<string>(() => formatDateForInput(new Date()));
   const [toTime, setToTime] = useState<string>('12:00');
   const [includeTime, setIncludeTime] = useState<boolean>(false);
   const [copied, setCopied] = useState<boolean>(false);
