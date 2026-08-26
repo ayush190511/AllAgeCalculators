@@ -7,18 +7,18 @@ const currentPath = Astro.url.pathname;
   <OfflineBanner client:load />
   <div class="max-w-5xl mx-auto px-4 sm:px-6">
     <div class="h-16 flex items-center justify-between">
-      <!-- Brand Logo -->
-      <a href="/" class="flex items-center gap-2.5 group shrink-0">
+      <!-- Brand Logo & Name (Always visible as branding on both mobile & desktop) -->
+      <a href="/" class="flex items-center gap-2 sm:gap-2.5 group shrink-0">
         <img 
           src="/favicon.png" 
           alt="AllAgeCalculators Logo" 
-          class="h-8 sm:h-9 w-auto object-contain rounded-lg shadow-2xs transition group-hover:scale-105" 
+          class="h-7 sm:h-9 w-auto object-contain rounded-lg shadow-2xs transition group-hover:scale-105" 
         />
-        <div class="hidden sm:flex flex-col">
-          <span class="text-sm font-bold tracking-tight text-[var(--ink-primary)] leading-none">
+        <div class="flex flex-col">
+          <span class="text-xs sm:text-sm font-bold tracking-tight text-[var(--ink-primary)] leading-tight">
             AllAgeCalculators
           </span>
-          <span class="text-[10px] font-mono text-[var(--ink-mute)] mt-0.5">allagecalculators.com</span>
+          <span class="text-[9px] sm:text-[10px] font-mono text-[var(--ink-mute)]">allagecalculators.com</span>
         </div>
       </a>
 
