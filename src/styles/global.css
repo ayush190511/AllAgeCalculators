@@ -6,27 +6,31 @@
 }
 
 :root {
-  --canvas: #fafafa;
+  --canvas: #f8fafc;
   --canvas-card: #ffffff;
-  --canvas-inset: #fafafa;
-  --ink-primary: #171717;
-  --ink-body: #4d4d4d;
-  --ink-mute: #888888;
-  --hairline: #ebebeb;
-  --hairline-strong: #d4d4d4;
+  --canvas-inset: #f1f5f9;
+  --ink-primary: #0f172a;
+  --ink-body: #334155;
+  --ink-mute: #64748b;
+  --hairline: #e2e8f0;
+  --hairline-strong: #cbd5e1;
   --brand-blue: #0070f3;
+  --card-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.02);
+  --card-shadow-lg: 0 10px 30px -4px rgba(15, 23, 42, 0.08), 0 4px 10px -2px rgba(15, 23, 42, 0.03);
 }
 
 html.dark {
-  --canvas: #000000;
-  --canvas-card: #0a0a0a;
-  --canvas-inset: #111111;
-  --ink-primary: #ffffff;
-  --ink-body: #a1a1a1;
-  --ink-mute: #666666;
-  --hairline: #222222;
-  --hairline-strong: #333333;
-  --brand-blue: #0070f3;
+  --canvas: #090d16;
+  --canvas-card: #111827;
+  --canvas-inset: #0b111e;
+  --ink-primary: #f8fafc;
+  --ink-body: #cbd5e1;
+  --ink-mute: #64748b;
+  --hairline: #1e293b;
+  --hairline-strong: #334155;
+  --brand-blue: #38bdf8;
+  --card-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4), 0 2px 6px -1px rgba(0, 0, 0, 0.2);
+  --card-shadow-lg: 0 10px 30px -4px rgba(0, 0, 0, 0.6), 0 4px 10px -2px rgba(0, 0, 0, 0.3);
 }
 
 body {
@@ -35,7 +39,7 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.25s ease, color 0.25s ease;
   overflow-x: hidden;
   max-width: 100vw;
 }
@@ -59,19 +63,19 @@ html:not(.dark) #theme-toggle-moon-icon {
   font-variant-numeric: tabular-nums;
 }
 
-/* Vercel subtle mesh background glow */
+/* Subtle, soothing ambient mesh background glow */
 .hero-mesh-bg {
   background-image: 
-    radial-gradient(at 0% 0%, rgba(0, 112, 243, 0.05) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(121, 40, 202, 0.05) 0px, transparent 50%),
-    radial-gradient(at 50% 100%, rgba(245, 166, 35, 0.04) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.04) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(99, 102, 241, 0.04) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(245, 158, 11, 0.03) 0px, transparent 50%);
 }
 
 html.dark .hero-mesh-bg {
   background-image: 
-    radial-gradient(at 0% 0%, rgba(0, 112, 243, 0.12) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(121, 40, 202, 0.12) 0px, transparent 50%),
-    radial-gradient(at 50% 100%, rgba(245, 166, 35, 0.08) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.08) 0px, transparent 55%),
+    radial-gradient(at 100% 0%, rgba(129, 140, 248, 0.08) 0px, transparent 55%),
+    radial-gradient(at 50% 100%, rgba(251, 191, 36, 0.05) 0px, transparent 55%);
 }
 
 /* Custom smooth pulse ticker animation */
@@ -154,8 +158,15 @@ input[type="number"].no-spinner {
 }
 
 /* Animated Hamburger to Cross Transformation */
+#hamburger-animated-icon .hamburger-bar {
+  width: 18px !important;
+  height: 2px !important;
+  min-height: 2px !important;
+  max-height: 2px !important;
+}
+
 #hamburger-animated-icon.is-active .hamburger-bar:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
+  transform: translateY(5.5px) rotate(45deg);
 }
 
 #hamburger-animated-icon.is-active .hamburger-bar:nth-child(2) {
@@ -164,7 +175,7 @@ input[type="number"].no-spinner {
 }
 
 #hamburger-animated-icon.is-active .hamburger-bar:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg);
+  transform: translateY(-5.5px) rotate(-45deg);
 }
 
 

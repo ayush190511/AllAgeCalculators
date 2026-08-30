@@ -142,12 +142,12 @@ const currentPath = Astro.url.pathname;
           type="button"
           aria-label="Toggle Navigation Menu"
           aria-expanded="false"
-          class="lg:hidden p-2.5 rounded-lg bg-[var(--canvas-inset)] border border-[var(--hairline)] text-[var(--ink-primary)] hover:border-[var(--ink-primary)] transition flex items-center justify-center cursor-pointer select-none"
+          class="lg:hidden w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-[var(--canvas-inset)] border border-[var(--hairline)] text-[var(--ink-primary)] hover:border-[var(--ink-primary)] transition flex items-center justify-center cursor-pointer select-none"
         >
-          <div id="hamburger-animated-icon" class="w-5 h-4 relative flex flex-col justify-between transition-transform duration-300">
-            <span class="hamburger-bar w-full h-[2px] bg-current rounded-full transition-all duration-300 ease-in-out origin-center"></span>
-            <span class="hamburger-bar w-full h-[2px] bg-current rounded-full transition-all duration-300 ease-in-out origin-center"></span>
-            <span class="hamburger-bar w-full h-[2px] bg-current rounded-full transition-all duration-300 ease-in-out origin-center"></span>
+          <div id="hamburger-animated-icon" class="w-[18px] h-[13px] relative flex flex-col justify-between items-center transition-transform duration-300">
+            <span class="hamburger-bar block w-[18px] h-[2px] min-h-[2px] max-h-[2px] shrink-0 bg-current rounded-full transition-all duration-300 ease-in-out origin-center"></span>
+            <span class="hamburger-bar block w-[18px] h-[2px] min-h-[2px] max-h-[2px] shrink-0 bg-current rounded-full transition-all duration-300 ease-in-out origin-center"></span>
+            <span class="hamburger-bar block w-[18px] h-[2px] min-h-[2px] max-h-[2px] shrink-0 bg-current rounded-full transition-all duration-300 ease-in-out origin-center"></span>
           </div>
         </button>
       </div>

@@ -21,6 +21,7 @@ export const UPSCMode: React.FC<UPSCModeProps> = ({
   const [birthTime, setBirthTime] = useState<string>('12:00');
   const [category, setCategory] = useState<Category>('GEN');
   const [targetYear, setTargetYear] = useState<number>(2026);
+  const [showRelaxations, setShowRelaxations] = useState<boolean>(false);
   const [copied, setCopied] = useState<boolean>(false);
 
   useEffect(() => {
@@ -104,27 +105,25 @@ export const UPSCMode: React.FC<UPSCModeProps> = ({
   const categories: Category[] = ['GEN', 'EWS', 'OBC', 'SC', 'ST'];
   const years = [2024, 2025, 2026, 2027, 2028, 2029, 2030];
 
-  const [showRelaxations, setShowRelaxations] = useState<boolean>(false);
-
   return (
-    <div className="space-y-4 sm:space-y-5">
+    <div className="space-y-4 sm:space-y-6">
       {/* Input Card */}
-      <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-4 sm:p-5 md:p-6 shadow-xs transition-colors">
-        <div className="flex items-center justify-between pb-3.5 border-b border-[var(--hairline)]">
-          <div className="flex items-center gap-2">
-            <div className="h-2 w-2 rounded-full bg-[#0070f3]" />
-            <h2 className="text-sm sm:text-base font-semibold tracking-tight text-[var(--ink-primary)]">
+      <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-8 shadow-xs transition-colors">
+        <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-[var(--hairline)]">
+          <div className="flex items-center gap-2 sm:gap-2.5">
+            <div className="h-2 w-2 sm:h-2.5 sm:w-2.5 rounded-full bg-[#0070f3] shadow-[0_0_8px_rgba(0,112,243,0.6)]" />
+            <h2 className="text-sm sm:text-base md:text-lg font-bold tracking-tight text-[var(--ink-primary)]">
               UPSC CSE Age & Eligibility Engine
             </h2>
           </div>
-          <span className="text-[11px] sm:text-xs font-mono px-2.5 py-1 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-md text-[var(--ink-body)]">
+          <span className="text-[11px] sm:text-xs font-mono px-2.5 py-1 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-md sm:rounded-lg text-[var(--ink-body)] font-medium">
             Cutoff: 1st August {targetYear}
           </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 pt-4 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 pt-4 sm:pt-5 items-start">
           {/* DOB Input */}
-          <div>
+          <div className="md:col-span-1">
             <DateInputField
               label="Date of Birth"
               value={dob}
@@ -134,20 +133,20 @@ export const UPSCMode: React.FC<UPSCModeProps> = ({
           </div>
 
           {/* Category Selector */}
-          <div className="space-y-1.5">
-            <label className="block text-xs font-medium uppercase tracking-wider text-[var(--ink-body)]">
+          <div className="space-y-1.5 sm:space-y-2">
+            <label className="block text-xs sm:text-sm font-bold uppercase tracking-wider text-[var(--ink-primary)]">
               Category <span className="text-[#ee0000]">*</span>
             </label>
-            <div className="flex flex-wrap gap-1.5">
+            <div className="flex flex-wrap gap-1.5 sm:gap-2">
               {categories.map((cat) => (
                 <button
                   key={cat}
                   type="button"
                   onClick={() => setCategory(cat)}
-                  className={`px-3 py-1.5 text-xs font-mono font-medium rounded-lg border transition cursor-pointer select-none ${
+                  className={`h-10 sm:h-12 px-3 sm:px-4 text-xs sm:text-sm font-mono font-bold rounded-lg sm:rounded-xl border transition-all cursor-pointer select-none shadow-2xs flex items-center justify-center ${
                     category === cat
-                      ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] shadow-sm'
-                      : 'bg-[var(--canvas-inset)] text-[var(--ink-body)] border-[var(--hairline)] hover:border-[var(--ink-primary)]'
+                      ? 'bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] shadow-sm scale-[1.02]'
+                      : 'bg-[var(--canvas-inset)] text-[var(--ink-body)] border-[var(--hairline)] hover:border-[var(--ink-primary)] hover:bg-[var(--canvas-card)]'
                   }`}
                 >
                   {cat}
@@ -157,14 +156,14 @@ export const UPSCMode: React.FC<UPSCModeProps> = ({
           </div>
 
           {/* Target Exam Year Select */}
-          <div className="space-y-1.5">
-            <label className="block text-xs font-medium uppercase tracking-wider text-[var(--ink-body)]">
+          <div className="space-y-1.5 sm:space-y-2">
+            <label className="block text-xs sm:text-sm font-bold uppercase tracking-wider text-[var(--ink-primary)]">
               Target Exam Year <span className="text-[#ee0000]">*</span>
             </label>
             <select
               value={targetYear}
               onChange={(e) => setTargetYear(Number(e.target.value))}
-              className="w-full h-10 px-3 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg text-xs sm:text-sm font-mono text-[var(--ink-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--ink-primary)] transition cursor-pointer"
+              className="w-full h-10 sm:h-12 px-3 sm:px-4 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg sm:rounded-xl text-xs sm:text-sm font-mono font-bold text-[var(--ink-primary)] focus:outline-none focus:ring-2 focus:ring-[#0070f3]/40 focus:border-[#0070f3] shadow-2xs transition-all cursor-pointer"
             >
               {years.map((y) => (
                 <option key={y} value={y}>
@@ -176,53 +175,53 @@ export const UPSCMode: React.FC<UPSCModeProps> = ({
         </div>
 
         {/* Special Category Age Relaxations Toggle */}
-        <div className="pt-2.5 border-t border-[var(--hairline)] mt-3.5">
+        <div className="pt-2.5 sm:pt-3 border-t border-[var(--hairline)] mt-4 sm:mt-5">
           <button
             type="button"
             onClick={() => setShowRelaxations(!showRelaxations)}
-            className="text-xs text-[#0070f3] hover:underline flex items-center gap-1 font-medium cursor-pointer select-none"
+            className="text-xs sm:text-sm text-[#0070f3] dark:text-[#38bdf8] hover:underline flex items-center gap-1.5 font-semibold cursor-pointer select-none py-1"
           >
             {showRelaxations ? '– Hide Special Category Relaxations' : '+ Add Special Category Relaxations (PwBD / Ex-Servicemen / Defence)'}
           </button>
 
           {showRelaxations && (
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-2.5 animate-fade-in-down">
-              <label className="flex items-center gap-2 p-2.5 rounded-lg border border-[var(--hairline)] bg-[var(--canvas-inset)] text-xs text-[var(--ink-primary)] cursor-pointer hover:border-[var(--ink-primary)] transition">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 pt-2.5 sm:pt-3 animate-fade-in-down">
+              <label className="flex items-center gap-2 p-2.5 sm:p-3 rounded-lg sm:rounded-xl border border-[var(--hairline)] bg-[var(--canvas-inset)] text-xs sm:text-sm font-medium text-[var(--ink-primary)] cursor-pointer hover:border-[var(--ink-primary)] transition shadow-2xs">
                 <input
                   type="checkbox"
                   checked={relaxations.pwbd}
                   onChange={() => toggleRelaxation('pwbd')}
-                  className="h-3.5 w-3.5 rounded text-[#0070f3]"
+                  className="h-3.5 w-3.5 sm:h-4 sm:w-4 rounded text-[#0070f3]"
                 />
                 <span>PwBD (+10 Yrs)</span>
               </label>
 
-              <label className="flex items-center gap-2 p-2.5 rounded-lg border border-[var(--hairline)] bg-[var(--canvas-inset)] text-xs text-[var(--ink-primary)] cursor-pointer hover:border-[var(--ink-primary)] transition">
+              <label className="flex items-center gap-2 p-2.5 sm:p-3 rounded-lg sm:rounded-xl border border-[var(--hairline)] bg-[var(--canvas-inset)] text-xs sm:text-sm font-medium text-[var(--ink-primary)] cursor-pointer hover:border-[var(--ink-primary)] transition shadow-2xs">
                 <input
                   type="checkbox"
                   checked={relaxations.exServicemen}
                   onChange={() => toggleRelaxation('exServicemen')}
-                  className="h-3.5 w-3.5 rounded text-[#0070f3]"
+                  className="h-3.5 w-3.5 sm:h-4 sm:w-4 rounded text-[#0070f3]"
                 />
                 <span>Ex-Servicemen (+5 Yrs)</span>
               </label>
 
-              <label className="flex items-center gap-2 p-2.5 rounded-lg border border-[var(--hairline)] bg-[var(--canvas-inset)] text-xs text-[var(--ink-primary)] cursor-pointer hover:border-[var(--ink-primary)] transition">
+              <label className="flex items-center gap-2 p-2.5 sm:p-3 rounded-lg sm:rounded-xl border border-[var(--hairline)] bg-[var(--canvas-inset)] text-xs sm:text-sm font-medium text-[var(--ink-primary)] cursor-pointer hover:border-[var(--ink-primary)] transition shadow-2xs">
                 <input
                   type="checkbox"
                   checked={relaxations.defenceOps}
                   onChange={() => toggleRelaxation('defenceOps')}
-                  className="h-3.5 w-3.5 rounded text-[#0070f3]"
+                  className="h-3.5 w-3.5 sm:h-4 sm:w-4 rounded text-[#0070f3]"
                 />
-                <span>Defence Disabled (+3 Yrs)</span>
+                <span>Defence (+3 Yrs)</span>
               </label>
 
-              <label className="flex items-center gap-2 p-2.5 rounded-lg border border-[var(--hairline)] bg-[var(--canvas-inset)] text-xs text-[var(--ink-primary)] cursor-pointer hover:border-[var(--ink-primary)] transition">
+              <label className="flex items-center gap-2 p-2.5 sm:p-3 rounded-lg sm:rounded-xl border border-[var(--hairline)] bg-[var(--canvas-inset)] text-xs sm:text-sm font-medium text-[var(--ink-primary)] cursor-pointer hover:border-[var(--ink-primary)] transition shadow-2xs">
                 <input
                   type="checkbox"
                   checked={relaxations.jkDomicile}
                   onChange={() => toggleRelaxation('jkDomicile')}
-                  className="h-3.5 w-3.5 rounded text-[#0070f3]"
+                  className="h-3.5 w-3.5 sm:h-4 sm:w-4 rounded text-[#0070f3]"
                 />
                 <span>J&K (+5 Yrs)</span>
               </label>
@@ -233,30 +232,32 @@ export const UPSCMode: React.FC<UPSCModeProps> = ({
 
       {/* Main Results Card */}
       {result ? (
-        <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl p-4 sm:p-5 md:p-6 shadow-xs relative transition-colors animate-fade-in-down">
-          <div className="flex flex-wrap items-center justify-between gap-3 pb-3.5 border-b border-[var(--hairline)]">
+        <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-8 shadow-xs relative transition-colors animate-fade-in-down space-y-4 sm:space-y-5">
+          <div className="flex flex-wrap items-center justify-between gap-2.5 pb-3 sm:pb-4 border-b border-[var(--hairline)]">
             <div className="flex items-center gap-2">
-              <Shield className="w-4 h-4 text-[#0070f3]" />
-              <span className="text-xs uppercase font-mono tracking-wider text-[var(--ink-mute)]">UPSC CSE {targetYear} Verdict</span>
+              <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-[#0070f3]" />
+              <span className="text-xs sm:text-sm uppercase font-mono tracking-wider font-bold text-[var(--ink-mute)]">
+                UPSC CSE {targetYear} Verdict
+              </span>
             </div>
 
             <button
               onClick={handleCopySummary}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[var(--ink-primary)] bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-lg hover:border-[var(--ink-primary)] transition cursor-pointer"
+              className="flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-semibold text-[var(--ink-primary)] bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-lg sm:rounded-xl hover:border-[var(--ink-primary)] hover:bg-[var(--canvas-card)] transition-all cursor-pointer shadow-2xs"
             >
-              {copied ? <Check className="w-3.5 h-3.5 text-[#0070f3]" /> : <Copy className="w-3.5 h-3.5" />}
+              {copied ? <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#0070f3]" /> : <Copy className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
               <span>{copied ? 'Copied!' : 'Copy Summary'}</span>
             </button>
           </div>
 
           {/* Verdict Status Banner */}
-          <div className="my-4">
+          <div>
             {result.status === 'eligible' && (
-              <div className="p-3 bg-[#0070f3]/10 border border-[#0070f3]/30 rounded-xl flex items-center gap-3 text-[#0070f3]">
-                <CheckCircle2 className="w-5 h-5 shrink-0" />
+              <div className="p-3.5 sm:p-5 bg-emerald-500/10 border border-emerald-500/30 dark:bg-emerald-500/15 dark:border-emerald-500/40 rounded-xl sm:rounded-2xl flex items-start sm:items-center gap-3 sm:gap-3.5 text-emerald-600 dark:text-emerald-400 shadow-2xs">
+                <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 shrink-0 mt-0.5 sm:mt-0" />
                 <div>
-                  <div className="text-sm sm:text-base font-bold">ELIGIBLE for UPSC CSE {targetYear}</div>
-                  <div className="text-xs text-[var(--ink-body)]">
+                  <div className="text-sm sm:text-base md:text-lg font-bold">ELIGIBLE for UPSC CSE {targetYear}</div>
+                  <div className="text-xs sm:text-sm text-[var(--ink-body)] mt-0.5 leading-relaxed">
                     Age on 1st August {targetYear} is within the {result.maxAgeAllowed} year limit for {category}.
                   </div>
                 </div>
@@ -264,23 +265,23 @@ export const UPSCMode: React.FC<UPSCModeProps> = ({
             )}
 
             {result.status === 'underage' && (
-              <div className="p-3 bg-[#f5a623]/10 border border-[#f5a623]/30 rounded-xl flex items-center gap-3 text-[#f5a623]">
-                <AlertCircle className="w-5 h-5 shrink-0" />
+              <div className="p-3.5 sm:p-5 bg-amber-500/10 border border-amber-500/30 dark:bg-amber-500/15 dark:border-amber-500/40 rounded-xl sm:rounded-2xl flex items-start sm:items-center gap-3 sm:gap-3.5 text-amber-600 dark:text-amber-400 shadow-2xs">
+                <AlertCircle className="w-5 h-5 sm:w-6 sm:h-6 shrink-0 mt-0.5 sm:mt-0" />
                 <div>
-                  <div className="text-sm sm:text-base font-bold">UNDERAGE for UPSC CSE {targetYear}</div>
-                  <div className="text-xs text-[var(--ink-body)]">
-                    {underageDetails ? `First eligible exam: UPSC CSE ${underageDetails.firstEligibleYear}. Must be 21+ on 1st Aug.` : `Must be at least 21 years old on 1st August ${targetYear}.`}
+                  <div className="text-sm sm:text-base md:text-lg font-bold">UNDERAGE for UPSC CSE {targetYear}</div>
+                  <div className="text-xs sm:text-sm text-[var(--ink-body)] mt-0.5 leading-relaxed">
+                    {underageDetails ? `First eligible exam: UPSC CSE ${underageDetails.firstEligibleYear}. Must be 21+ on 1st August.` : `Must be at least 21 years old on 1st August ${targetYear}.`}
                   </div>
                 </div>
               </div>
             )}
 
             {result.status === 'overage' && (
-              <div className="p-3 bg-[#ee0000]/10 border border-[#ee0000]/30 rounded-xl flex items-center gap-3 text-[#ee0000]">
-                <XCircle className="w-5 h-5 shrink-0" />
+              <div className="p-3.5 sm:p-5 bg-rose-500/10 border border-rose-500/30 dark:bg-rose-500/15 dark:border-rose-500/40 rounded-xl sm:rounded-2xl flex items-start sm:items-center gap-3 sm:gap-3.5 text-rose-600 dark:text-rose-400 shadow-2xs">
+                <XCircle className="w-5 h-5 sm:w-6 sm:h-6 shrink-0 mt-0.5 sm:mt-0" />
                 <div>
-                  <div className="text-sm sm:text-base font-bold">OVERAGE for UPSC CSE {targetYear}</div>
-                  <div className="text-xs text-[var(--ink-body)]">
+                  <div className="text-sm sm:text-base md:text-lg font-bold">OVERAGE for UPSC CSE {targetYear}</div>
+                  <div className="text-xs sm:text-sm text-[var(--ink-body)] mt-0.5 leading-relaxed">
                     Exceeds maximum age limit of {result.maxAgeAllowed} years for {category} as of 1st August {targetYear}.
                   </div>
                 </div>
@@ -289,34 +290,34 @@ export const UPSCMode: React.FC<UPSCModeProps> = ({
           </div>
 
           {/* 3 Metric Cards */}
-          <div className="grid grid-cols-3 gap-2 sm:gap-3 my-3 text-center">
-            <div className="bg-[var(--canvas-inset)] p-2.5 sm:p-3 rounded-xl border border-[var(--hairline)] min-w-0">
-              <span className="block text-[10px] uppercase font-mono text-[var(--ink-mute)] truncate">Age on 1st Aug {targetYear}</span>
-              <span className="text-sm sm:text-base md:text-lg font-bold text-[var(--ink-primary)] font-mono-num block mt-0.5 truncate">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3.5 md:gap-4">
+            <div className="bg-[var(--canvas-inset)] p-3 sm:p-4 md:p-5 rounded-xl sm:rounded-2xl border border-[var(--hairline)] min-w-0 shadow-2xs">
+              <span className="block text-[10px] sm:text-xs uppercase font-mono font-semibold text-[var(--ink-mute)] truncate">Age on 1st Aug {targetYear}</span>
+              <span className="text-base sm:text-xl md:text-2xl font-bold text-[var(--ink-primary)] font-mono-num block mt-0.5 sm:mt-1 truncate">
                 {result.ageOnCutoff.years}y {result.ageOnCutoff.months}m {result.ageOnCutoff.days}d
               </span>
             </div>
 
-            <div className="bg-[var(--canvas-inset)] p-2.5 sm:p-3 rounded-xl border border-[var(--hairline)] min-w-0">
-              <span className="block text-[10px] uppercase font-mono text-[var(--ink-mute)] truncate">Attempts Allowed ({category})</span>
-              <span className="text-sm sm:text-base md:text-lg font-bold text-[var(--ink-primary)] font-mono-num block mt-0.5 truncate">
+            <div className="bg-[var(--canvas-inset)] p-3 sm:p-4 md:p-5 rounded-xl sm:rounded-2xl border border-[var(--hairline)] min-w-0 shadow-2xs">
+              <span className="block text-[10px] sm:text-xs uppercase font-mono font-semibold text-[var(--ink-mute)] truncate">Attempts Allowed ({category})</span>
+              <span className="text-base sm:text-xl md:text-2xl font-bold text-[var(--ink-primary)] font-mono-num block mt-0.5 sm:mt-1 truncate">
                 {result.attemptsAllowed === 99 ? 'Unlimited' : `${result.attemptsAllowed}`}
               </span>
             </div>
 
-            <div className="bg-[var(--canvas-inset)] p-2.5 sm:p-3 rounded-xl border border-[var(--hairline)] min-w-0">
-              <span className="block text-[10px] uppercase font-mono text-[var(--ink-mute)] truncate">Max Age Cap ({category})</span>
-              <span className="text-sm sm:text-base md:text-lg font-bold text-[var(--ink-primary)] font-mono-num block mt-0.5 truncate">
+            <div className="bg-[var(--canvas-inset)] p-3 sm:p-4 md:p-5 rounded-xl sm:rounded-2xl border border-[var(--hairline)] min-w-0 shadow-2xs">
+              <span className="block text-[10px] sm:text-xs uppercase font-mono font-semibold text-[var(--ink-mute)] truncate">Max Age Cap ({category})</span>
+              <span className="text-base sm:text-xl md:text-2xl font-bold text-[var(--ink-primary)] font-mono-num block mt-0.5 sm:mt-1 truncate">
                 {result.maxAgeAllowed} Years
               </span>
             </div>
           </div>
         </div>
       ) : (
-        <div className="p-6 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl text-center space-y-1.5">
-          <Shield className="w-6 h-6 mx-auto text-[#0070f3]" />
-          <h3 className="text-sm font-semibold text-[var(--ink-primary)]">Ready for Eligibility Verdict</h3>
-          <p className="text-xs text-[var(--ink-mute)] max-w-sm mx-auto">
+        <div className="p-8 sm:p-10 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-2xl sm:rounded-3xl text-center space-y-2 shadow-sm">
+          <Shield className="w-8 h-8 mx-auto text-[#0070f3]" />
+          <h3 className="text-base sm:text-lg font-bold text-[var(--ink-primary)]">Ready for Eligibility Verdict</h3>
+          <p className="text-xs sm:text-sm text-[var(--ink-mute)] max-w-md mx-auto leading-relaxed">
             Enter your Date of Birth in the box above to calculate official Rule 6 eligibility and remaining attempts.
           </p>
         </div>

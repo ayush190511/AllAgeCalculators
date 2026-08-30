@@ -230,13 +230,16 @@ export const DateInputField: React.FC<DateInputFieldProps> = ({
   };
 
   return (
-    <div className={`space-y-1.5 ${className}`}>
+    <div className={`space-y-1.5 sm:space-y-2 ${className}`}>
       {/* Label */}
-      <label className="block text-xs font-medium uppercase tracking-wider text-[var(--ink-body)] truncate">
-        {label} {required && <span className="text-[#ee0000]">*</span>}
-      </label>
+      <div className="flex items-center justify-between">
+        <label className="block text-xs font-medium uppercase tracking-wider text-[var(--ink-body)]">
+          {label} {required && <span className="text-[#ee0000]">*</span>}
+        </label>
+        <span className="text-[10px] sm:text-xs font-mono text-[var(--ink-mute)]">DD/MM/YYYY</span>
+      </div>
 
-      {/* Clean Single Entry Box with Placeholder and Integrated Calendar Picker */}
+      {/* Date Entry Box with Integrated Calendar Picker */}
       <div className="relative flex items-center">
         <input
           type="text"
@@ -247,12 +250,12 @@ export const DateInputField: React.FC<DateInputFieldProps> = ({
           onChange={handleInputChange}
           onBlur={handleBlur}
           placeholder="DD/MM/YYYY"
-          className="w-full h-10 pl-3 pr-24 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg text-sm text-[var(--ink-primary)] font-mono-num font-semibold focus:outline-none focus:ring-2 focus:ring-[var(--ink-primary)] transition tracking-wider placeholder:text-[var(--ink-mute)]/60 placeholder:font-normal"
+          className="w-full h-10 sm:h-13 md:h-14 pl-3 sm:pl-4 md:pl-5 pr-24 sm:pr-32 md:pr-36 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg sm:rounded-xl md:rounded-2xl text-sm sm:text-lg md:text-xl text-[var(--ink-primary)] font-mono-num font-semibold sm:font-bold tracking-wider sm:tracking-widest focus:outline-none focus:ring-2 focus:ring-[#0070f3]/40 focus:border-[#0070f3] shadow-2xs transition-all placeholder:text-[var(--ink-mute)]/40 placeholder:font-normal"
           aria-label={`${label} in DD/MM/YYYY format`}
         />
 
         {/* Integrated Calendar Trigger Button */}
-        <div className="absolute right-1 top-1 bottom-1 flex items-center">
+        <div className="absolute right-1 sm:right-1.5 md:right-2 top-1 bottom-1 flex items-center">
           <div className="relative h-full flex items-center">
             {/* Native HTML5 date input positioned to anchor the picker */}
             <input
@@ -277,19 +280,19 @@ export const DateInputField: React.FC<DateInputFieldProps> = ({
             <button
               type="button"
               onClick={handleOpenCalendar}
-              className="h-8 px-2.5 bg-[var(--canvas-inset)] border border-[var(--hairline)] hover:border-[var(--ink-primary)] hover:bg-[var(--canvas-card)] text-[var(--ink-primary)] active:scale-[0.98] rounded-md flex items-center justify-center gap-1.5 transition cursor-pointer select-none"
+              className="h-8 sm:h-10 md:h-10.5 px-2.5 sm:px-3.5 md:px-4 bg-[var(--canvas-inset)] border border-[var(--hairline)] hover:border-[#0070f3] hover:bg-[var(--canvas-card)] text-[var(--ink-primary)] active:scale-[0.98] rounded-md sm:rounded-lg md:rounded-xl flex items-center justify-center gap-1.5 sm:gap-2 transition-all cursor-pointer select-none shadow-2xs"
               title="Open calendar picker"
               aria-label="Open calendar picker"
             >
-              <CalendarIcon className="w-3.5 h-3.5 text-[#0070f3] pointer-events-none" />
-              <span className="text-xs font-mono font-medium pointer-events-none">Calendar</span>
+              <CalendarIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#0070f3] pointer-events-none" />
+              <span className="text-xs sm:text-sm font-semibold pointer-events-none">Calendar</span>
             </button>
           </div>
         </div>
       </div>
 
       {(inputError || helpText) && (
-        <p className="text-[11px] text-amber-500 font-medium">{inputError || helpText}</p>
+        <p className="text-xs text-amber-500 font-medium pt-0.5">{inputError || helpText}</p>
       )}
     </div>
   );
