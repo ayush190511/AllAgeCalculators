@@ -76,19 +76,7 @@ export const DogAgeMode: React.FC = () => {
     <div className="space-y-4 sm:space-y-6">
       {/* Input Card */}
       <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-8 shadow-xs transition-colors">
-        <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-[var(--hairline)]">
-          <div className="flex items-center gap-2 sm:gap-2.5">
-            <span className="text-lg sm:text-xl">🐶</span>
-            <h2 className="text-sm sm:text-base md:text-lg font-bold tracking-tight text-[var(--ink-primary)]">
-              Dog Age & Human Years Engine
-            </h2>
-          </div>
-          <span className="text-[11px] sm:text-xs font-mono px-2.5 py-1 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-md sm:rounded-lg text-[var(--ink-body)] font-medium">
-            AVMA Formula
-          </span>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-7 pt-4 sm:pt-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-7">
           {/* DOB */}
           <DateInputField
             label="Dog's Date of Birth"

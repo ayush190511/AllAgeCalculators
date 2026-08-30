@@ -257,7 +257,15 @@ export const DateInputField: React.FC<DateInputFieldProps> = ({
         {/* Integrated Calendar Trigger Button */}
         <div className="absolute right-1 sm:right-1.5 md:right-2 top-1 bottom-1 flex items-center">
           <div className="relative h-full flex items-center">
-            {/* Native HTML5 date input positioned to anchor the picker */}
+            {/* Visual Button Display */}
+            <div
+              className="h-8 sm:h-10 md:h-10.5 px-2.5 sm:px-3.5 md:px-4 bg-[var(--canvas-inset)] border border-[var(--hairline)] hover:border-[#0070f3] hover:bg-[var(--canvas-card)] text-[var(--ink-primary)] rounded-md sm:rounded-lg md:rounded-xl flex items-center justify-center gap-1.5 sm:gap-2 transition-all select-none shadow-2xs pointer-events-none"
+            >
+              <CalendarIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#0070f3]" />
+              <span className="text-xs sm:text-sm font-semibold">Calendar</span>
+            </div>
+
+            {/* Native HTML5 date input directly overlaid with cursor-pointer */}
             <input
               ref={hiddenDateInputRef}
               type="date"
@@ -272,21 +280,10 @@ export const DateInputField: React.FC<DateInputFieldProps> = ({
                   setInputError(null);
                 }
               }}
-              className="absolute inset-0 opacity-0 pointer-events-none w-full h-full"
-              tabIndex={-1}
-              aria-hidden="true"
-            />
-
-            <button
-              type="button"
-              onClick={handleOpenCalendar}
-              className="h-8 sm:h-10 md:h-10.5 px-2.5 sm:px-3.5 md:px-4 bg-[var(--canvas-inset)] border border-[var(--hairline)] hover:border-[#0070f3] hover:bg-[var(--canvas-card)] text-[var(--ink-primary)] active:scale-[0.98] rounded-md sm:rounded-lg md:rounded-xl flex items-center justify-center gap-1.5 sm:gap-2 transition-all cursor-pointer select-none shadow-2xs"
-              title="Open calendar picker"
+              className="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-10"
+              title="Click to open calendar"
               aria-label="Open calendar picker"
-            >
-              <CalendarIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#0070f3] pointer-events-none" />
-              <span className="text-xs sm:text-sm font-semibold pointer-events-none">Calendar</span>
-            </button>
+            />
           </div>
         </div>
       </div>

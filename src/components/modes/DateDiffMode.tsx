@@ -47,15 +47,8 @@ export const DateDiffMode: React.FC = () => {
   return (
     <div className="space-y-4 sm:space-y-6">
       {/* Input Card */}
-      <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-8 shadow-xs transition-colors">
-        <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-[var(--hairline)]">
-          <div className="flex items-center gap-2 sm:gap-2.5">
-            <div className="h-2 w-2 sm:h-2.5 sm:w-2.5 rounded-full bg-[#7928ca] shadow-[0_0_8px_rgba(121,40,202,0.6)]" />
-            <h2 className="text-sm sm:text-base md:text-lg font-bold tracking-tight text-[var(--ink-primary)]">
-              Date & Time Difference Engine
-            </h2>
-          </div>
-
+      <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-8 shadow-xs transition-colors space-y-4">
+        <div className="flex justify-end">
           <button
             type="button"
             onClick={() => setIncludeTime(!includeTime)}
@@ -69,7 +62,7 @@ export const DateDiffMode: React.FC = () => {
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-7 pt-4 sm:pt-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-7">
           {/* From Date */}
           <div className="space-y-2">
             <DateInputField

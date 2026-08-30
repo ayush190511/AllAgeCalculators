@@ -109,19 +109,7 @@ export const UPSCMode: React.FC<UPSCModeProps> = ({
     <div className="space-y-4 sm:space-y-6">
       {/* Input Card */}
       <div className="bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-xl sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-8 shadow-xs transition-colors">
-        <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-[var(--hairline)]">
-          <div className="flex items-center gap-2 sm:gap-2.5">
-            <div className="h-2 w-2 sm:h-2.5 sm:w-2.5 rounded-full bg-[#0070f3] shadow-[0_0_8px_rgba(0,112,243,0.6)]" />
-            <h2 className="text-sm sm:text-base md:text-lg font-bold tracking-tight text-[var(--ink-primary)]">
-              UPSC CSE Age & Eligibility Engine
-            </h2>
-          </div>
-          <span className="text-[11px] sm:text-xs font-mono px-2.5 py-1 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-md sm:rounded-lg text-[var(--ink-body)] font-medium">
-            Cutoff: 1st August {targetYear}
-          </span>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 pt-4 sm:pt-5 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 items-start">
           {/* DOB Input */}
           <div className="md:col-span-1">
             <DateInputField
