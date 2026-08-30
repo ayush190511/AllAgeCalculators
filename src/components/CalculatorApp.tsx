@@ -49,31 +49,31 @@ export const CalculatorApp: React.FC = () => {
   return (
     <div className="w-full max-w-5xl mx-auto space-y-4 sm:space-y-8">
       {/* Three Hero Mode Cards / Tabs directly at top of the page */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-2 sm:gap-3.5 p-1.5 sm:p-2.5 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-xl sm:rounded-2xl md:rounded-3xl shadow-xs transition-colors">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-2 sm:gap-2.5 p-1.5 sm:p-2 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-xl sm:rounded-2xl shadow-xs transition-colors">
         {/* Mode 1 Tab */}
         <button
           type="button"
           onClick={() => handleModeChange('upsc')}
-          className={`p-3 sm:p-4 md:p-5 rounded-lg sm:rounded-xl md:rounded-2xl text-left transition-all flex items-start gap-2.5 sm:gap-3.5 relative cursor-pointer ${
+          className={`p-2.5 sm:p-3 md:p-3.5 rounded-lg sm:rounded-xl text-left transition-all flex items-start gap-2.5 sm:gap-3 relative cursor-pointer ${
             mode === 'upsc'
               ? 'bg-[var(--canvas-card)] text-[var(--ink-primary)] border border-[var(--hairline)] shadow-sm'
               : 'text-[var(--ink-body)] hover:text-[var(--ink-primary)] hover:bg-[var(--canvas-card)]/60 border border-transparent'
           }`}
         >
           <div
-            className={`p-2 sm:p-3 rounded-lg sm:rounded-xl shrink-0 transition-colors ${
+            className={`p-2 sm:p-2.5 rounded-lg shrink-0 transition-colors ${
               mode === 'upsc' ? 'bg-[#0070f3] text-white shadow-xs' : 'bg-[var(--hairline)] text-[var(--ink-body)]'
             }`}
           >
-            <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5" />
+            <ShieldCheck className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
           </div>
           <div>
-            <div className="flex items-center gap-1.5 sm:gap-2">
-              <span className="text-[10px] sm:text-xs uppercase font-mono tracking-wider font-bold text-[var(--ink-mute)]">Mode 1</span>
-              {mode === 'upsc' && <span className="h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-[#0070f3] animate-pulse" />}
+            <div className="flex items-center gap-1.5">
+              <span className="text-[10px] uppercase font-mono tracking-wider font-bold text-[var(--ink-mute)]">Mode 1</span>
+              {mode === 'upsc' && <span className="h-1.5 w-1.5 rounded-full bg-[#0070f3] animate-pulse" />}
             </div>
-            <h3 className="text-xs sm:text-sm md:text-base font-bold tracking-tight mt-0.5">UPSC Age & Eligibility</h3>
-            <p className="text-[11px] sm:text-xs text-[var(--ink-mute)] line-clamp-1 mt-0.5">
+            <h3 className="text-xs sm:text-sm font-bold tracking-tight mt-0.5">UPSC Age & Eligibility</h3>
+            <p className="text-[11px] text-[var(--ink-mute)] line-clamp-1 mt-0.5">
               Exact 1st August cutoff, attempt counter & relaxations
             </p>
           </div>
@@ -83,26 +83,26 @@ export const CalculatorApp: React.FC = () => {
         <button
           type="button"
           onClick={() => handleModeChange('normal')}
-          className={`p-3 sm:p-4 md:p-5 rounded-lg sm:rounded-xl md:rounded-2xl text-left transition-all flex items-start gap-2.5 sm:gap-3.5 relative cursor-pointer ${
+          className={`p-2.5 sm:p-3 md:p-3.5 rounded-lg sm:rounded-xl text-left transition-all flex items-start gap-2.5 sm:gap-3 relative cursor-pointer ${
             mode === 'normal'
               ? 'bg-[var(--canvas-card)] text-[var(--ink-primary)] border border-[var(--hairline)] shadow-sm'
               : 'text-[var(--ink-body)] hover:text-[var(--ink-primary)] hover:bg-[var(--canvas-card)]/60 border border-transparent'
           }`}
         >
           <div
-            className={`p-2 sm:p-3 rounded-lg sm:rounded-xl shrink-0 transition-colors ${
+            className={`p-2 sm:p-2.5 rounded-lg shrink-0 transition-colors ${
               mode === 'normal' ? 'bg-[#0070f3] text-white shadow-xs' : 'bg-[var(--hairline)] text-[var(--ink-body)]'
             }`}
           >
-            <Calendar className="w-4 h-4 sm:w-5 sm:h-5" />
+            <Calendar className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
           </div>
           <div>
-            <div className="flex items-center gap-1.5 sm:gap-2">
-              <span className="text-[10px] sm:text-xs uppercase font-mono tracking-wider font-bold text-[var(--ink-mute)]">Mode 2</span>
-              {mode === 'normal' && <span className="h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-[#0070f3] animate-pulse" />}
+            <div className="flex items-center gap-1.5">
+              <span className="text-[10px] uppercase font-mono tracking-wider font-bold text-[var(--ink-mute)]">Mode 2</span>
+              {mode === 'normal' && <span className="h-1.5 w-1.5 rounded-full bg-[#0070f3] animate-pulse" />}
             </div>
-            <h3 className="text-xs sm:text-sm md:text-base font-bold tracking-tight mt-0.5">Normal Age Calculator</h3>
-            <p className="text-[11px] sm:text-xs text-[var(--ink-mute)] line-clamp-1 mt-0.5">
+            <h3 className="text-xs sm:text-sm font-bold tracking-tight mt-0.5">Normal Age Calculator</h3>
+            <p className="text-[11px] text-[var(--ink-mute)] line-clamp-1 mt-0.5">
               Exact age as of today + live second-by-second ticker
             </p>
           </div>
@@ -112,26 +112,26 @@ export const CalculatorApp: React.FC = () => {
         <button
           type="button"
           onClick={() => handleModeChange('datediff')}
-          className={`p-3 sm:p-4 md:p-5 rounded-lg sm:rounded-xl md:rounded-2xl text-left transition-all flex items-start gap-2.5 sm:gap-3.5 relative cursor-pointer ${
+          className={`p-2.5 sm:p-3 md:p-3.5 rounded-lg sm:rounded-xl text-left transition-all flex items-start gap-2.5 sm:gap-3 relative cursor-pointer ${
             mode === 'datediff'
               ? 'bg-[var(--canvas-card)] text-[var(--ink-primary)] border border-[var(--hairline)] shadow-sm'
               : 'text-[var(--ink-body)] hover:text-[var(--ink-primary)] hover:bg-[var(--canvas-card)]/60 border border-transparent'
           }`}
         >
           <div
-            className={`p-2 sm:p-3 rounded-lg sm:rounded-xl shrink-0 transition-colors ${
+            className={`p-2 sm:p-2.5 rounded-lg shrink-0 transition-colors ${
               mode === 'datediff' ? 'bg-[#7928ca] text-white shadow-xs' : 'bg-[var(--hairline)] text-[var(--ink-body)]'
             }`}
           >
-            <ArrowRightLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+            <ArrowRightLeft className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
           </div>
           <div>
-            <div className="flex items-center gap-1.5 sm:gap-2">
-              <span className="text-[10px] sm:text-xs uppercase font-mono tracking-wider font-bold text-[var(--ink-mute)]">Mode 3</span>
-              {mode === 'datediff' && <span className="h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-[#7928ca] animate-pulse" />}
+            <div className="flex items-center gap-1.5">
+              <span className="text-[10px] uppercase font-mono tracking-wider font-bold text-[var(--ink-mute)]">Mode 3</span>
+              {mode === 'datediff' && <span className="h-1.5 w-1.5 rounded-full bg-[#7928ca] animate-pulse" />}
             </div>
-            <h3 className="text-xs sm:text-sm md:text-base font-bold tracking-tight mt-0.5">Date Difference</h3>
-            <p className="text-[11px] sm:text-xs text-[var(--ink-mute)] line-clamp-1 mt-0.5">
+            <h3 className="text-xs sm:text-sm font-bold tracking-tight mt-0.5">Date Difference</h3>
+            <p className="text-[11px] text-[var(--ink-mute)] line-clamp-1 mt-0.5">
               Age gaps, event intervals & unit breakdowns
             </p>
           </div>

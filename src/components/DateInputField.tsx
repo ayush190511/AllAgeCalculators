@@ -216,6 +216,7 @@ export const DateInputField: React.FC<DateInputFieldProps> = ({
 
   const handleOpenCalendar = (e: React.MouseEvent) => {
     e.preventDefault();
+    e.stopPropagation();
     if (hiddenDateInputRef.current) {
       if (typeof hiddenDateInputRef.current.showPicker === 'function') {
         try {
@@ -226,14 +227,15 @@ export const DateInputField: React.FC<DateInputFieldProps> = ({
         }
       }
       hiddenDateInputRef.current.focus();
+      hiddenDateInputRef.current.click();
     }
   };
 
   return (
-    <div className={`space-y-1.5 sm:space-y-2 ${className}`}>
+    <div className={`space-y-1.5 ${className}`}>
       {/* Label */}
       <div className="flex items-center justify-between">
-        <label className="block text-xs font-medium uppercase tracking-wider text-[var(--ink-body)]">
+        <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--ink-body)]">
           {label} {required && <span className="text-[#ee0000]">*</span>}
         </label>
         <span className="text-[10px] sm:text-xs font-mono text-[var(--ink-mute)]">DD/MM/YYYY</span>
@@ -250,41 +252,42 @@ export const DateInputField: React.FC<DateInputFieldProps> = ({
           onChange={handleInputChange}
           onBlur={handleBlur}
           placeholder="DD/MM/YYYY"
-          className="w-full h-10 sm:h-13 md:h-14 pl-3 sm:pl-4 md:pl-5 pr-24 sm:pr-32 md:pr-36 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg sm:rounded-xl md:rounded-2xl text-sm sm:text-lg md:text-xl text-[var(--ink-primary)] font-mono-num font-semibold sm:font-bold tracking-wider sm:tracking-widest focus:outline-none focus:ring-2 focus:ring-[#0070f3]/40 focus:border-[#0070f3] shadow-2xs transition-all placeholder:text-[var(--ink-mute)]/40 placeholder:font-normal"
+          className="w-full h-10 sm:h-11 md:h-11 pl-3 sm:pl-3.5 md:pl-4 pr-24 sm:pr-28 md:pr-30 bg-[var(--canvas-card)] border border-[var(--hairline)] rounded-lg sm:rounded-xl text-sm sm:text-base md:text-base text-[var(--ink-primary)] font-mono-num font-semibold tracking-normal sm:tracking-wide focus:outline-none focus:ring-2 focus:ring-[#0070f3]/40 focus:border-[#0070f3] shadow-2xs transition-all placeholder:text-xs sm:placeholder:text-sm placeholder:tracking-normal placeholder:text-[var(--ink-mute)]/45 placeholder:font-normal"
           aria-label={`${label} in DD/MM/YYYY format`}
         />
 
         {/* Integrated Calendar Trigger Button */}
-        <div className="absolute right-1 sm:right-1.5 md:right-2 top-1 bottom-1 flex items-center">
-          <div className="relative h-full flex items-center">
-            {/* Visual Button Display */}
-            <div
-              className="h-8 sm:h-10 md:h-10.5 px-2.5 sm:px-3.5 md:px-4 bg-[var(--canvas-inset)] border border-[var(--hairline)] hover:border-[#0070f3] hover:bg-[var(--canvas-card)] text-[var(--ink-primary)] rounded-md sm:rounded-lg md:rounded-xl flex items-center justify-center gap-1.5 sm:gap-2 transition-all select-none shadow-2xs pointer-events-none"
-            >
-              <CalendarIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#0070f3]" />
-              <span className="text-xs sm:text-sm font-semibold">Calendar</span>
-            </div>
+        <div className="absolute right-1 sm:right-1.5 md:right-1.5 top-1 bottom-1 flex items-center">
+          <button
+            type="button"
+            onClick={handleOpenCalendar}
+            className="h-8 sm:h-8.5 md:h-8.5 px-2.5 sm:px-3 bg-[var(--canvas-inset)] border border-[var(--hairline)] hover:border-[#0070f3] hover:bg-[var(--canvas-card)] text-[var(--ink-primary)] rounded-md sm:rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-all select-none shadow-2xs cursor-pointer active:scale-95"
+            title="Open calendar picker"
+            aria-label="Open calendar picker"
+          >
+            <CalendarIcon className="w-3.5 h-3.5 text-[#0070f3]" />
+            <span className="text-xs font-medium">Calendar</span>
+          </button>
 
-            {/* Native HTML5 date input directly overlaid with cursor-pointer */}
-            <input
-              ref={hiddenDateInputRef}
-              type="date"
-              value={value || ''}
-              max={max}
-              min={min}
-              onChange={(e) => {
-                const newVal = e.target.value;
-                if (newVal) {
-                  onChange(newVal);
-                  setDisplayText(isoToDisplay(newVal));
-                  setInputError(null);
-                }
-              }}
-              className="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-10"
-              title="Click to open calendar"
-              aria-label="Open calendar picker"
-            />
-          </div>
+          {/* Native HTML5 date input off-screen for picker invocation */}
+          <input
+            ref={hiddenDateInputRef}
+            type="date"
+            value={value || ''}
+            max={max}
+            min={min}
+            onChange={(e) => {
+              const newVal = e.target.value;
+              if (newVal) {
+                onChange(newVal);
+                setDisplayText(isoToDisplay(newVal));
+                setInputError(null);
+              }
+            }}
+            tabIndex={-1}
+            className="sr-only opacity-0 pointer-events-none absolute -z-10"
+            aria-hidden="true"
+          />
         </div>
       </div>
 
