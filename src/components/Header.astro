@@ -31,16 +31,10 @@ const currentPath = Astro.url.pathname;
           Home
         </a>
         <a 
-          href="/upsc-age-calculator" 
-          class={`px-2.5 py-1.5 rounded-lg transition ${currentPath === '/upsc-age-calculator' || currentPath === '/upsc-age-calculator/' ? 'bg-[var(--canvas-inset)] text-[var(--ink-primary)] font-semibold border border-[var(--hairline)]' : 'hover:text-[var(--ink-primary)]'}`}
+          href="/date-difference-calculator" 
+          class={`px-2.5 py-1.5 rounded-lg transition ${currentPath === '/date-difference-calculator' || currentPath === '/date-difference-calculator/' ? 'bg-[var(--canvas-inset)] text-[var(--ink-primary)] font-semibold border border-[var(--hairline)]' : 'hover:text-[var(--ink-primary)]'}`}
         >
-          UPSC Engine
-        </a>
-        <a 
-          href="/retirement-age-calculator" 
-          class={`px-2.5 py-1.5 rounded-lg transition ${currentPath === '/retirement-age-calculator' || currentPath === '/retirement-age-calculator/' ? 'bg-[var(--canvas-inset)] text-[var(--ink-primary)] font-semibold border border-[var(--hairline)]' : 'hover:text-[var(--ink-primary)]'}`}
-        >
-          Retirement
+          Date Diff
         </a>
         <a 
           href="/dog-age-calculator" 
@@ -55,10 +49,16 @@ const currentPath = Astro.url.pathname;
           Baby Age 👶
         </a>
         <a 
-          href="/date-difference-calculator" 
-          class={`px-2.5 py-1.5 rounded-lg transition ${currentPath === '/date-difference-calculator' || currentPath === '/date-difference-calculator/' ? 'bg-[var(--canvas-inset)] text-[var(--ink-primary)] font-semibold border border-[var(--hairline)]' : 'hover:text-[var(--ink-primary)]'}`}
+          href="/upsc-age-calculator" 
+          class={`px-2.5 py-1.5 rounded-lg transition ${currentPath === '/upsc-age-calculator' || currentPath === '/upsc-age-calculator/' ? 'bg-[var(--canvas-inset)] text-[var(--ink-primary)] font-semibold border border-[var(--hairline)]' : 'hover:text-[var(--ink-primary)]'}`}
         >
-          Date Diff
+          UPSC Engine
+        </a>
+        <a 
+          href="/retirement-age-calculator" 
+          class={`px-2.5 py-1.5 rounded-lg transition ${currentPath === '/retirement-age-calculator' || currentPath === '/retirement-age-calculator/' ? 'bg-[var(--canvas-inset)] text-[var(--ink-primary)] font-semibold border border-[var(--hairline)]' : 'hover:text-[var(--ink-primary)]'}`}
+        >
+          Retirement
         </a>
                 <!-- Vertical Divider Separator between Calculators & Info Pages -->
         <div class="h-4 w-px bg-[var(--hairline-strong)] mx-1.5 shrink-0 opacity-60"></div>
@@ -162,6 +162,24 @@ const currentPath = Astro.url.pathname;
         Home
       </a>
       <a 
+        href="/date-difference-calculator" 
+        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/date-difference-calculator' || currentPath === '/date-difference-calculator/' ? 'mobile-active-pill bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--hairline)]' : 'bg-[var(--canvas-inset)] text-[var(--ink-body)] border-[var(--hairline)]'}`}
+      >
+        Date Diff
+      </a>
+      <a 
+        href="/dog-age-calculator" 
+        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/dog-age-calculator' || currentPath === '/dog-age-calculator/' ? 'mobile-active-pill bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--hairline)]' : 'bg-[var(--canvas-inset)] text-[var(--ink-body)] border-[var(--hairline)]'}`}
+      >
+        Dog Age 🐶
+      </a>
+      <a 
+        href="/baby-age-calculator" 
+        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/baby-age-calculator' || currentPath === '/baby-age-calculator/' ? 'mobile-active-pill bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--hairline)]' : 'bg-[var(--canvas-inset)] text-[var(--ink-body)] border-[var(--hairline)]'}`}
+      >
+        Baby Age 👶
+      </a>
+      <a 
         href="/upsc-age-calculator" 
         class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/upsc-age-calculator' || currentPath === '/upsc-age-calculator/' ? 'mobile-active-pill bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] font-semibold' : 'bg-[var(--canvas-inset)] text-[var(--ink-body)] border-[var(--hairline)]'}`}
       >
@@ -172,24 +190,6 @@ const currentPath = Astro.url.pathname;
         class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/retirement-age-calculator' || currentPath === '/retirement-age-calculator/' ? 'mobile-active-pill bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] font-semibold' : 'bg-[var(--canvas-inset)] text-[var(--ink-body)] border-[var(--hairline)]'}`}
       >
         Retirement
-      </a>
-      <a 
-        href="/dog-age-calculator" 
-        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/dog-age-calculator' || currentPath === '/dog-age-calculator/' ? 'mobile-active-pill bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] font-semibold' : 'bg-[var(--canvas-inset)] text-[var(--ink-body)] border-[var(--hairline)]'}`}
-      >
-        Dog Age 🐶
-      </a>
-      <a 
-        href="/baby-age-calculator" 
-        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/baby-age-calculator' || currentPath === '/baby-age-calculator/' ? 'mobile-active-pill bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--ink-primary)] font-semibold' : 'bg-[var(--canvas-inset)] text-[var(--ink-body)] border-[var(--hairline)]'}`}
-      >
-        Baby Age 👶
-      </a>
-      <a 
-        href="/date-difference-calculator" 
-        class={`px-3 py-1 rounded-full whitespace-nowrap text-xs transition border ${currentPath === '/date-difference-calculator' || currentPath === '/date-difference-calculator/' ? 'mobile-active-pill bg-[var(--ink-primary)] text-[var(--canvas-card)] border-[var(--hairline)]' : 'bg-[var(--canvas-inset)] text-[var(--ink-body)] border-[var(--hairline)]'}`}
-      >
-        Date Diff
       </a>
     </div>
 

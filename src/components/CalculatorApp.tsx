@@ -8,7 +8,7 @@ import { ShieldCheck, Calendar, ArrowRightLeft } from 'lucide-react';
 export type ModeType = 'upsc' | 'normal' | 'datediff';
 
 export const CalculatorApp: React.FC = () => {
-  const [mode, setMode] = useState<ModeType>('upsc');
+  const [mode, setMode] = useState<ModeType>('normal');
   // Shared DOB state maintained across modes (empty by default)
   const [sharedDob, setSharedDob] = useState<string>('');
 
@@ -18,7 +18,7 @@ export const CalculatorApp: React.FC = () => {
       const params = new URLSearchParams(window.location.search);
       const urlMode = params.get('mode') as ModeType;
       const urlDob = params.get('dob');
-      if (urlMode && ['upsc', 'normal', 'datediff'].includes(urlMode)) {
+      if (urlMode && ['normal', 'datediff', 'upsc'].includes(urlMode)) {
         setMode(urlMode);
       }
       if (urlDob) {
@@ -50,36 +50,7 @@ export const CalculatorApp: React.FC = () => {
     <div className="w-full max-w-5xl mx-auto space-y-4 sm:space-y-8">
       {/* Three Hero Mode Cards / Tabs directly at top of the page */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-2 sm:gap-2.5 p-1.5 sm:p-2 bg-[var(--canvas-inset)] border border-[var(--hairline)] rounded-xl sm:rounded-2xl shadow-xs transition-colors">
-        {/* Mode 1 Tab */}
-        <button
-          type="button"
-          onClick={() => handleModeChange('upsc')}
-          className={`p-2.5 sm:p-3 md:p-3.5 rounded-lg sm:rounded-xl text-left transition-all flex items-start gap-2.5 sm:gap-3 relative cursor-pointer ${
-            mode === 'upsc'
-              ? 'bg-[var(--canvas-card)] text-[var(--ink-primary)] border border-[var(--hairline)] shadow-sm'
-              : 'text-[var(--ink-body)] hover:text-[var(--ink-primary)] hover:bg-[var(--canvas-card)]/60 border border-transparent'
-          }`}
-        >
-          <div
-            className={`p-2 sm:p-2.5 rounded-lg shrink-0 transition-colors ${
-              mode === 'upsc' ? 'bg-[#0070f3] text-white shadow-xs' : 'bg-[var(--hairline)] text-[var(--ink-body)]'
-            }`}
-          >
-            <ShieldCheck className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
-          </div>
-          <div>
-            <div className="flex items-center gap-1.5">
-              <span className="text-[10px] uppercase font-mono tracking-wider font-bold text-[var(--ink-mute)]">Mode 1</span>
-              {mode === 'upsc' && <span className="h-1.5 w-1.5 rounded-full bg-[#0070f3] animate-pulse" />}
-            </div>
-            <h3 className="text-xs sm:text-sm font-bold tracking-tight mt-0.5">UPSC Age & Eligibility</h3>
-            <p className="text-[11px] text-[var(--ink-mute)] line-clamp-1 mt-0.5">
-              Exact 1st August cutoff, attempt counter & relaxations
-            </p>
-          </div>
-        </button>
-
-        {/* Mode 2 Tab */}
+        {/* Mode 1 Tab - Normal Age */}
         <button
           type="button"
           onClick={() => handleModeChange('normal')}
@@ -98,7 +69,7 @@ export const CalculatorApp: React.FC = () => {
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="text-[10px] uppercase font-mono tracking-wider font-bold text-[var(--ink-mute)]">Mode 2</span>
+              <span className="text-[10px] uppercase font-mono tracking-wider font-bold text-[var(--ink-mute)]">Mode 1</span>
               {mode === 'normal' && <span className="h-1.5 w-1.5 rounded-full bg-[#0070f3] animate-pulse" />}
             </div>
             <h3 className="text-xs sm:text-sm font-bold tracking-tight mt-0.5">Normal Age Calculator</h3>
@@ -108,7 +79,7 @@ export const CalculatorApp: React.FC = () => {
           </div>
         </button>
 
-        {/* Mode 3 Tab */}
+        {/* Mode 2 Tab - Date Diff */}
         <button
           type="button"
           onClick={() => handleModeChange('datediff')}
@@ -127,7 +98,7 @@ export const CalculatorApp: React.FC = () => {
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="text-[10px] uppercase font-mono tracking-wider font-bold text-[var(--ink-mute)]">Mode 3</span>
+              <span className="text-[10px] uppercase font-mono tracking-wider font-bold text-[var(--ink-mute)]">Mode 2</span>
               {mode === 'datediff' && <span className="h-1.5 w-1.5 rounded-full bg-[#7928ca] animate-pulse" />}
             </div>
             <h3 className="text-xs sm:text-sm font-bold tracking-tight mt-0.5">Date Difference</h3>
@@ -136,13 +107,42 @@ export const CalculatorApp: React.FC = () => {
             </p>
           </div>
         </button>
+
+        {/* Mode 3 Tab - UPSC */}
+        <button
+          type="button"
+          onClick={() => handleModeChange('upsc')}
+          className={`p-2.5 sm:p-3 md:p-3.5 rounded-lg sm:rounded-xl text-left transition-all flex items-start gap-2.5 sm:gap-3 relative cursor-pointer ${
+            mode === 'upsc'
+              ? 'bg-[var(--canvas-card)] text-[var(--ink-primary)] border border-[var(--hairline)] shadow-sm'
+              : 'text-[var(--ink-body)] hover:text-[var(--ink-primary)] hover:bg-[var(--canvas-card)]/60 border border-transparent'
+          }`}
+        >
+          <div
+            className={`p-2 sm:p-2.5 rounded-lg shrink-0 transition-colors ${
+              mode === 'upsc' ? 'bg-[#0070f3] text-white shadow-xs' : 'bg-[var(--hairline)] text-[var(--ink-body)]'
+            }`}
+          >
+            <ShieldCheck className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
+          </div>
+          <div>
+            <div className="flex items-center gap-1.5">
+              <span className="text-[10px] uppercase font-mono tracking-wider font-bold text-[var(--ink-mute)]">Mode 3</span>
+              {mode === 'upsc' && <span className="h-1.5 w-1.5 rounded-full bg-[#0070f3] animate-pulse" />}
+            </div>
+            <h3 className="text-xs sm:text-sm font-bold tracking-tight mt-0.5">UPSC Age & Eligibility</h3>
+            <p className="text-[11px] text-[var(--ink-mute)] line-clamp-1 mt-0.5">
+              Exact 1st August cutoff, attempt counter & relaxations
+            </p>
+          </div>
+        </button>
       </div>
 
       {/* Active Mode Render */}
       <div>
-        {mode === 'upsc' && <UPSCMode dob={sharedDob} onDobChange={handleDobChange} />}
         {mode === 'normal' && <NormalAgeMode dob={sharedDob} onDobChange={handleDobChange} />}
         {mode === 'datediff' && <DateDiffMode />}
+        {mode === 'upsc' && <UPSCMode dob={sharedDob} onDobChange={handleDobChange} />}
       </div>
 
       {/* Collapsible Category Relaxation Reference Matrix */}
