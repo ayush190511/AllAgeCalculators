@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { calculateDateDifference, formatDateForInput } from '../../lib/date-utils';
+import { calculateDateDifference } from '../../lib/date-utils';
 import { DateInputField } from '../DateInputField';
 import { ArrowRightLeft, Calendar, Copy, Check } from 'lucide-react';
 
@@ -11,7 +11,7 @@ interface DateDiffModeProps {
 export const DateDiffMode: React.FC<DateDiffModeProps> = ({ title, subtitle }) => {
   const [fromDate, setFromDate] = useState<string>('');
   const [fromTime, setFromTime] = useState<string>('00:00');
-  const [toDate, setToDate] = useState<string>(() => formatDateForInput(new Date()));
+  const [toDate, setToDate] = useState<string>('');
   const [toTime, setToTime] = useState<string>('12:00');
   const [includeTime, setIncludeTime] = useState<boolean>(false);
   const [copied, setCopied] = useState<boolean>(false);
